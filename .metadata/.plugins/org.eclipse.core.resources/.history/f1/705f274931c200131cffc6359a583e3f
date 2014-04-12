@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+
+<html ng-app="pot">
+
+<head>
+	
+	<title>Profit One Trillion</title>
+
+	<!--[if lt IE 9]>
+	<script type="text/javascript" src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+	<![endif]-->
+
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<meta http-equiv="Content-Language" content="EN" />
+	<meta name="description" content="Asteroid Mining Game" />
+	<meta name="keywords" content="asteroid,mining,game" />
+	<meta name="author" content="Jos van Egmond" />
+	<meta name="copyright" content="SpaceAppsChallenge" />
+	<meta name="application-name" content="Test" />
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
+	<link rel="shortcut icon" type="image/png" href="/images/icon.png">
+	<link rel="stylesheet" type="text/css" media="screen" href="main.css" />
+
+	<script type="text/javascript" src="js/application.js"></script>
+	
+    <link rel="stylesheet" href="style/demo.css">
+
+</head>
+
+<body>
+
+<div id="page">
+	
+	<section id="content">
+	
+        <div class="sample">
+            <canvas id="canvas"></canvas>
+        </div>
+        
+	</section>
+		
+    <script type="text/javascript">
+        (function()
+        {
+			
+		})();
+    </script>
+	
+	</div>
+
+
+</body>
+
+</html>

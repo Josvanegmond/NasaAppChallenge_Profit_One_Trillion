@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+	
+	<title>Profit One Trillion</title>
+
+	<!--[if lt IE 9]>
+	<script type="text/javascript" src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+	<![endif]-->
+
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<meta http-equiv="Content-Language" content="EN" />
+	<meta name="description" content="Asteroid Mining Game" />
+	<meta name="keywords" content="asteroid,mining,game" />
+	<meta name="author" content="Jos van Egmond" />
+	<meta name="copyright" content="SpaceAppsChallenge" />
+	<meta name="application-name" content="Test" />
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
+	<link rel="shortcut icon" type="image/png" href="/images/icon.png">
+
+	<script type="text/javascript" src="processing.js"></script>
+
+</head>
+
+<body>
+<div id="page">
+	<canvas data-processing-sources="./asteroids_profit_game2.pde"></canvas>
+</div>
+</body>
+
+</html>
