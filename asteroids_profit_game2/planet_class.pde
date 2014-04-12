@@ -5,16 +5,16 @@ class Planet {
   color col;
   Orbit orbit;
   int size;
-  PImage image;
+  PImage planetImage;
 
   int playerNumber = 0;
 
-  Planet( String name, Orbit orbit, color colI, int sizeI, PImage image) {
+  Planet( String name, Orbit orbit, color colI, int sizeI, PImage planetImage) {
     this.name = name;
     this.orbit = orbit;
     col = colI;
     size = sizeI;
-    this.image = image;
+    this.planetImage = planetImage;
   }
 
   void setPlayerNumber(int pNumber) {
@@ -26,13 +26,13 @@ class Planet {
 
     fill(col);
     //ellipse( width/2 + xv*solarSystemX, height/2 + yv*solarSystemY, size, size/2 );
-    image ( image, position.x + offSetX - image.width/2, position.y + offSetY- image.height/2);
+    image ( planetImage, position.x + offSetX - planetImage.width/2, position.y + offSetY- planetImage.height/2);
     if (name.equals("cargo")) {
       if ( playerNumber > 0 ) {
         noFill();
         stroke(255, 255, 255);
-        int xe =  (int)(position.x + offSetX - cargoImage.width/2);
-        int ye = (int)(position.y + offSetY- cargoImage.height/2);
+        int xe =  (int)(position.x + offSetX - planetImage.width/2);
+        int ye = (int)(position.y + offSetY- planetImage.height/2);
         ellipse( xe, ye, 20, 40 );
         ellipse( xe, ye, 40, 20 );
       }
