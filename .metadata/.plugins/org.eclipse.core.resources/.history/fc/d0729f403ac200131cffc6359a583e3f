@@ -51,8 +51,7 @@ void setup() {
   planets.add ( new Planet ( "cargo", 19.8950/180.0*PI, 0.9, 2.20256, 1.0/180.0*PI, color(255, 100, 255), 20));
 
   //Pallas
-//  String lines[] = loadStrings("http://asterank.com/api/asterank?query={\"e\":{\"$lt\":0.22263338430942921},\"e\":{\"$gt\":0.22263338430942920}}&limit=1");
-
+  String lines[] = loadStrings("http://asterank.com/api/asterank?query={\"e\":{\"$lt\":0.22263338430942921},\"e\":{\"$gt\":0.22263338430942920}}&limit=1");
 // 
   // // some filtering on a-semi major axis
   // // String lines[] = loadStrings("http://asterank.com/api/asterank?query={\"a\":{\"$gt\":0.2},\"a\":{\"$lt\":7.0}}&limit="+str(numberOfAsteroids));
