@@ -11,7 +11,7 @@ String totalStringAll = "";
 String totalString = "";
 
 ArrayList<Orbit> orbits = new ArrayList<Orbit>();
-ArrayList<Planet> planets = new ArrayList(); 
+ArrayList<Planet> planets = new ArrayList<Planet>(); 
 
 Sun sun;
 
@@ -139,7 +139,7 @@ void draw() {
 
   if ( playerView == 1)
   {
-    Orbit b = (Orbit) orbits.get(playerNumber);
+    Orbit b = orbits.get(playerNumber);
     offSetX = (int)-b.position.x+ width/2;
     offSetY = (int)-b.position.y+ height/2;
 
@@ -152,15 +152,14 @@ void draw() {
     text ( "GLOBAL VIEW (toggle z)", 10, height - 10);
   }
 
-  for (int i = planets.size()-1; i >= 0; i--) {
-    Planet b = (Planet) planets.get(i);
-    b.drawPlanetOnDayNumber(dayNumber, sun);
+  for (Planet planet : planets) {
+    planet.drawPlanetOnDayNumber(dayNumber, sun);
   }
 
   sun.drawSunOnDayNumber(dayNumber);
 
   for (int i = orbits.size()-1; i >= 0; i--) {
-    Orbit b = (Orbit) orbits.get(i);
+    Orbit b = orbits.get(i);
     b.drawOrbitOnDayNumber(dayNumber, sun);
   }
 
@@ -169,11 +168,11 @@ void draw() {
     fill(150);
     stroke(200, 100, 50);
     for (int i1 = orbits.size()-1; i1 >= 0; i1--) {
-      Orbit a = (Orbit) orbits.get(i1);
+      Orbit a = orbits.get(i1);
       float dt = 100000000;
       for (int i2 = orbits.size()-1; i2 >= 0; i2--) {
         if ( i1 != i2 ) {
-          Orbit b = (Orbit) orbits.get(i2);
+          Orbit b = orbits.get(i2);
           float dd = distance ( a.position, b.position );
           if ( dd < dt ) dt = dd;
           if ( dd < distanceForConnection )
@@ -196,7 +195,7 @@ void keyPressed() {
     if (playerNumber == 0)
     {
       playerNumber = (int)random(  (orbits.size()/2-1));
-      Orbit b = (Orbit) orbits.get(playerNumber);
+      Orbit b = orbits.get(playerNumber);
       b.setPlayerNumber(1);
     }
     if ( playerView == 0 )
@@ -217,12 +216,12 @@ void keyPressed() {
 
   if ( (key == 'p') && (playerNumber == 0 )) {
     playerNumber = (int)random(  (orbits.size()/2-1));
-    Orbit b = (Orbit) orbits.get(playerNumber);
+    Orbit b = orbits.get(playerNumber);
     b.setPlayerNumber(1);
   }
 
   if ( key == 'm' ) {
-    Orbit b = (Orbit) orbits.get(playerNumber);
+    Orbit b = orbits.get(playerNumber);
     if (!b.isMined()) {
       b.setMined();
       beam.addProfit(b.getProfit());    
@@ -239,11 +238,11 @@ void keyPressed() {
 }
 
 void jumpToCargoShip() {
-  Orbit a = (Orbit) orbits.get(playerNumber);
+  Orbit a = orbits.get(playerNumber);
   Planet t;
 
   for (int i1 = planets.size()-1; i1 >= 0; i1--) {
-    Planet b = (Planet) planets.get(i1);
+    Planet b = planets.get(i1);
     if ( b.name.equals("cargo"))
     {
       float dd = distance ( a.position, b.position );
