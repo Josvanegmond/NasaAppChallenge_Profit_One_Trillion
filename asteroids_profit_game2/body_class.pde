@@ -18,7 +18,7 @@ class Body {
     	onTouch();
     }
 
-    image(bodyImage, position.x + offSetX - bodyImage.height/2, position.y + offSetY - bodyImage.width/2);
+    image(bodyImage, position.x - bodyImage.height/2, position.y - bodyImage.width/2);
   }
   
   protected void onTouch() {
