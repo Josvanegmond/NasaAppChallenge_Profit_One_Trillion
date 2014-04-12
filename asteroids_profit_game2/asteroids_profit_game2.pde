@@ -29,7 +29,6 @@ PImage backgroundImage;
 PImage foregroundImage;
 
 void setup() {
-
   size(600, 600);
   
   backgroundImage = loadImage("data/space.png");
@@ -55,15 +54,13 @@ void setup() {
   //Asteroids data loading
   String lines[] = loadStrings("./data/asteroids.dat");
   for (String line : lines) {
-  	String asteroidInfo[] = split( line, ",");
-  	asteroids.add(new Asteroid(asteroidInfo[0], new Orbit( asteroidInfo ), float(asteroidInfo[5])));
+  	asteroids.add(new Asteroid(asteroidInfo[0], new Orbit(split(line, ",")), float(asteroidInfo[5])));
   }
-
-  println( "added number of asteroids " + asteroids.size());
+  
+  beam = new Player("Beam", asteroids.get((int)random(  (asteroids.size()/2-1))));
 
   fill( (255), (255), (255));
 }
-
 
 void draw()
 {
@@ -75,13 +72,8 @@ void draw()
 	strokeWeight(3);
 	stroke(200, 100, 50);
 
-	//image ( sunImage, width/2+ offSetX - sunImage.width/2, height/2 + offSetY- sunImage.height/2);
-	text ( "added number of asteroids " + asteroids.size(), 10, 10);
-    if (beam != null) {
-    	text ( "Total Profit Player " + str(beam.profitLevel), 10, 30);
-    }
+    text ( "Total Profit Player " + str(beam.profitLevel), 10, 30);
 	
-	if ( beam == null) { text ( "key p to add player", 10, 50); }
 	text ( "key m to mine (if on green asteroid)", 10, 70);
 	
 	dayNumber += .5;
@@ -94,18 +86,14 @@ void draw()
 		asteroid.drawOnDayNumber(dayNumber);
 	}
 	
-	if (beam != null) {
-		beam.draw();
-	}
+	beam.draw();
 	
 	drawHud();
 }
 
 void drawHud() {
-	if (beam != null) {
-		drawBar(width - 85, beam.fuelLevel / 100, "F");
-		drawBar(width - 60, beam.metalLevel / beam.cargoHold, "C");
-	}
+	drawBar(width - 85, beam.fuelLevel / 100, "F");
+	drawBar(width - 60, beam.metalLevel / beam.cargoHold, "C");
 
 	// stroke(0, 255, 255);
 	
@@ -133,9 +121,6 @@ void drawBar(int xv, float levelFull, String label) {
 }
 
 void mousePressed() {
-  if (beam == null) {
-    return;
-  }
   for (Asteroid asteroid : asteroids) {
 	  if (travelToBodyIfWithinReach(asteroid)) {
 		return;
@@ -157,14 +142,6 @@ boolean travelToBodyIfWithinReach(Body body) {
 }
 
 void keyPressed() {
-  if ( (key == 'p') && (beam == null)) {
-    beam = new Player("Beam", asteroids.get((int)random(  (asteroids.size()/2-1))));
-  }
-  
-  if (beam == null) {
-    return;
-  }
-
   if ( key == 'z')
   { //toggle overview and player view
     playerView = !playerView;
@@ -182,8 +159,4 @@ void keyPressed() {
       ((Asteroid) b).mine(beam);
      }
   }
-}
-
-void doJump(Asteroid source, Asteroid target) {
-  beam.setLocation(target);
 }

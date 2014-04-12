@@ -10,6 +10,7 @@ class Planet extends Body {
 
   void drawOnDayNumber(float dayNumber) {
     super.drawOnDayNumber(dayNumber);
+    fill(col);
     text( name.substring(0, 2), position.x, position.y);
   }
 }
