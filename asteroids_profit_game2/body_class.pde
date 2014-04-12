@@ -4,7 +4,6 @@ class Body {
   private final PImage bodyImage;
   
   PVector position = new PVector(0, 0);
-  boolean touched = false;
   protected Player presentPlayer;
 
   Body(String name, Orbit orbit, PImage bodyImage) {
@@ -23,9 +22,7 @@ class Body {
     float hWidth = bodyImage.width/2;
     float hHeight = bodyImage.height/2;
     if( mouseX > position.x - hWidth && mouseX < position.x + hWidth &&
-    	mouseY > position.y - hHeight && mouseY < position.y + hHeight )
-    {
-    	touched = true;
+    	mouseY > position.y - hHeight && mouseY < position.y + hHeight ) {
     	isTouched();
     }
 
