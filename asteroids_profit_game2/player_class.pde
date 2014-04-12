@@ -4,19 +4,18 @@ class Player
   
   Body location;
   
-  int fuelLevel = 100;
+  float fuelLevel = 100;
   int metalLevel = 0;
   int profitLevel = 0;
   
   PVector targetLocation;
   
-  public Player( String name, Body startLocation)
-  {
-    	this.name = name;
-     this.location = startLocation;
+  Player( String name, Body startLocation) {
+    this.name = name;
+    this.location = startLocation;
   }
   
-  public void draw() {
+  void draw() {
 	  noFill();
 	  strokeWeight(2);
 	  stroke(255, 255, 255);
@@ -30,28 +29,26 @@ class Player
 	  ellipse( xv, yv, int(fuelLevel * 1.2), int(fuelLevel * 1.2)  );
   }
   
-  public void addMetal(float change)
-  {
+  boolean isWithinReach(Body body) {
+   	float fuelRange = fuelLevel * 0.6;
+   	float xDifference = abs(body.position.x - location.position.x); 
+   	float yDifference = abs(body.position.y - location.position.y);
+    return xDifference < fuelRange && yDifference < fuelRange && sqrt(xDifference*xDifference + yDifference*yDifference) < fuelRange;
+  }
+  
+  void addMetal(float change) {
     metalLevel += change;
   }
   
   void setLocation(Body location) {
     this.location = location;
-  }
+  } 
   
-  private float getProfit()
-  {
-    return profitLevel;
-  }
-  
-  
-  public void setMoveTarget( PVector targetLocation )
-  {
+  public void setMoveTarget( PVector targetLocation ) {
   	this.targetLocation = targetLocation;
   }
   
-  public boolean canMove()
-  {
+  public boolean canMove() {
   	return (this.fuelLevel > 0);
   }
 }

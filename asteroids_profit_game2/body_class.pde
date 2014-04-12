@@ -14,17 +14,21 @@ class Body {
   void drawOnDayNumber(float dayNumber) {
     position = orbit.calculatePositionForDay(dayNumber);
     
-    float hWidth = bodyImage.width/2;
-    float hHeight = bodyImage.height/2;
-    if( mouseX > position.x - hWidth && mouseX < position.x + hWidth &&
-    	mouseY > position.y - hHeight && mouseY < position.y + hHeight ) {
-    	isTouched();
+    if(isUnderMouse()) {
+    	onTouch();
     }
 
     image(bodyImage, position.x + offSetX - bodyImage.height/2, position.y + offSetY - bodyImage.width/2);
   }
   
-  protected void isTouched() {
+  protected void onTouch() {
 	  // Overwrite for hover functionality.
+  }
+  
+  boolean isUnderMouse() {
+    float hWidth = bodyImage.width/2;
+    float hHeight = bodyImage.height/2;
+   	return mouseX > position.x - hWidth && mouseX < position.x + hWidth &&
+   	  mouseY > position.y - hHeight && mouseY < position.y + hHeight;
   }
 }

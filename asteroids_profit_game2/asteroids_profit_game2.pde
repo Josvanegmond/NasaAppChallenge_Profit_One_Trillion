@@ -94,7 +94,7 @@ void draw()
 	image ( sunImage, width/2+ offSetX - sunImage.width/2, height/2 + offSetY- sunImage.height/2);
 	text ( "added number of asteroids " + asteroids.size(), 10, 10);
   if (beam != null) {
-    	text ( "Total Profit Player " + str(beam.getProfit()), 10, 30);
+    	text ( "Total Profit Player " + str(beam.profitLevel), 10, 30);
   }
 	
 	if ( playerNumber < 1 ) { text ( "key p to add player", 10, 50); }
@@ -136,9 +136,24 @@ void draw()
 
 
 void mousePressed() {
-  
-//  solarSystemX = (width/2 - mouseX);
-//  solarSystemY = (height/2 - mouseY);
+  for (Asteroid asteroid : asteroids) {
+	  if (travelToBodyIfWithinReach(asteroid)) {
+		return;
+	  }
+  }
+  for (Body body : bodies) {
+	  if (travelToBodyIfWithinReach(body)) {
+		  return;
+	  }
+  }
+}
+
+public boolean travelToBodyIfWithinReach(Body body) {
+  if (body.isUnderMouse() && beam.isWithinReach(body)) {
+	  beam.setLocation(body);
+	  return true;
+  }
+  return false;
 }
 
 void keyPressed() {
