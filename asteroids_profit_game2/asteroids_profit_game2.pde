@@ -102,15 +102,34 @@ void draw()
 }
 
 void drawHud() {
-	noFill();
-	stroke(255, 255, 255);
- strokeWeight(2);
-	rect(width - 80, 74, 40, 100);
+	if (beam != null) {
+		drawBar(width - 85, beam.fuelLevel / 100, "F");
+		drawBar(width - 60, beam.metalLevel / beam.cargoHold, "C");
+	}
 
-// stroke(0, 255, 255);
+	// stroke(0, 255, 255);
 	
 	fill(150,150,150,255);
 	image( foregroundImage, 0, 0, 600, 600 );
+}
+
+void drawBar(int xv, float levelFull, String label) {
+	int rectHeight = 60;
+	int rectWidth = 20;
+	int yv = 74;
+	noStroke();
+	fill(255, 0, 0);
+	int redBarHeight = 60*(1.0-levelFull);
+	rect(xv, yv, rectWidth, redBarHeight);
+	fill(0, 255, 0);
+	rect(xv, yv + redBarHeight, rectWidth, 60*levelFull);
+	
+	noFill();
+	stroke(255, 255, 255);
+	strokeWeight(2);
+	rect(xv, yv, rectWidth, rectHeight);
+	fill(255, 255, 255);
+	text(label, xv+7, 148);
 }
 
 void mousePressed() {

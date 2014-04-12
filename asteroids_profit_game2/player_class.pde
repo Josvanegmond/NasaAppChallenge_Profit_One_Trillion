@@ -1,11 +1,12 @@
 class Player
 {
+  float cargoHold = 1000.0;
   final String name;
   
   Body location;
   
   float fuelLevel = 100;
-  int metalLevel = 0;
+  float metalLevel = 0;
   int profitLevel = 0;
   
   PVector targetLocation;
