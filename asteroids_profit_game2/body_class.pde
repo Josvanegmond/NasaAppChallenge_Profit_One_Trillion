@@ -30,9 +30,16 @@ class Body {
 
     if ( presentPlayer != null) {
       noFill();
+      strokeWeight(2);
       stroke(255, 255, 255);
-      ellipse( position.x + offSetX, position.y + offSetY, 20, 40 );
-      ellipse( position.x + offSetX, position.y + offSetY, 40, 20 );
+      float xv = position.x + offSetX;
+      float yv = position.y + offSetY;
+      ellipse( xv, yv, 20, 40 );
+      ellipse( xv, yv, 40, 20 );
+      
+      noStroke();
+      fill(0, 200, 255, 70);
+      ellipse( xv, yv, presentPlayer.fuelLevel + 20, presentPlayer.fuelLevel + 20  );
     }
   }
   
