@@ -6,8 +6,6 @@ float distanceForConnection = 40.0 ;
 
 int playerNumber = 0;
 
-int linesOn = 1;
-
 String totalStringAll = "";
 String totalString = "";
 
@@ -68,65 +66,66 @@ void setup() {
 
 void draw()
 {
-  background(0);
+	background(0);
   
-  image ( sunImage, width/2+ offSetX - sunImage.width/2, height/2 + offSetY- sunImage.height/2);
-  text ( "added number of asteroids " + asteroids.size(), 10, 10);
-  text ( "Total Profit Player " + str(beam.getProfit()), 10, 30);
+	strokeWeight(3);
+	fill(150);
+	stroke(200, 100, 50);
+	float dt = 100000000;
+	for (int i1 = asteroids.size()-1; i1 >= 0; i1--)
+	{
+		Asteroid a = asteroids.get(i1);
+		for (int i2 = asteroids.size()-1; i2 >= 0; i2--)
+		{
+		    if ( i1 != i2 )
+		    {
+		      	Asteroid b = asteroids.get(i2);
+		     	float dd = Utils.distance ( a.position, b.position );
+		      
+		      	if ( dd < dt ) { dt = dd; }
+		     	if ( dd < distanceForConnection )
+		     	{
+					line ( a.position.x + offSetX, a.position.y + offSetY, b.position.x + offSetX, b.position.y + offSetY);
+				}
+			}
+		}
+	}
 
-  if ( playerNumber < 1 ) text ( "key p to add player", 10, 50);
-  text ( "key m to mine (if on green asteroid)", 10, 70);
-  text ( "key c to rocket to connected asteroid", 10, 90);
-
-  dayNumber += .5;
-
-  if ( playerView == 1)
-  {
-    Asteroid b = asteroids.get(playerNumber);
-    offSetX = (int)-b.position.x+ width/2;
-    offSetY = (int)-b.position.y+ height/2;
-
-    text ( "PLAYER VIEW (toggle z)", 10, height - 10);
-  }
-  else
-  {
-    offSetX = 0;
-    offSetY = 0;
-    text ( "GLOBAL VIEW (toggle z)", 10, height - 10);
-  }
-
-  for (Planet planet : planets) {
-    planet.drawOnDayNumber(dayNumber);
-  }
-
-  for (Asteroid asteroid : asteroids) {
-    asteroid.drawOnDayNumber(dayNumber);
-  }
-  
-  beam.draw();
-
-  if ( linesOn == 1 ) {
-    strokeWeight(2);
-    fill(150);
-    stroke(200, 100, 50);
-    for (int i1 = asteroids.size()-1; i1 >= 0; i1--) {
-      Asteroid a = asteroids.get(i1);
-      float dt = 100000000;
-      for (int i2 = asteroids.size()-1; i2 >= 0; i2--) {
-        if ( i1 != i2 ) {
-
-          Asteroid b = asteroids.get(i2);
-          float dd = Utils.distance ( a.position, b.position );
-          
-          if ( dd < dt ) dt = dd;
-          if ( dd < distanceForConnection )
-            line ( a.position.x + offSetX, a.position.y + offSetY, b.position.x + offSetX, b.position.y + offSetY);
-        }
-      }
-    }
-  }
-  
-  image( foregroundImage, 0, 0, 600, 600 );
+	image ( sunImage, width/2+ offSetX - sunImage.width/2, height/2 + offSetY- sunImage.height/2);
+	text ( "added number of asteroids " + asteroids.size(), 10, 10);
+	text ( "Total Profit Player " + str(beam.getProfit()), 10, 30);
+	
+	if ( playerNumber < 1 ) { text ( "key p to add player", 10, 50); }
+	text ( "key m to mine (if on green asteroid)", 10, 70);
+	text ( "key c to rocket to connected asteroid", 10, 90);
+	
+	dayNumber += .5;
+	
+	if ( playerView == 1)
+	{
+		Asteroid b = asteroids.get(playerNumber);
+		offSetX = (int)-b.position.x+ width/2;
+		offSetY = (int)-b.position.y+ height/2;
+		
+		text ( "PLAYER VIEW (toggle z)", 10, height - 10);
+	}
+	
+	else
+	{
+		offSetX = 0;
+		offSetY = 0;
+		text ( "GLOBAL VIEW (toggle z)", 10, height - 10);
+	}
+	
+	for (Planet planet : planets) {
+		planet.drawOnDayNumber(dayNumber);
+	}
+	
+	for (Asteroid asteroid : asteroids) {
+		asteroid.drawOnDayNumber(dayNumber);
+	}
+	
+	image( foregroundImage, 0, 0, 600, 600 );
 }
 
 
@@ -187,7 +186,7 @@ void jumpToCargoShip() {
   Asteroid a = asteroids.get(playerNumber);
   Planet t;
 
-  for (int i1 = planets.size()-1; i1 >= 0; i1--) {
+  for (int i1 = planets.size()-1; i1 >= 0; i1--){
     Planet b = planets.get(i1);
     if ( b.name.equals("cargo"))
     {

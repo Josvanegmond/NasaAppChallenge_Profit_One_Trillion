@@ -7,7 +7,7 @@ class Asteroid extends Body {
   }
   
   void mine() {
-     if (presentPlayer != null) {
+     if ( hasPlayer() ) {
        presentPlayer.addMetal(minableProfit);    
        minableProfit = 0.0;
      }
@@ -16,6 +16,12 @@ class Asteroid extends Body {
   boolean isMined() {
     return minableProfit < 1;
   }
+  
+  public void hasPlayer()
+  {
+  	return (presentplayer != null);
+  }
+  
   
   protected void isTouched() {
 	stroke(200, 100, 50);
