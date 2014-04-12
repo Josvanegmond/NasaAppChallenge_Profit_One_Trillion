@@ -12,10 +12,9 @@ String totalString = "";
 ArrayList<Asteroid> asteroids = new ArrayList<Asteroid>();
 ArrayList<Body> bodies = new ArrayList<Body>(); 
 
-int solarSystemX = 50;
-int solarSystemY = 50;
-int offSetX = 0;
-int offSetY = 0;
+float zoomLevel = 150;
+PVector referencePosition = new PVector( 150, 150 );
+
 int playerView = 0;
 
 float dayNumber = 0;
@@ -42,11 +41,11 @@ void setup() {
   planetImage = loadImage("data/planet.png");
   cargoImage = loadImage("data/cargo.png");
   asteroidImage = loadImage("data/asteroid.png");
-
+  
   // planets.add ( new Planet ( name, ma, e, a, n, color, size ) );
   bodies.add ( new Planet ( "Mercury", new Orbit(168.6562/180.0*PI, 0.205635, 0.387098, 4.0923344368/180.0*PI), color(255, 100, 100), 5, planetImage ) );
-  bodies.add ( new Planet ( "Venus", new Orbit(48.0052/180.0*PI, 0.006773, 0.723330, 1.6021302244/180.0*PI), color(255, 255, 100), 10, planetImage ));
-  bodies.add ( new Planet ( "Earth", new EarthOrbit(), color(0, 0, 255), 10, earthImage));
+  bodies.add ( new Planet ( "Venus", new Orbit(48.0052/180.0*PI, 0.006773, 0.723330, 1.6021302244/180.0*PI), color(255, 255, 100), 10, planetImage ) );
+  bodies.add ( new Planet ( "Earth", new EarthOrbit(), color(0, 0, 255), 10, earthImage ));
   bodies.add ( new Planet ( "Mars", new Orbit(18.6021/180.0*PI, 0.093405, 1.523688, 0.5240207766/180.0*PI), color(255, 100, 255), 10, planetImage ));
   bodies.add ( new Planet ( "Jupiter", new Orbit(19.8950/180.0*PI, 0.048498, 5.20256, 0.0830853001/180.0*PI), color(255, 100, 255), 20, planetImage ));
 
@@ -72,31 +71,8 @@ void draw()
 	
 	fill(150,150,150,255);
 	image( backgroundImage, 0, 0, backgroundImage.width, backgroundImage.height );
-  
-	strokeWeight(3);
-	stroke(200, 100, 50);
-	float dt = 100000000;
-	for (int i1 = asteroids.size()-1; i1 >= 0; i1--)
-	{
-		Asteroid a = asteroids.get(i1);
-		for (int i2 = asteroids.size()-1; i2 >= 0; i2--)
-		{
-		    if ( i1 != i2 )
-		    {
-		      	Asteroid b = asteroids.get(i2);
-		     	float dd = Utils.distance ( a.position, b.position );
-		      
-	      		if ( dd < dt ) { dt = dd; }
-	      		
-		     	if ( dd < distanceForConnection )
-		     	{
-					line ( a.position.x + offSetX, a.position.y + offSetY, b.position.x + offSetX, b.position.y + offSetY);
-				}
-			}
-		}
-	}
 
-	image ( sunImage, width/2+ offSetX - sunImage.width/2, height/2 + offSetY- sunImage.height/2);
+	//image ( sunImage, width/2+ offSetX - sunImage.width/2, height/2 + offSetY- sunImage.height/2);
 	text ( "added number of asteroids " + asteroids.size(), 10, 10);
   if (beam != null) {
     	text ( "Total Profit Player " + str(beam.profitLevel), 10, 30);
@@ -111,16 +87,16 @@ void draw()
 	if ( playerView == 1)
 	{
 		Asteroid b = asteroids.get(playerNumber);
-		offSetX = (int)-b.position.x+ width/2;
-		offSetY = (int)-b.position.y+ height/2;
+		referencePosition.x = (int)-b.position.x+ width/2;
+		referencePosition.y = (int)-b.position.y+ height/2;
 		
 		text ( "PLAYER VIEW (toggle z)", 10, height - 10);
 	}
 	
 	else
 	{
-		offSetX = 0;
-		offSetY = 0;
+		referencePosition.x = 0;
+		referencePosition.y = 0;
 		text ( "GLOBAL VIEW (toggle z)", 10, height - 10);
 	}
 	
@@ -164,19 +140,14 @@ public boolean travelToBodyIfWithinReach(Body body) {
 
 void keyPressed() {
 
-  if ( key == 'z' ) { //toggle overview and player view
+  if ( key == 'z' )
+  { //toggle overview and player view
     if ( playerView == 0 )
     {
-      solarSystemX*=2;
-      solarSystemY*=2;
-      distanceForConnection*=2;
       playerView = 1;
     }
     else {
       playerView = 0;
-      solarSystemX/=2;
-      solarSystemY/=2;
-      distanceForConnection/=2;
     }
   }
 

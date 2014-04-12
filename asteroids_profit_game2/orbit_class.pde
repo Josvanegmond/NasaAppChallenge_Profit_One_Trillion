@@ -9,7 +9,7 @@ class Orbit {
    	this( float(info[1]), float(info[2]), float(info[3]), float(info[4]) );
   }
   
-  Orbit( float maI, float eI, float aI, float nI) {
+  Orbit( float maI, float eI, float aI, float nI ) {
     ma = maI; 
     e = eI; 
     a = aI; 
@@ -35,14 +35,14 @@ class Orbit {
   
   PVector solarPosition(float xv, float yv) {
     return new PVector(
-        width/2 + xv*solarSystemX,
-        height/2 + yv*solarSystemY);
+        width/2 + referencePosition.x + xv * zoomLevel,
+        height/2 + referencePosition.y + yv * zoomLevel );
   }
 }
 
 class EarthOrbit extends Orbit {
   EarthOrbit() {
-    super(356.0470/180.0*PI, 0.016709, 1.0, 0.9856002585/180.0*PI);
+    super(356.0470/180.0*PI, 0.016709, 1.0, 0.9856002585/180.0*PI );
   }
   
   PVector calculatePositionForDay(float day) {
@@ -52,9 +52,7 @@ class EarthOrbit extends Orbit {
     float xv = cos(E0 ) - e;
     float yv = sqrt(1.0 - e*e) * sin(E0);
     
-    return new PVector(
-        width/2 + xv*solarSystemX,
-        height/2 + yv*solarSystemY);
+    return solarPosition(xv, yv);
   }  
 }
 

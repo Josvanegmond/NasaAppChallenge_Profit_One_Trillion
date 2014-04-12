@@ -19,8 +19,8 @@ class Player
 	  noFill();
 	  strokeWeight(2);
 	  stroke(255, 255, 255);
-	  float xv = location.position.x + offSetX;
-	  float yv = location.position.y + offSetY;
+	  float xv = location.position.x;
+	  float yv = location.position.y;
 	  ellipse( xv, yv, 20, 40 );
 	  ellipse( xv, yv, 40, 20 );
 	  
