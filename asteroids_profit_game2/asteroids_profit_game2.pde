@@ -1,4 +1,4 @@
-/* @pjs preload="data/sun.png, data/earth_small.png, data/planet.png, data/cargo.png, data/asteroid.png, data/play_screen.png"; */
+/* @pjs preload="data/space.png, data/sun.png, data/earth_small.png, data/planet.png, data/cargo.png, data/asteroid.png, data/play_screen.png"; */
 
 int numberOfAsteroids = 500;
 float profitLimit = 350.0;
@@ -27,12 +27,14 @@ PImage earthImage;
 PImage planetImage;
 PImage cargoImage;
 PImage asteroidImage;
+PImage backgroundImage;
 PImage foregroundImage;
 
 void setup() {
 
   size(600, 600);
   
+  backgroundImage = loadImage("data/space.png");
   foregroundImage = loadImage("data/play_screen.png");
 
   sunImage = loadImage("data/sun.png");
@@ -41,7 +43,7 @@ void setup() {
   cargoImage = loadImage("data/cargo.png");
   asteroidImage = loadImage("data/asteroid.png");
 
-  // // planets.add ( new Planet ( name, ma, e, a, n, color, size ) );
+  // planets.add ( new Planet ( name, ma, e, a, n, color, size ) );
   bodies.add ( new Planet ( "Mercury", new Orbit(168.6562/180.0*PI, 0.205635, 0.387098, 4.0923344368/180.0*PI), color(255, 100, 100), 5, planetImage ) );
   bodies.add ( new Planet ( "Venus", new Orbit(48.0052/180.0*PI, 0.006773, 0.723330, 1.6021302244/180.0*PI), color(255, 255, 100), 10, planetImage ));
   bodies.add ( new Planet ( "Earth", new EarthOrbit(), color(0, 0, 255), 10, earthImage));
@@ -67,9 +69,11 @@ void setup() {
 void draw()
 {
 	background(0);
+	
+	fill(150,150,150,255);
+	image( backgroundImage, 0, 0, backgroundImage.width, backgroundImage.height );
   
 	strokeWeight(3);
-	fill(150);
 	stroke(200, 100, 50);
 	float dt = 100000000;
 	for (int i1 = asteroids.size()-1; i1 >= 0; i1--)
@@ -82,7 +86,8 @@ void draw()
 		      	Asteroid b = asteroids.get(i2);
 		     	float dd = Utils.distance ( a.position, b.position );
 		      
-	      	if ( dd < dt ) { dt = dd; }
+	      		if ( dd < dt ) { dt = dd; }
+	      		
 		     	if ( dd < distanceForConnection )
 		     	{
 					line ( a.position.x + offSetX, a.position.y + offSetY, b.position.x + offSetX, b.position.y + offSetY);
@@ -131,6 +136,7 @@ void draw()
 		beam.draw();
 	}
 	
+	fill(150,150,150,255);
 	image( foregroundImage, 0, 0, 600, 600 );
 }
 
