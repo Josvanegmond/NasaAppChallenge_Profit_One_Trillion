@@ -1,0 +1,17 @@
+#page {
+	align: center;
+	margin: auto;
+	float: center;
+}
+
+canvas {
+	margin-right: auto;
+	margin-left: 100px;
+}
+
+img {
+	position: absolute;
+	left: 334px;
+	top: 574px;
+	z-level: 100;
+}
