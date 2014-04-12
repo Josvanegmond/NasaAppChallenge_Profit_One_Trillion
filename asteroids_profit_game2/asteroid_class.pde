@@ -19,12 +19,12 @@ class Asteroid {
   }
   
   void mine() {
-     beam.addProfit(minableProfit);    
+     presentPlayer.addProfit(minableProfit);    
      minableProfit = 0.0;
   }
   
   boolean isMined() {
-    return minableProfit == 0.0;
+    return minableProfit < 1;
   }
 
   void drawOrbitOnDayNumber(float dayNumber, Sun sun) {
@@ -44,13 +44,12 @@ class Asteroid {
     position.x = width/2 + xv*solarSystemX;
     position.y = height/2 + yv*solarSystemY;
 
-    if (!isMined()) fill( 0, 255, 0); 
-    else fill(255, 0, 0);
+    if (isMined()) fill(255, 0, 0); 
+    else fill( 0, 255, 0);
 
     ellipse( position.x + offSetX, position.y + offSetY, minableProfit/30, minableProfit/30 );
 
-    if ( presentPlayer == null) {
-
+    if ( presentPlayer != null) {
       noFill();
       stroke(255, 255, 255);
       ellipse( position.x + offSetX, position.y + offSetY, 20, 40 );
