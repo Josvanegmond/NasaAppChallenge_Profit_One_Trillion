@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 
-<html>
+<html ng-app="pot">
 
 <head>
 	
@@ -20,15 +20,36 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 
 	<link rel="shortcut icon" type="image/png" href="/images/icon.png">
+	<link rel="stylesheet" type="text/css" media="screen" href="main.css" />
 
-	<script type="text/javascript" src="processing.js"></script>
+	<script type="text/javascript" src="js/application.js"></script>
+	
+    <link rel="stylesheet" href="style/demo.css">
 
 </head>
 
 <body>
+
 <div id="page">
-	<canvas data-processing-sources="./test.pde"></canvas>
-</div>
+	
+	<section id="content">
+	
+        <div class="sample">
+            <canvas id="canvas"></canvas>
+        </div>
+        
+	</section>
+		
+    <script type="text/javascript">
+        (function()
+        {
+			
+		})();
+    </script>
+	
+	</div>
+
+
 </body>
 
 </html>

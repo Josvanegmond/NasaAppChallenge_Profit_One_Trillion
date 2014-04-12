@@ -27,7 +27,7 @@
 
 <body>
 <div id="page">
-	<canvas data-processing-sources="./test.pde"></canvas>
+	<canvas data-processing-sources="./processing/asteroids_profit_game2.pde"></canvas>
 </div>
 </body>
 
