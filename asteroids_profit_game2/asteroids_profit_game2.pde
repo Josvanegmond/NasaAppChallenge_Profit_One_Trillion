@@ -1,4 +1,4 @@
-/* @pjs preload="data/sun.png, data/earth.png, data/planet.png, data/cargo.png"; */
+/* @pjs preload="data/sun.png, data/earth.png, data/planet.png, data/cargo.png, data/asteroid.png"; */
 
 int numberOfAsteroids = 500;
 float profitLimit = 350.0;
@@ -30,15 +30,17 @@ PImage sunImage;
 PImage earthImage;
 PImage planetImage;
 PImage cargoImage;
+PImage asteroidImage;
 
 void setup() {
 
   size(600, 600);
 
   sunImage = loadImage("data/sun.png");
-  earthImage = loadImage("data/earth.png");
+  earthImage = loadImage("data/earth_small.png");
   planetImage = loadImage("data/planet.png");
   cargoImage = loadImage("data/cargo.png");
+  asteroidImage = loadImage("data/asteroid.png");
 
   sun = new Sun();
 
@@ -64,10 +66,6 @@ void setup() {
   fill( (255), (255), (255));
 }
 
-
-float distance(PVector pos, PVector pos2) {
-  return sqrt(((pos.x-pos2.x)*(pos.x-pos2.x))+((pos.y-pos2.y)*(pos.y-pos2.y)));
-}
 
 void draw()
 {
@@ -116,8 +114,10 @@ void draw()
       float dt = 100000000;
       for (int i2 = asteroids.size()-1; i2 >= 0; i2--) {
         if ( i1 != i2 ) {
+
           Asteroid b = asteroids.get(i2);
-          float dd = distance ( a.position, b.position );
+          float dd = Utils.distance ( a.position, b.position );
+          
           if ( dd < dt ) dt = dd;
           if ( dd < distanceForConnection )
             line ( a.position.x + offSetX, a.position.y + offSetY, b.position.x + offSetX, b.position.y + offSetY);
@@ -188,7 +188,7 @@ void jumpToCargoShip() {
     Planet b = planets.get(i1);
     if ( b.name.equals("cargo"))
     {
-      float dd = distance ( a.position, b.position );
+      float dd = Utils.distance ( a.position, b.position );
       println ( dd );
       if ( dd < distanceForConnection*10 )
       {
@@ -210,8 +210,10 @@ void jumpToAsteroid() {
   Asteroid backUpMinedAsteroid = null;
   for (int i2 = asteroids.size()-1; i2 >= 0; i2--) {
     if ( playerNumber != i2 ) {
+
       Asteroid target = asteroids.get(i2);
-      float dd = distance( location.position, target.position );
+      float dd = Utils.distance( location.position, target.position );
+
       if ( dd < maxJumpDistance ) maxJumpDistance = dd;
       if ( dd < distanceForConnection ) {
         if (!target.isMined()) {
