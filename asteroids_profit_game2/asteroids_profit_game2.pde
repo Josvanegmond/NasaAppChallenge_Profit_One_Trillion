@@ -37,7 +37,7 @@ void setup() {
   size(600, 600);
 
   sunImage = loadImage("data/sun.png");
-  earthImage = loadImage("data/earth.png");
+  earthImage = loadImage("data/earth_small.png");
   planetImage = loadImage("data/planet.png");
   cargoImage = loadImage("data/cargo.png");
   asteroidImage = loadImage("data/asteroid.png");
@@ -117,7 +117,7 @@ void draw()
         if ( i1 != i2 ) {
 
           Asteroid b = asteroids.get(i2);
-          float dd = distance ( a.position, b.position );
+          float dd = Utils.distance ( a.position, b.position );
           
           if ( dd < dt ) dt = dd;
           if ( dd < distanceForConnection )
@@ -213,7 +213,7 @@ void jumpToAsteroid() {
     if ( playerNumber != i2 ) {
 
       Asteroid target = asteroids.get(i2);
-      float dd = distance( location.position, target.position );
+      float dd = Utils.distance( location.position, target.position );
 
       if ( dd < maxJumpDistance ) maxJumpDistance = dd;
       if ( dd < distanceForConnection ) {

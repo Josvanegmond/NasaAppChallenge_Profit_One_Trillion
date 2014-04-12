@@ -23,7 +23,7 @@ class Player
   
   private float getProfit()
   {
-    return profit;
+    return profitLevel;
   }
   
   
