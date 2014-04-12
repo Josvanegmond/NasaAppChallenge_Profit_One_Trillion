@@ -6,23 +6,15 @@ class Asteroid extends Body {
     this.minableProfit = minableProfit;
   }
   
-  void mine() {
-     if ( hasPlayer() ) {
-       presentPlayer.addMetal(minableProfit);    
-       minableProfit = 0.0;
-     }
+  void mine(Player player) {
+     player.addMetal(minableProfit);    
+     minableProfit = 0.0;
   }
   
   boolean isMined() {
     return minableProfit < 1;
   }
-  
-  public void hasPlayer()
-  {
-  	return (presentplayer != null);
-  }
-  
-  
+ 
   protected void isTouched() {
    	stroke(200, 100, 50);
    	strokeWeight(5);

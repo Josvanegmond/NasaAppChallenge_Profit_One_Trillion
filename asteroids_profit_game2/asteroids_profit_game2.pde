@@ -10,7 +10,7 @@ String totalStringAll = "";
 String totalString = "";
 
 ArrayList<Asteroid> asteroids = new ArrayList<Asteroid>();
-ArrayList<Planet> planets = new ArrayList<Planet>(); 
+ArrayList<Body> bodies = new ArrayList<Body>(); 
 
 int solarSystemX = 50;
 int solarSystemY = 50;
@@ -20,7 +20,7 @@ int playerView = 0;
 
 float dayNumber = 0;
 
-Player beam = new Player ( "Beam" );
+Player beam;
 
 PImage sunImage;
 PImage earthImage;
@@ -42,14 +42,14 @@ void setup() {
   asteroidImage = loadImage("data/asteroid.png");
 
   // // planets.add ( new Planet ( name, ma, e, a, n, color, size ) );
-  planets.add ( new Planet ( "Mercury", new Orbit(168.6562/180.0*PI, 0.205635, 0.387098, 4.0923344368/180.0*PI), color(255, 100, 100), 5, planetImage ) );
-  planets.add ( new Planet ( "Venus", new Orbit(48.0052/180.0*PI, 0.006773, 0.723330, 1.6021302244/180.0*PI), color(255, 255, 100), 10, planetImage ));
-  planets.add ( new Planet ( "Earth", new EarthOrbit(), color(0, 0, 255), 10, earthImage));
-  planets.add ( new Planet ( "Mars", new Orbit(18.6021/180.0*PI, 0.093405, 1.523688, 0.5240207766/180.0*PI), color(255, 100, 255), 10, planetImage ));
-  planets.add ( new Planet ( "Jupiter", new Orbit(19.8950/180.0*PI, 0.048498, 5.20256, 0.0830853001/180.0*PI), color(255, 100, 255), 20, planetImage ));
+  bodies.add ( new Planet ( "Mercury", new Orbit(168.6562/180.0*PI, 0.205635, 0.387098, 4.0923344368/180.0*PI), color(255, 100, 100), 5, planetImage ) );
+  bodies.add ( new Planet ( "Venus", new Orbit(48.0052/180.0*PI, 0.006773, 0.723330, 1.6021302244/180.0*PI), color(255, 255, 100), 10, planetImage ));
+  bodies.add ( new Planet ( "Earth", new EarthOrbit(), color(0, 0, 255), 10, earthImage));
+  bodies.add ( new Planet ( "Mars", new Orbit(18.6021/180.0*PI, 0.093405, 1.523688, 0.5240207766/180.0*PI), color(255, 100, 255), 10, planetImage ));
+  bodies.add ( new Planet ( "Jupiter", new Orbit(19.8950/180.0*PI, 0.048498, 5.20256, 0.0830853001/180.0*PI), color(255, 100, 255), 20, planetImage ));
 
   //cargo ship
-  planets.add ( new Planet ( "cargo", new Orbit(19.8950/180.0*PI, 0.9, 2.20256, 1.0/180.0*PI), color(255, 100, 255), 20, cargoImage));
+  bodies.add ( new Body ( "cargo", new Orbit(19.8950/180.0*PI, 0.9, 2.20256, 1.0/180.0*PI), cargoImage));
 
   //Asteroids data loading
   String lines[] = loadStrings("./data/asteroids.dat");
@@ -82,7 +82,7 @@ void draw()
 		      	Asteroid b = asteroids.get(i2);
 		     	float dd = Utils.distance ( a.position, b.position );
 		      
-		      	if ( dd < dt ) { dt = dd; }
+	      	if ( dd < dt ) { dt = dd; }
 		     	if ( dd < distanceForConnection )
 		     	{
 					line ( a.position.x + offSetX, a.position.y + offSetY, b.position.x + offSetX, b.position.y + offSetY);
@@ -93,7 +93,9 @@ void draw()
 
 	image ( sunImage, width/2+ offSetX - sunImage.width/2, height/2 + offSetY- sunImage.height/2);
 	text ( "added number of asteroids " + asteroids.size(), 10, 10);
-	text ( "Total Profit Player " + str(beam.getProfit()), 10, 30);
+  if (beam != null) {
+    	text ( "Total Profit Player " + str(beam.getProfit()), 10, 30);
+  }
 	
 	if ( playerNumber < 1 ) { text ( "key p to add player", 10, 50); }
 	text ( "key m to mine (if on green asteroid)", 10, 70);
@@ -117,12 +119,16 @@ void draw()
 		text ( "GLOBAL VIEW (toggle z)", 10, height - 10);
 	}
 	
-	for (Planet planet : planets) {
-		planet.drawOnDayNumber(dayNumber);
+	for (Body body : bodies) {
+		body.drawOnDayNumber(dayNumber);
 	}
 	
 	for (Asteroid asteroid : asteroids) {
 		asteroid.drawOnDayNumber(dayNumber);
+	}
+	
+	if (beam != null) {
+		beam.draw();
 	}
 	
 	image( foregroundImage, 0, 0, 600, 600 );
@@ -138,12 +144,6 @@ void mousePressed() {
 void keyPressed() {
 
   if ( key == 'z' ) { //toggle overview and player view
-    if (playerNumber == 0)
-    {
-      playerNumber = (int)random(  (asteroids.size()/2-1));
-      Asteroid b = asteroids.get(playerNumber);
-      b.setPlayer(beam);
-    }
     if ( playerView == 0 )
     {
       solarSystemX*=2;
@@ -162,45 +162,48 @@ void keyPressed() {
 
   if ( (key == 'p') && (playerNumber == 0 )) {
     playerNumber = (int)random(  (asteroids.size()/2-1));
-    Asteroid b = asteroids.get(playerNumber);
-    b.setPlayer(beam);
+    beam = new Player("Beam", asteroids.get(playerNumber));
+  }
+  
+  if (beam == null) {
+    return;
   }
 
-  if ( key == 'm' ) {
+  if ( key == 'm') {
     Asteroid b = asteroids.get(playerNumber);
     if (!b.isMined()) {
-      b.mine();
+      b.mine(beam);
      }
   }
 
-  if ( key == 'j') {
-    jumpToCargoShip();
-  }
+//  if ( key == 'j') {
+//    jumpToCargoShip();
+//  }
 
   if ( key == 'c' ) {
     jumpToAsteroid();
   }
 }
 
-void jumpToCargoShip() {
-  Asteroid a = asteroids.get(playerNumber);
-  Planet t;
-
-  for (int i1 = planets.size()-1; i1 >= 0; i1--){
-    Planet b = planets.get(i1);
-    if ( b.name.equals("cargo"))
-    {
-      float dd = Utils.distance ( a.position, b.position );
-      if ( dd < distanceForConnection*10 )
-      {
-        a.setPlayer(null);
-        b.setPlayer(beam);
-        //playerNumber = 0;
-        break;
-      }
-    }
-  }
-}
+//void jumpToCargoShip() {
+//  Asteroid a = asteroids.get(playerNumber);
+//  Planet t;
+//
+//  for (int i1 = planets.size()-1; i1 >= 0; i1--){
+//    Planet b = planets.get(i1);
+//    if ( b.name.equals("cargo"))
+//    {
+//      float dd = Utils.distance ( a.position, b.position );
+//      if ( dd < distanceForConnection*10 )
+//      {
+//        a.setPlayer(null);
+//        b.setPlayer(beam);
+//        //playerNumber = 0;
+//        break;
+//      }
+//    }
+//  }
+//}
 
 void jumpToAsteroid() {
   Asteroid location = asteroids.get(playerNumber);
@@ -234,6 +237,5 @@ void jumpToAsteroid() {
 
 void doJump(Asteroid source, Asteroid target) {
   playerNumber = asteroids.indexOf(target);
-  target.setPlayer(beam);
-  source.setPlayer(null);
+  beam.setLocation(target);
 }
