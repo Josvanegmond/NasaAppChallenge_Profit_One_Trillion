@@ -34,7 +34,6 @@ class Asteroid {
 //    if (isMined()) fill(255, 0, 0); 
 //    else fill( 0, 255, 0);
 
-    println("We're here: ");
     image(asteroidImage, position.x + offSetX - asteroidImage.height/2, position.y + offSetY - asteroidImage.width/2);
 
     if ( presentPlayer != null) {

@@ -5,33 +5,29 @@ class Planet {
   color col;
   Orbit orbit;
   int size;
+  PImage image;
 
   int playerNumber = 0;
 
-  Planet( String name, Orbit orbit, color colI, int sizeI) {
+  Planet( String name, Orbit orbit, color colI, int sizeI, PImage image) {
     this.name = name;
     this.orbit = orbit;
     col = colI;
     size = sizeI;
+    this.image = image;
   }
 
   void setPlayerNumber(int pNumber) {
     playerNumber = pNumber;
   }
 
-  void drawPlanetOnDayNumber(float dayNumber, Sun sun) {
+  void drawPlanetOnDayNumber(float dayNumber) {
     position = orbit.calculatePositionForDay(dayNumber);
 
     fill(col);
     //ellipse( width/2 + xv*solarSystemX, height/2 + yv*solarSystemY, size, size/2 );
-    if ( !name.equals("cargo")) {
-      image ( planetImage, position.x + offSetX - planetImage.width/2, position.y + offSetY- planetImage.height/2);
-    }
-    else
-    {
-
-      image ( cargoImage, position.x + offSetX - cargoImage.width/2, position.y + offSetY- cargoImage.height/2);
-
+    image ( image, position.x + offSetX - image.width/2, position.y + offSetY- image.height/2);
+    if (name.equals("cargo")) {
       if ( playerNumber > 0 ) {
         noFill();
         stroke(255, 255, 255);
@@ -45,43 +41,4 @@ class Planet {
   }
 }
 
-class Sun { //actually the earth :-)
-  //orbital elements of the Sun (=Earth)
-  // float N = 0.0;
-  //float i = 0.0;
-  // float w = 282.9404 + 4.70935E-5 * d;
-  float a = 1.000000 ;
-  float e = 0.016709;
-  float ma = 356.0470/180.0*PI ;
-  float n = 0.9856002585/180.0*PI ;
-  PVector position;
-  Sun() {
-    position = new PVector(0, 0);
-  }
-  float[] drawSunOnDayNumber(float d) {
-    // N = 0.0;
-    // i = 0.0;
-    // w = 282.9404 + 4.70935E-5 * d;
-    // a = 1.000000 ;
-    // float M = (356.0470 + 0.9856002585 * d)/180*PI;
-
-    float M = (ma + n * d);
-    float E0 = M + e*   sin(ma ) * ( 1.0 + e * cos(ma ));
-
-    float xv =  a * ( cos(E0 ) - e );
-    float yv =  a * ( sqrt(1.0 - e*e) * sin(E0) );
-
-    float[] sunCoordinates = {
-      xv, yv
-    };
-
-
-    fill(255, 0, 0);
-
-    // ellipse( width/2 + xv*solarSystemX + offSetX, height/2 + yv*solarSystemY + offSetY, 10, 10 );
-    image ( earthImage, width/2 + xv*solarSystemX + offSetX - earthImage.width/2, height/2 + yv*solarSystemY + offSetY- earthImage.height/2);
-
-    return sunCoordinates;
-  }
-}
 
