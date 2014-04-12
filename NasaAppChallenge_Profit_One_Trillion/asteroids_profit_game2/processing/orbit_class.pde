@@ -6,7 +6,7 @@ class Orbit {
   float profit;
   PVector position;
   int playerNumber = 0;
-  int mined = 0;
+  boolean mined = false;
   
   Orbit(   float maI, float eI, float aI, float nI, float profitI) {
     ma = maI; 
@@ -19,9 +19,15 @@ class Orbit {
   void setPlayerNumber(int pNumber) {
     playerNumber = pNumber;
   }
+  
   void setMined() {
-    mined = 1;
+    mined = true;
   }
+  
+  boolean isMined() {
+    return mined;
+  }
+  
   float getProfit() {
     return profit;
   }
@@ -43,7 +49,7 @@ class Orbit {
     position.x = width/2 + xv*solarSystemX;
     position.y = height/2 + yv*solarSystemY;
 
-    if ( mined < 1 ) fill( 0, 255, 0); 
+    if (!mined) fill( 0, 255, 0); 
     else fill(255, 0, 0);
 
     ellipse( position.x + offSetX, position.y + offSetY, profit/30, profit/30 );

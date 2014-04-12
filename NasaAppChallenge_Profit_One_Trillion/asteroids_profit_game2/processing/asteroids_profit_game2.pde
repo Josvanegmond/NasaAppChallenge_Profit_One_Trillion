@@ -59,8 +59,8 @@ void setup() {
   //filtering on profit
   String lines[] = loadStrings("http://asterank.com/api/asterank?query={\"a\":{\"$gt\":0.1},\"a\":{\"$lt\":10.0}}&limit="+str(numberOfAsteroids));
 
-  for (String line : lines) {
-    totalStringAll+=line;
+  for (int i = 0 ; i < lines.length; i++) {
+    totalStringAll+=lines[i];
   }
   int myCharNum = 0;
 
