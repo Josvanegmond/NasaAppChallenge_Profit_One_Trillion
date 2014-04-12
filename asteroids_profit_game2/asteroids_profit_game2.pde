@@ -10,8 +10,9 @@ int linesOn = 1;
 String totalStringAll = "";
 String totalString = "";
 
-ArrayList Orbits;
-ArrayList Planets;
+ArrayList<Orbit> orbits = new ArrayList<Orbit>();
+ArrayList<Planet> planets = new ArrayList(); 
+
 Sun sun;
 
 int solarSystemX = 50;
@@ -38,20 +39,16 @@ void setup() {
   planetImage = loadImage("planet.png");
   cargoImage = loadImage("cargo.png");
 
-  Orbits = new ArrayList();
-
   sun = new Sun();
 
-  Planets = new ArrayList(); 
-
-  // Planets.add ( new Planet ( name, ma, e, a, n, color, size ) );
-  Planets.add ( new Planet ( "Mercury", 168.6562/180.0*PI, 0.205635, 0.387098, 4.0923344368/180.0*PI, color(255, 100, 100), 5 ) );
-  Planets.add ( new Planet ( "Venus", 48.0052/180.0*PI, 0.006773, 0.723330, 1.6021302244/180.0*PI, color(255, 255, 100), 10 ));
-  Planets.add ( new Planet ( "Mars", 18.6021/180.0*PI, 0.093405, 1.523688, 0.5240207766/180.0*PI, color(255, 100, 255), 10 ));
-  Planets.add ( new Planet ( "Jupiter", 19.8950/180.0*PI, 0.048498, 5.20256, 0.0830853001/180.0*PI, color(255, 100, 255), 20));
+  // planets.add ( new Planet ( name, ma, e, a, n, color, size ) );
+  planets.add ( new Planet ( "Mercury", 168.6562/180.0*PI, 0.205635, 0.387098, 4.0923344368/180.0*PI, color(255, 100, 100), 5 ) );
+  planets.add ( new Planet ( "Venus", 48.0052/180.0*PI, 0.006773, 0.723330, 1.6021302244/180.0*PI, color(255, 255, 100), 10 ));
+  planets.add ( new Planet ( "Mars", 18.6021/180.0*PI, 0.093405, 1.523688, 0.5240207766/180.0*PI, color(255, 100, 255), 10 ));
+  planets.add ( new Planet ( "Jupiter", 19.8950/180.0*PI, 0.048498, 5.20256, 0.0830853001/180.0*PI, color(255, 100, 255), 20));
 
   //cargo ship
-  Planets.add ( new Planet ( "cargo", 19.8950/180.0*PI, 0.9, 2.20256, 1.0/180.0*PI, color(255, 100, 255), 20));
+  planets.add ( new Planet ( "cargo", 19.8950/180.0*PI, 0.9, 2.20256, 1.0/180.0*PI, color(255, 100, 255), 20));
 
   //Pallas
   //String lines[] = loadStrings("http://asterank.com/api/asterank?query={\"e\":{\"$lt\":0.22263338430942921},\"e\":{\"$gt\":0.22263338430942920}}&limit=1");
@@ -62,8 +59,8 @@ void setup() {
   //filtering on profit
   String lines[] = loadStrings("http://asterank.com/api/asterank?query={\"a\":{\"$gt\":0.1},\"a\":{\"$lt\":10.0}}&limit="+str(numberOfAsteroids));
 
-  for (String line : lines) {
-    totalStringAll+=line;
+  for (int i = 0 ; i < lines.length; i++) {
+    totalStringAll+=lines[i];
   }
   int myCharNum = 0;
 
@@ -81,7 +78,7 @@ void setup() {
     float profit = extractedValue("\"profit\"") ;//in trillions ( or something)
 
     if ( profit > profitLimit ) {
-      Orbits.add ( new Orbit ( ma, e, a, n, profit ) );
+      orbits.add ( new Orbit ( ma, e, a, n, profit ) );
       // println ( "added " +ma + " " +e+ " " +a+ " " +n+ " " + profit   );
     }
     else {
@@ -95,7 +92,7 @@ void setup() {
     //   calculateCoordinates(i, ma, e, a, n );
   }
 
-  println( "added number of asteroids " + Orbits.size());
+  println( "added number of asteroids " + orbits.size());
 
   fill( (255), (255), (255));
 }
@@ -131,7 +128,7 @@ float distance(PVector pos, PVector pos2) {
 void draw() {
   background(0);
   image ( sunImage, width/2+ offSetX - sunImage.width/2, height/2 + offSetY- sunImage.height/2);
-  text ( "added number of asteroids " + Orbits.size(), 10, 10);
+  text ( "added number of asteroids " + orbits.size(), 10, 10);
   text ( "Total Profit Player " + str(beam.getProfit()), 10, 30);
 
   if ( playerNumber < 1 ) text ( "key p to add player", 10, 50);
@@ -142,7 +139,7 @@ void draw() {
 
   if ( playerView == 1)
   {
-    Orbit b = (Orbit) Orbits.get(playerNumber);
+    Orbit b = (Orbit) orbits.get(playerNumber);
     offSetX = (int)-b.position.x+ width/2;
     offSetY = (int)-b.position.y+ height/2;
 
@@ -155,15 +152,15 @@ void draw() {
     text ( "GLOBAL VIEW (toggle z)", 10, height - 10);
   }
 
-  for (int i = Planets.size()-1; i >= 0; i--) {
-    Planet b = (Planet) Planets.get(i);
+  for (int i = planets.size()-1; i >= 0; i--) {
+    Planet b = (Planet) planets.get(i);
     b.drawPlanetOnDayNumber(dayNumber, sun);
   }
 
   sun.drawSunOnDayNumber(dayNumber);
 
-  for (int i = Orbits.size()-1; i >= 0; i--) {
-    Orbit b = (Orbit) Orbits.get(i);
+  for (int i = orbits.size()-1; i >= 0; i--) {
+    Orbit b = (Orbit) orbits.get(i);
     b.drawOrbitOnDayNumber(dayNumber, sun);
   }
 
@@ -171,12 +168,12 @@ void draw() {
     strokeWeight(2);
     fill(150);
     stroke(200, 100, 50);
-    for (int i1 = Orbits.size()-1; i1 >= 0; i1--) {
-      Orbit a = (Orbit) Orbits.get(i1);
+    for (int i1 = orbits.size()-1; i1 >= 0; i1--) {
+      Orbit a = (Orbit) orbits.get(i1);
       float dt = 100000000;
-      for (int i2 = Orbits.size()-1; i2 >= 0; i2--) {
+      for (int i2 = orbits.size()-1; i2 >= 0; i2--) {
         if ( i1 != i2 ) {
-          Orbit b = (Orbit) Orbits.get(i2);
+          Orbit b = (Orbit) orbits.get(i2);
           float dd = distance ( a.position, b.position );
           if ( dd < dt ) dt = dd;
           if ( dd < distanceForConnection )
@@ -196,11 +193,10 @@ void mousePressed() {
 void keyPressed() {
 
   if ( key == 'z' ) { //toggle overview and player view
-
     if (playerNumber == 0)
     {
-      playerNumber = (int)random(  (Orbits.size()/2-1));
-      Orbit b = (Orbit) Orbits.get(playerNumber);
+      playerNumber = (int)random(  (orbits.size()/2-1));
+      Orbit b = (Orbit) orbits.get(playerNumber);
       b.setPlayerNumber(1);
     }
     if ( playerView == 0 )
@@ -220,61 +216,80 @@ void keyPressed() {
 
 
   if ( (key == 'p') && (playerNumber == 0 )) {
-    playerNumber = (int)random(  (Orbits.size()/2-1));
-    Orbit b = (Orbit) Orbits.get(playerNumber);
+    playerNumber = (int)random(  (orbits.size()/2-1));
+    Orbit b = (Orbit) orbits.get(playerNumber);
     b.setPlayerNumber(1);
   }
 
   if ( key == 'm' ) {
-    Orbit b = (Orbit) Orbits.get(playerNumber);
-    b.setMined();
-    beam.addProfit(b.getProfit());
-  }
-
-  if ( key == 'j') {//jumping on board of the cargo ship
-
-    Orbit a = (Orbit) Orbits.get(playerNumber);
-    Planet t;
-
-    for (int i1 = Planets.size()-1; i1 >= 0; i1--) {
-      Planet b = (Planet) Planets.get(i1);
-      if ( b.name.equals("cargo"))
-      {
-        float dd = distance ( a.position, b.position );
-        println ( dd );
-        if ( dd < distanceForConnection*5 )
-        {
-          println("jump");
-          a.setPlayerNumber(0);
-          b.setPlayerNumber(1);
-          //playerNumber = 0;
-          break;
-        }
-      }
+    Orbit b = (Orbit) orbits.get(playerNumber);
+    if (!b.isMined()) {
+      b.setMined();
+      beam.addProfit(b.getProfit());    
     }
   }
 
-  if ( key == 'c' ) {
-    Orbit a = (Orbit) Orbits.get(playerNumber);
-    //look for connections
+  if ( key == 'j') {
+    jumpToCargoShip();
+  }
 
-    float dt = 100000000;
-    for (int i2 = Orbits.size()-1; i2 >= 0; i2--) {
-      if ( playerNumber != i2 ) {
-        Orbit b = (Orbit) Orbits.get(i2);
-        float dd = distance ( a.position, b.position );
-        if ( dd < dt ) dt = dd;
-        if ( dd < distanceForConnection )
-        {//jump
-          if ( b.mined == 0 ) {
-            playerNumber = i2;
-            b.setPlayerNumber(1);
-            a.setPlayerNumber(0);
-            break;
-          }
-        }
+  if ( key == 'c' ) {
+    jumpToAsteroid();
+  }
+}
+
+void jumpToCargoShip() {
+  Orbit a = (Orbit) orbits.get(playerNumber);
+  Planet t;
+
+  for (int i1 = planets.size()-1; i1 >= 0; i1--) {
+    Planet b = (Planet) planets.get(i1);
+    if ( b.name.equals("cargo"))
+    {
+      float dd = distance ( a.position, b.position );
+      println ( dd );
+      if ( dd < distanceForConnection*5 )
+      {
+        println("jump");
+        a.setPlayerNumber(0);
+        b.setPlayerNumber(1);
+        //playerNumber = 0;
+        break;
       }
     }
   }
 }
 
+void jumpToAsteroid() {
+  Orbit location = orbits.get(playerNumber);
+  //look for connections
+
+  float maxJumpDistance = 100000000;
+  Orbit backUpMinedAsteroid = null;
+  for (int i2 = orbits.size()-1; i2 >= 0; i2--) {
+    if ( playerNumber != i2 ) {
+      Orbit target = orbits.get(i2);
+      float dd = distance( location.position, target.position );
+      if ( dd < maxJumpDistance ) maxJumpDistance = dd;
+      if ( dd < distanceForConnection ) {
+        if (!target.isMined()) {
+          doJump(location, target);
+          return;
+        }
+        else {
+          backUpMinedAsteroid = target;
+        }
+      }
+    }
+  }
+  
+  if (backUpMinedAsteroid != null) {
+    doJump(location, backUpMinedAsteroid);   
+  }
+}
+
+void doJump(Orbit source, Orbit target) {
+  playerNumber = orbits.indexOf(target);
+  target.setPlayerNumber(1);
+  source.setPlayerNumber(0);
+}
