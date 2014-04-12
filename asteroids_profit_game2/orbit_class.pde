@@ -22,7 +22,7 @@ class Orbit {
 
     float E1 = E0 - ( E0 - e * sin(E0) - M ) / ( 1 - e* cos(E0) );
 
-    while ( abs ( E1 - E0 ) > .0005 ) {
+    while ( abs ( E1 - E0 ) > .5 ) {
       E0 = E1;
       E1 = E0 - ( E0 - e*  sin(E0 ) - M ) / ( 1 - e * cos(E0 ) );
     }

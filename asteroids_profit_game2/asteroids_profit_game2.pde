@@ -45,13 +45,13 @@ void setup() {
   sun = new Sun();
 
   // // planets.add ( new Planet ( name, ma, e, a, n, color, size ) );
-  planets.add ( new Planet ( "Mercury", 168.6562/180.0*PI, 0.205635, 0.387098, 4.0923344368/180.0*PI, color(255, 100, 100), 5 ) );
-  planets.add ( new Planet ( "Venus", 48.0052/180.0*PI, 0.006773, 0.723330, 1.6021302244/180.0*PI, color(255, 255, 100), 10 ));
-  planets.add ( new Planet ( "Mars", 18.6021/180.0*PI, 0.093405, 1.523688, 0.5240207766/180.0*PI, color(255, 100, 255), 10 ));
-  planets.add ( new Planet ( "Jupiter", 19.8950/180.0*PI, 0.048498, 5.20256, 0.0830853001/180.0*PI, color(255, 100, 255), 20));
+  planets.add ( new Planet ( "Mercury", new Orbit(168.6562/180.0*PI, 0.205635, 0.387098, 4.0923344368/180.0*PI), color(255, 100, 100), 5 ) );
+  planets.add ( new Planet ( "Venus", new Orbit(48.0052/180.0*PI, 0.006773, 0.723330, 1.6021302244/180.0*PI), color(255, 255, 100), 10 ));
+  planets.add ( new Planet ( "Mars", new Orbit(18.6021/180.0*PI, 0.093405, 1.523688, 0.5240207766/180.0*PI), color(255, 100, 255), 10 ));
+  planets.add ( new Planet ( "Jupiter", new Orbit(19.8950/180.0*PI, 0.048498, 5.20256, 0.0830853001/180.0*PI), color(255, 100, 255), 20));
 
   //cargo ship
-  planets.add ( new Planet ( "cargo", 19.8950/180.0*PI, 0.9, 2.20256, 1.0/180.0*PI, color(255, 100, 255), 20));
+  planets.add ( new Planet ( "cargo", new Orbit(19.8950/180.0*PI, 0.9, 2.20256, 1.0/180.0*PI), color(255, 100, 255), 20));
 
   //Asteroids data loading
   String lines[] = loadStrings("./data/asteroids.dat");
