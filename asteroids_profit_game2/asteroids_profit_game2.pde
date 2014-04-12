@@ -101,9 +101,8 @@ void draw()
 
   sun.drawSunOnDayNumber(dayNumber);
 
-  for (int i = asteroids.size()-1; i >= 0; i--) {
-    Asteroid b = asteroids.get(i);
-    b.drawOrbitOnDayNumber(dayNumber, sun);
+  for (Asteroid asteroid : asteroids) {
+    asteroid.drawOrbitOnDayNumber(dayNumber, sun);
   }
 
   if ( linesOn == 1 ) {
