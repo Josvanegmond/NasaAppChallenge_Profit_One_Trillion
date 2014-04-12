@@ -8,9 +8,9 @@ class Orbit {
   int playerNumber = 0;
   boolean mined = false;
   
-  Orbit( float[] info )
+  Orbit( String[] info )
   {
-  	this( info[0], info[1], info[2], info[3], info[4], info[5] );
+  	this( info[0], float(info[1]), float(info[2]), float(info[3]), float(info[4]), float(info[5]) );
   }
   
   Orbit( String name, float maI, float eI, float aI, float nI, float profitI) {
