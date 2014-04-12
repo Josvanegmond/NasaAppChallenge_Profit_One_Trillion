@@ -66,10 +66,6 @@ void setup() {
 }
 
 
-float distance(PVector pos, PVector pos2) {
-  return sqrt(((pos.x-pos2.x)*(pos.x-pos2.x))+((pos.y-pos2.y)*(pos.y-pos2.y)));
-}
-
 void draw()
 {
   background(0);
@@ -119,7 +115,7 @@ void draw()
       for (int i2 = orbits.size()-1; i2 >= 0; i2--) {
         if ( i1 != i2 ) {
           Orbit b = orbits.get(i2);
-          float dd = distance ( a.position, b.position );
+          float dd = Utils.distance ( a.position, b.position );
           if ( dd < dt ) dt = dd;
           if ( dd < distanceForConnection )
             line ( a.position.x + offSetX, a.position.y + offSetY, b.position.x + offSetX, b.position.y + offSetY);
@@ -191,7 +187,7 @@ void jumpToCargoShip() {
     Planet b = planets.get(i1);
     if ( b.name.equals("cargo"))
     {
-      float dd = distance ( a.position, b.position );
+      float dd = Utils.distance ( a.position, b.position );
       println ( dd );
       if ( dd < distanceForConnection*10 )
       {
@@ -214,7 +210,7 @@ void jumpToAsteroid() {
   for (int i2 = orbits.size()-1; i2 >= 0; i2--) {
     if ( playerNumber != i2 ) {
       Orbit target = orbits.get(i2);
-      float dd = distance( location.position, target.position );
+      float dd = Utils.distance( location.position, target.position );
       if ( dd < maxJumpDistance ) maxJumpDistance = dd;
       if ( dd < distanceForConnection ) {
         if (!target.isMined()) {
