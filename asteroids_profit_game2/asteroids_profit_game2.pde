@@ -167,64 +167,6 @@ void keyPressed() {
       b.mine(beam);
      }
   }
-
-//  if ( key == 'j') {
-//    jumpToCargoShip();
-//  }
-
-  if ( key == 'c' ) {
-    jumpToAsteroid();
-  }
-}
-
-//void jumpToCargoShip() {
-//  Asteroid a = asteroids.get(playerNumber);
-//  Planet t;
-//
-//  for (int i1 = planets.size()-1; i1 >= 0; i1--){
-//    Planet b = planets.get(i1);
-//    if ( b.name.equals("cargo"))
-//    {
-//      float dd = Utils.distance ( a.position, b.position );
-//      if ( dd < distanceForConnection*10 )
-//      {
-//        a.setPlayer(null);
-//        b.setPlayer(beam);
-//        //playerNumber = 0;
-//        break;
-//      }
-//    }
-//  }
-//}
-
-void jumpToAsteroid() {
-  Asteroid location = asteroids.get(playerNumber);
-  //look for connections
-
-  float maxJumpDistance = 100000000;
-  Asteroid backUpMinedAsteroid = null;
-  for (int i2 = asteroids.size()-1; i2 >= 0; i2--) {
-    if ( playerNumber != i2 ) {
-
-      Asteroid target = asteroids.get(i2);
-      float dd = Utils.distance( location.position, target.position );
-
-      if ( dd < maxJumpDistance ) maxJumpDistance = dd;
-      if ( dd < distanceForConnection ) {
-        if (!target.isMined()) {
-          doJump(location, target);
-          return;
-        }
-        else {
-          backUpMinedAsteroid = target;
-        }
-      }
-    }
-  }
-  
-  if (backUpMinedAsteroid != null) {
-    doJump(location, backUpMinedAsteroid);   
-  }
 }
 
 void doJump(Asteroid source, Asteroid target) {
