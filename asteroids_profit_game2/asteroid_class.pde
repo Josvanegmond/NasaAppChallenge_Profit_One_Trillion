@@ -15,7 +15,7 @@ class Asteroid extends Body {
     return minableProfit < 1;
   }
  
-  protected void isTouched() {
+  protected void onTouch() {
    	stroke(200, 100, 50);
    	strokeWeight(5);
    	ellipse( position.x + offSetX, position.y + offSetY, asteroidImage.width, asteroidImage.height );
