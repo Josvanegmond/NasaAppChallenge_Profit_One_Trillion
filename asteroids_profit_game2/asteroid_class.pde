@@ -19,7 +19,7 @@ class Asteroid {
   }
   
   void mine() {
-     presentPlayer.addProfit(minableProfit);    
+     presentPlayer.addMetal(minableProfit);    
      minableProfit = 0.0;
   }
   
@@ -47,7 +47,8 @@ class Asteroid {
     if (isMined()) fill(255, 0, 0); 
     else fill( 0, 255, 0);
 
-    ellipse( position.x + offSetX, position.y + offSetY, minableProfit/30, minableProfit/30 );
+    println("We're here: ");
+    image(asteroidImage, position.x + offSetX, position.y + offSetY);
 
     if ( presentPlayer != null) {
       noFill();

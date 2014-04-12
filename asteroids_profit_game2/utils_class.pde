@@ -1,4 +1,4 @@
-class Utils
+static class Utils
 {
 	public static float distance(PVector pos, PVector pos2)
 	{
