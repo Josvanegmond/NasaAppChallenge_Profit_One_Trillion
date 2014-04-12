@@ -54,7 +54,8 @@ void setup() {
   //Asteroids data loading
   String lines[] = loadStrings("./data/asteroids.dat");
   for (String line : lines) {
-  	asteroids.add(new Asteroid(asteroidInfo[0], new Orbit(split(line, ",")), float(asteroidInfo[5])));
+	String[] asteroidInfo = split(line, ",");
+  	asteroids.add(new Asteroid(asteroidInfo[0], new Orbit(asteroidInfo), float(asteroidInfo[5])));
   }
   
   beam = new Player("Beam", asteroids.get((int)random(  (asteroids.size()/2-1))));

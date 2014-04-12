@@ -15,6 +15,14 @@ class Asteroid extends Body {
     return minableProfit < 1;
   }
  
+  void drawOnDayNumber(float dayNumber) {
+	  if (isMined()) {
+		  tint(255, 0, 0);
+	  }
+	  super.drawOnDayNumber(dayNumber);
+	  noTint();
+  }
+  
   protected void onTouch() {
    	stroke(200, 100, 50);
    	strokeWeight(5);
