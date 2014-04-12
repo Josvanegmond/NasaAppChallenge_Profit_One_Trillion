@@ -16,9 +16,9 @@ PVector referencePosition = new PVector( 0, 0 );
 boolean playerView = false;
 
 float dayNumber = 0;
-Body sun;
 
-Player beam;
+Player miner;
+Planet earth;
 
 PImage sunImage;
 PImage earthImage;
@@ -40,11 +40,11 @@ void setup() {
   cargoImage = loadImage("data/cargo.png");
   asteroidImage = loadImage("data/asteroid.png");
   
-  sun = new Body( "Sun", new SolarOrbit(), sunImage);
-  bodies.add ( sun );
+  bodies.add ( new Body( "Sun", new SolarOrbit(), sunImage) );
   bodies.add ( new Planet ( "Mercury", new Orbit(168.6562/180.0*PI, 0.205635, 0.387098, 4.0923344368/180.0*PI), color(255, 100, 100), 5, planetImage ) );
   bodies.add ( new Planet ( "Venus", new Orbit(48.0052/180.0*PI, 0.006773, 0.723330, 1.6021302244/180.0*PI), color(255, 255, 100), 10, planetImage ) );
-  bodies.add ( new Planet ( "Earth", new EarthOrbit(), color(0, 0, 255), 10, earthImage ));
+  earth = new Planet ( "Earth", new EarthOrbit(), color(0, 0, 255), 10, earthImage );
+  bodies.add ( earth);
   bodies.add ( new Planet ( "Mars", new Orbit(18.6021/180.0*PI, 0.093405, 1.523688, 0.5240207766/180.0*PI), color(255, 100, 255), 10, planetImage ));
   bodies.add ( new Planet ( "Jupiter", new Orbit(19.8950/180.0*PI, 0.048498, 5.20256, 0.0830853001/180.0*PI), color(255, 100, 255), 20, planetImage ));
 
@@ -58,7 +58,7 @@ void setup() {
   	asteroids.add(new Asteroid(asteroidInfo[0], new Orbit(asteroidInfo), float(asteroidInfo[5])));
   }
   
-  beam = new Player("Beam", asteroids.get((int)random(  (asteroids.size()/2-1))));
+  miner = new Player("Beam", asteroids.get((int)random(  (asteroids.size()/2-1))));
 
   fill( (255), (255), (255));
 }
@@ -73,7 +73,7 @@ void draw()
 	strokeWeight(3);
 	stroke(200, 100, 50);
 
-    text ( "Total Profit Player " + str(beam.profitLevel), 10, 30);
+    text ( "Total Profit Player " + str(miner.profitLevel), 10, 30);
 	
 	text ( "key m to mine (if on green asteroid)", 10, 70);
 	
@@ -87,14 +87,14 @@ void draw()
 		asteroid.drawOnDayNumber(dayNumber);
 	}
 	
-	beam.draw();
+	miner.draw();
 	
 	drawHud();
 }
 
 void drawHud() {
-	drawBar(width - 85, beam.fuelLevel / 100, "F");
-	drawBar(width - 60, beam.metalLevel / beam.cargoHold, "C");
+	drawBar(width - 85, miner.fuelLevel / 100, "F");
+	drawBar(width - 60, miner.metalLevel / miner.cargoHold, "C");
 
 	// stroke(0, 255, 255);
 	
@@ -135,8 +135,8 @@ void mousePressed() {
 }
 
 boolean travelToBodyIfWithinReach(Body body) {
-  if (body.isUnderMouse() && beam.isWithinReach(body)) {
-	  beam.setLocation(body);
+  if (body.isUnderMouse() && miner.isWithinReach(body)) {
+	  miner.setLocation(body);
 	  return true;
   }
   return false;
@@ -148,16 +148,16 @@ void keyPressed() {
     playerView = !playerView;
     zoomLevel *= playerView ? 2 : 0.5;
     if (playerView) {
-      referencePosition = beam.getLocation().position;
+      referencePosition = miner.getLocation().position;
     } else {
       referencePosition = new PVector(0, 0);
     }  
   }
 
   if ( key == 'm') {
-    Body b = beam.getLocation();
+    Body b = miner.getLocation();
     if (b instanceof Asteroid && !((Asteroid) b).isMined()) {
-      ((Asteroid) b).mine(beam);
+      ((Asteroid) b).mine(miner);
      }
   }
 }

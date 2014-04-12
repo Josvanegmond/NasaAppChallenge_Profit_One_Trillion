@@ -1,13 +1,13 @@
 class Player
 {
-  float cargoHold = 1000.0;
+  float cargoHold = 4000.0;
   final String name;
   
   Body location;
   
   float fuelLevel = 100;
   float metalLevel = 0;
-  int profitLevel = 0;
+  long profitLevel = 0;
   
   PVector targetLocation;
   
@@ -37,13 +37,29 @@ class Player
     return xDifference < fuelRange && yDifference < fuelRange && sqrt(xDifference*xDifference + yDifference*yDifference) < fuelRange;
   }
   
-  void addMetal(float change) {
-    metalLevel += change;
+  float addMetal(float change) {
+	if (metalLevel + change < cargoHold) {
+		metalLevel += change;
+		return change;
+	} else {
+		float minedAmount = cargoHold - metalLevel;
+		metalLevel = cargoHold;
+		return minedAmount;
+	}
   }
   
   void setLocation(Body location) {
+	if (location == earth) {
+		sellMetal();
+	}
     this.location = location;
-  } 
+  }
+  
+  void sellMetal() {
+	  profitLevel += 100000*metalLevel;
+	  metalLevel = 0.0;
+	  fuelLevel = 100;
+  }
   
   Body getLocation() {
     return location;

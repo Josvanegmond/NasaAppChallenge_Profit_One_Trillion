@@ -7,8 +7,8 @@ class Asteroid extends Body {
   }
   
   void mine(Player player) {
-     player.addMetal(minableProfit);    
-     minableProfit = 0.0;
+     float minedProfit = player.addMetal(minableProfit);    
+     minableProfit -= minedProfit;
   }
   
   boolean isMined() {
