@@ -1,4 +1,4 @@
-/* @pjs preload="data/sun.png, data/earth.png, data/planet.png, data/cargo.png"; */
+/* @pjs preload="data/sun.png, data/earth.png, data/planet.png, data/cargo.png, data/asteroid.png"; */
 
 int numberOfAsteroids = 500;
 float profitLimit = 350.0;
@@ -30,6 +30,7 @@ PImage sunImage;
 PImage earthImage;
 PImage planetImage;
 PImage cargoImage;
+PImage asteroidImage;
 
 void setup() {
 
@@ -39,6 +40,7 @@ void setup() {
   earthImage = loadImage("data/earth.png");
   planetImage = loadImage("data/planet.png");
   cargoImage = loadImage("data/cargo.png");
+  asteroidImage = loadImage("data/asteroid.png");
 
   sun = new Sun();
 
