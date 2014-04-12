@@ -92,11 +92,11 @@ void draw()
   }
 
   for (Planet planet : planets) {
-    planet.drawPlanetOnDayNumber(dayNumber);
+    planet.drawOnDayNumber(dayNumber);
   }
 
   for (Asteroid asteroid : asteroids) {
-    asteroid.drawOrbitOnDayNumber(dayNumber);
+    asteroid.drawOnDayNumber(dayNumber);
   }
 
   if ( linesOn == 1 ) {
@@ -188,7 +188,7 @@ void jumpToCargoShip() {
       {
         println("jump");
         a.setPlayer(null);
-        b.setPlayerNumber(1);
+        b.setPlayer(beam);
         //playerNumber = 0;
         break;
       }

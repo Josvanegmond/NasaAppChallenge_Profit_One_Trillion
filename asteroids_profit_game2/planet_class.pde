@@ -1,32 +1,15 @@
-class Planet {
-  PVector position = new PVector(0, 0);
-  
-  String name;
+class Planet extends Body {
   color col;
-  Orbit orbit;
   int size;
-  PImage planetImage;
 
-  int playerNumber = 0;
-
-  Planet( String name, Orbit orbit, color colI, int sizeI, PImage planetImage) {
-    this.name = name;
-    this.orbit = orbit;
-    col = colI;
-    size = sizeI;
-    this.planetImage = planetImage;
+  Planet( String name, Orbit orbit, color col, int size, PImage planetImage) {
+    super(name, orbit, planetImage);
+    this.col = col;
+    this.size = size;
   }
 
-  void setPlayerNumber(int pNumber) {
-    playerNumber = pNumber;
-  }
-
-  void drawPlanetOnDayNumber(float dayNumber) {
-    position = orbit.calculatePositionForDay(dayNumber);
-
-    fill(col);
-    //ellipse( width/2 + xv*solarSystemX, height/2 + yv*solarSystemY, size, size/2 );
-    image ( planetImage, position.x + offSetX - planetImage.width/2, position.y + offSetY- planetImage.height/2);
+  void drawOnDayNumber(float dayNumber) {
+    super.drawOnDayNumber(dayNumber);
     if (name.equals("cargo")) {
       if ( playerNumber > 0 ) {
         noFill();
