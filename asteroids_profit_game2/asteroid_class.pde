@@ -27,16 +27,17 @@ class Asteroid {
     return minableProfit < 1;
   }
 
-  void drawOrbitOnDayNumber(float dayNumber, Sun sun) {
+  void drawOrbitOnDayNumber(float dayNumber, Sun sun)
+  {
     float M = orbit.ma + orbit.n * dayNumber;
     float E0 = M + orbit.e*   sin(orbit.ma ) * ( 1.0 + orbit.e * cos(orbit.ma ));
 
     float E1 = E0 - ( E0 - orbit.e * sin(E0) - M ) / ( 1 - orbit.e* cos(E0) );
 
-    while ( abs ( E1 - E0 ) > .0005 ) {
-      E0 = E1;
-      E1 = E0 - ( E0 - orbit.e*  sin(E0 ) - M ) / ( 1 - orbit.e * cos(E0 ) );
-    }
+    // while ( abs ( E1 - E0 ) > .5 ) {
+      // E0 = E1;
+      // E1 = E0 - ( E0 - orbit.e*  sin(E0 ) - M ) / ( 1 - orbit.e * cos(E0 ) );
+    // }
 
     float xv =  orbit.a * ( cos(E1 ) - orbit.e );
     float yv =  orbit.a * ( sqrt(1.0 - orbit.e*orbit.e) * sin(E1) );
@@ -47,7 +48,6 @@ class Asteroid {
     if (isMined()) fill(255, 0, 0); 
     else fill( 0, 255, 0);
 
-    println("We're here: ");
     image(asteroidImage, position.x + offSetX, position.y + offSetY);
 
     if ( presentPlayer != null) {

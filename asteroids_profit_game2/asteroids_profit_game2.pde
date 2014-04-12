@@ -1,4 +1,4 @@
-/* @pjs preload="data/sun.png, data/earth.png, data/planet.png, data/cargo.png, data/asteroid.png"; */
+/* @pjs preload="data/sun.png, data/earth_small.png, data/planet.png, data/cargo.png, data/asteroid.png, data/play_screen.png"; */
 
 int numberOfAsteroids = 500;
 float profitLimit = 350.0;
@@ -31,10 +31,13 @@ PImage earthImage;
 PImage planetImage;
 PImage cargoImage;
 PImage asteroidImage;
+PImage foregroundImage;
 
 void setup() {
 
   size(600, 600);
+  
+  foregroundImage = loadImage("data/play_screen.png");
 
   sunImage = loadImage("data/sun.png");
   earthImage = loadImage("data/earth_small.png");
@@ -70,6 +73,7 @@ void setup() {
 void draw()
 {
   background(0);
+  
   image ( sunImage, width/2+ offSetX - sunImage.width/2, height/2 + offSetY- sunImage.height/2);
   text ( "added number of asteroids " + asteroids.size(), 10, 10);
   text ( "Total Profit Player " + str(beam.getProfit()), 10, 30);
@@ -125,6 +129,8 @@ void draw()
       }
     }
   }
+  
+  image( foregroundImage, 0, 0, 600, 600 );
 }
 
 void mousePressed() {
@@ -189,10 +195,8 @@ void jumpToCargoShip() {
     if ( b.name.equals("cargo"))
     {
       float dd = Utils.distance ( a.position, b.position );
-      println ( dd );
       if ( dd < distanceForConnection*10 )
       {
-        println("jump");
         a.setPlayer(null);
         b.setPlayerNumber(1);
         //playerNumber = 0;
