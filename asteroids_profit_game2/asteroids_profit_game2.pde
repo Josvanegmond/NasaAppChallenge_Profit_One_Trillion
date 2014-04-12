@@ -102,7 +102,7 @@ void draw()
   sun.drawSunOnDayNumber(dayNumber);
 
   for (Asteroid asteroid : asteroids) {
-    asteroid.drawOrbitOnDayNumber(dayNumber, sun);
+    asteroid.drawOrbitOnDayNumber(dayNumber);
   }
 
   if ( linesOn == 1 ) {
@@ -128,9 +128,9 @@ void draw()
 }
 
 void mousePressed() {
-
-  solarSystemX = (width/2 - mouseX);
-  solarSystemY = (height/2 - mouseY);
+  
+//  solarSystemX = (width/2 - mouseX);
+//  solarSystemY = (height/2 - mouseY);
 }
 
 void keyPressed() {
