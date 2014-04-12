@@ -193,7 +193,7 @@ void jumpToCargoShip() {
     {
       float dd = distance ( a.position, b.position );
       println ( dd );
-      if ( dd < distanceForConnection*5 )
+      if ( dd < distanceForConnection*10 )
       {
         println("jump");
         a.setPlayerNumber(0);
