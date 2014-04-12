@@ -16,4 +16,12 @@ class Asteroid extends Body {
   boolean isMined() {
     return minableProfit < 1;
   }
+  
+  protected void isTouched() {
+	stroke(200, 100, 50);
+	strokeWeight(5);
+  	ellipse( position.x + offSetX, position.y + offSetY, asteroidImage.width, asteroidImage.height );
+	fill( 150, 150, 150 );
+	text( "Name: " + this.name + "\nProfit: " + this.minableProfit + " billion" , position.x + asteroidImage.width, position.y );
+  }
 }
