@@ -50,48 +50,14 @@ void setup() {
   //cargo ship
   planets.add ( new Planet ( "cargo", 19.8950/180.0*PI, 0.9, 2.20256, 1.0/180.0*PI, color(255, 100, 255), 20));
 
-  //Pallas
-//  String lines[] = loadStrings("http://asterank.com/api/asterank?query={\"e\":{\"$lt\":0.22263338430942921},\"e\":{\"$gt\":0.22263338430942920}}&limit=1");
-
+  //Asteroids data loading
+  String lines[] = loadStrings("./data/asteroids.dat");
 // 
-  // // some filtering on a-semi major axis
-  // // String lines[] = loadStrings("http://asterank.com/api/asterank?query={\"a\":{\"$gt\":0.2},\"a\":{\"$lt\":7.0}}&limit="+str(numberOfAsteroids));
-// 
-  // //filtering on profit
-  // String lines[] = loadStrings("http://asterank.com/api/asterank?query={\"a\":{\"$gt\":0.1},\"a\":{\"$lt\":10.0}}&limit="+str(numberOfAsteroids));
-// 
-  // for (int i = 0 ; i < lines.length; i++) {
-    // totalStringAll+=lines[i];
-  // }
-  // int myCharNum = 0;
-// 
-  // while ( myCharNum < (totalStringAll.length () - 10) ) {
-    // totalString = "";
-    // while ( ! ( (totalStringAll.substring ( myCharNum, myCharNum+1)).equals("}"))) {
-      // totalString += totalStringAll.substring(myCharNum, myCharNum+1);
-      // myCharNum++;
-    // }
-// 
-    // float ma = extractedValue("\"ma\"")/180.0*PI;
-    // float e = extractedValue("\"e\"") ;
-    // float a = extractedValue("\"a\"") ;
-    // float n = extractedValue("\"n\"")/180.0*PI ;
-    // float profit = extractedValue("\"profit\"") ;//in trillions ( or something)
-// 
-    // if ( profit > profitLimit ) {
-      // orbits.add ( new Orbit ( ma, e, a, n, profit ) );
-      // // println ( "added " +ma + " " +e+ " " +a+ " " +n+ " " + profit   );
-    // }
-    // else {
-      // // println ( "NOT added " +ma + " " +e+ " " +a+ " " +n+ " " + profit   );
-    // }
-// 
-// 
-    // myCharNum++;//skip an }
-// 
-    // // for ( int i = 0; i < 100 ; i++)
-    // //   calculateCoordinates(i, ma, e, a, n );
-  // }
+  for (int i = 0 ; i < lines.length; i++)
+  {
+  	String asteroidInfo[] = split( lines[i], "," );
+  	orbits.add( new Orbit( asteroidInfo ) );
+  }
 
   println( "added number of asteroids " + orbits.size());
 
@@ -99,34 +65,12 @@ void setup() {
 }
 
 
-float extractedValue(String searchStr ) {
-  int eIndex = totalString.indexOf(searchStr);
-
-  int eEnd = eIndex;
-  while ( ! ( (totalString.substring ( eEnd, eEnd+1)).equals(","))) {
-    eEnd++;
-  }
-
-  //println(totalString.substring(eIndex, eEnd));
-  String eStr = totalString.substring(eIndex + 5, eEnd);
-
-
-  if ( searchStr.equals("\"profit\"")) {
-    if ( eStr.length()> 20 )
-      eStr = totalString.substring(eIndex + 10, eEnd-15);
-    else
-      eStr = "0.0";
-  }
-
-  float e = float(eStr);
-  return ( e);
-}
-
 float distance(PVector pos, PVector pos2) {
   return sqrt(((pos.x-pos2.x)*(pos.x-pos2.x))+((pos.y-pos2.y)*(pos.y-pos2.y)));
 }
 
-void draw() {
+void draw()
+{
   background(0);
   image ( sunImage, width/2+ offSetX - sunImage.width/2, height/2 + offSetY- sunImage.height/2);
   text ( "added number of asteroids " + orbits.size(), 10, 10);
@@ -136,7 +80,7 @@ void draw() {
   text ( "key m to mine (if on green asteroid)", 10, 70);
   text ( "key c to rocket to connected asteroid", 10, 90);
 
-  dayNumber+=.5;
+  dayNumber += .5;
 
   if ( playerView == 1)
   {
