@@ -4,7 +4,6 @@ class Body {
   private final PImage bodyImage;
   
   PVector position = new PVector(0, 0);
-  boolean touched = false;
   protected Player presentPlayer;
 
   Body(String name, Orbit orbit, PImage bodyImage) {
@@ -23,9 +22,7 @@ class Body {
     float hWidth = bodyImage.width/2;
     float hHeight = bodyImage.height/2;
     if( mouseX > position.x - hWidth && mouseX < position.x + hWidth &&
-    	mouseY > position.y - hHeight && mouseY < position.y + hHeight )
-    {
-    	touched = true;
+    	mouseY > position.y - hHeight && mouseY < position.y + hHeight ) {
     	isTouched();
     }
 
@@ -33,9 +30,16 @@ class Body {
 
     if ( presentPlayer != null) {
       noFill();
+      strokeWeight(2);
       stroke(255, 255, 255);
-      ellipse( position.x + offSetX, position.y + offSetY, 20, 40 );
-      ellipse( position.x + offSetX, position.y + offSetY, 40, 20 );
+      float xv = position.x + offSetX;
+      float yv = position.y + offSetY;
+      ellipse( xv, yv, 20, 40 );
+      ellipse( xv, yv, 40, 20 );
+      
+      noStroke();
+      fill(0, 200, 255, 70);
+      ellipse( xv, yv, presentPlayer.fuelLevel + 20, presentPlayer.fuelLevel + 20  );
     }
   }
   
