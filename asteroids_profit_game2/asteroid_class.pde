@@ -1,8 +1,8 @@
 class Asteroid {
-  private final PVector position = new PVector(0, 0);
   private final Orbit orbit;
   private final String name;
   
+  private PVector position = new PVector(0, 0);
   private float minableProfit; 
   private Player presentPlayer;
  
@@ -19,43 +19,30 @@ class Asteroid {
   }
   
   void mine() {
-     presentPlayer.addMetal(minableProfit);    
-     minableProfit = 0.0;
+     if (presentPlayer != null) {
+       presentPlayer.addMetal(minableProfit);    
+       minableProfit = 0.0;
+     }
   }
   
   boolean isMined() {
     return minableProfit < 1;
   }
 
-  void drawOrbitOnDayNumber(float dayNumber, Sun sun)
+  void drawOrbitOnDayNumber( float dayNumber )
   {
-    float M = orbit.ma + orbit.n * dayNumber;
-    float E0 = M + orbit.e*   sin(orbit.ma ) * ( 1.0 + orbit.e * cos(orbit.ma ));
+   	position = orbit.calculatePositionForDay(dayNumber);
+//    if (isMined()) fill(255, 0, 0); 
+//    else fill( 0, 255, 0);
 
-    float E1 = E0 - ( E0 - orbit.e * sin(E0) - M ) / ( 1 - orbit.e* cos(E0) );
+    image(asteroidImage, position.x + offSetX - asteroidImage.height/2, position.y + offSetY - asteroidImage.width/2);
 
-    // while ( abs ( E1 - E0 ) > .5 ) {
-      // E0 = E1;
-      // E1 = E0 - ( E0 - orbit.e*  sin(E0 ) - M ) / ( 1 - orbit.e * cos(E0 ) );
-    // }
-
-    float xv =  orbit.a * ( cos(E1 ) - orbit.e );
-    float yv =  orbit.a * ( sqrt(1.0 - orbit.e*orbit.e) * sin(E1) );
-
-    position.x = width/2 + xv*solarSystemX;
-    position.y = height/2 + yv*solarSystemY;
-
-    if (isMined()) fill(255, 0, 0); 
-    else fill( 0, 255, 0);
-
-    image(asteroidImage, position.x + offSetX, position.y + offSetY);
-
-    if ( presentPlayer != null) {
+    if ( presentPlayer != null)
+    {
       noFill();
       stroke(255, 255, 255);
       ellipse( position.x + offSetX, position.y + offSetY, 20, 40 );
       ellipse( position.x + offSetX, position.y + offSetY, 40, 20 );
-      
     }
   }
 }
