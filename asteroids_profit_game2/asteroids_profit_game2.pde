@@ -127,6 +127,7 @@ void draw()
   image( foregroundImage, 0, 0, 600, 600 );
 }
 
+
 void mousePressed() {
   
 //  solarSystemX = (width/2 - mouseX);

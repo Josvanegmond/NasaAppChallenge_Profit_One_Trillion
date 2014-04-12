@@ -1,4 +1,5 @@
-class Asteroid {
+class Asteroid
+{
   private final Orbit orbit;
   private final String name;
   
@@ -6,7 +7,8 @@ class Asteroid {
   private float minableProfit; 
   private Player presentPlayer;
  
-  Asteroid(String name, Orbit orbit, float minableProfit) {
+  Asteroid(String name, Orbit orbit, float minableProfit)
+  {
     this.name = name;
     this.orbit = orbit;
     this.minableProfit = minableProfit;
@@ -31,11 +33,28 @@ class Asteroid {
 
   void drawOrbitOnDayNumber( float dayNumber )
   {
+  	float hWidth = asteroidImage.width/2;
+  	float hHeight = asteroidImage.height/2;
+  	
+    boolean touched = false;
+    if( mouseX > position.x - hWidth && mouseX < position.x + hWidth &&
+    	mouseY > position.y - hHeight && mouseY < position.y + hHeight )
+    {
+    	touched = true;
+    }
+    
    	position = orbit.calculatePositionForDay(dayNumber);
 //    if (isMined()) fill(255, 0, 0); 
 //    else fill( 0, 255, 0);
 
-    image(asteroidImage, position.x + offSetX - asteroidImage.height/2, position.y + offSetY - asteroidImage.width/2);
+	if( touched == true )
+	{
+    	stroke(200, 100, 50);
+    	strokeWeight(5);
+	  	ellipse( position.x + offSetX, position.y + offSetY, asteroidImage.width, asteroidImage.height );
+	}
+	
+    image(asteroidImage, position.x + offSetX - hHeight, position.y + offSetY - hWidth );
 
     if ( presentPlayer != null)
     {
@@ -44,5 +63,11 @@ class Asteroid {
       ellipse( position.x + offSetX, position.y + offSetY, 20, 40 );
       ellipse( position.x + offSetX, position.y + offSetY, 40, 20 );
     }
+    
+    if( touched == true )
+    {
+    	fill( 150, 150, 150 );
+    	text( "Name: " + this.name + "\nProfit: " + this.minableProfit + " billion" , position.x + asteroidImage.width, position.y );
+  	}
   }
 }
