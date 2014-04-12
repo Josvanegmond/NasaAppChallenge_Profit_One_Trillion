@@ -13,5 +13,3 @@ class Planet extends Body {
     text( name.substring(0, 2), position.x  + offSetX, position.y  + offSetY);
   }
 }
-
-

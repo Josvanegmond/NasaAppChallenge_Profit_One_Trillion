@@ -75,32 +75,12 @@ void draw()
   
 	strokeWeight(3);
 	stroke(200, 100, 50);
-	float dt = 100000000;
-	for (int i1 = asteroids.size()-1; i1 >= 0; i1--)
-	{
-		Asteroid a = asteroids.get(i1);
-		for (int i2 = asteroids.size()-1; i2 >= 0; i2--)
-		{
-		    if ( i1 != i2 )
-		    {
-		      	Asteroid b = asteroids.get(i2);
-		     	float dd = Utils.distance ( a.position, b.position );
-		      
-	      		if ( dd < dt ) { dt = dd; }
-	      		
-		     	if ( dd < distanceForConnection )
-		     	{
-					line ( a.position.x + offSetX, a.position.y + offSetY, b.position.x + offSetX, b.position.y + offSetY);
-				}
-			}
-		}
-	}
 
 	image ( sunImage, width/2+ offSetX - sunImage.width/2, height/2 + offSetY- sunImage.height/2);
 	text ( "added number of asteroids " + asteroids.size(), 10, 10);
-  if (beam != null) {
+    if (beam != null) {
     	text ( "Total Profit Player " + str(beam.profitLevel), 10, 30);
-  }
+    }
 	
 	if ( playerNumber < 1 ) { text ( "key p to add player", 10, 50); }
 	text ( "key m to mine (if on green asteroid)", 10, 70);
@@ -136,12 +116,25 @@ void draw()
 		beam.draw();
 	}
 	
+	drawHud();
+}
+
+void drawHud() {
+	noFill();
+	stroke(255, 255, 255);
+ strokeWeight(2);
+	rect(width - 80, 74, 40, 100);
+
+// stroke(0, 255, 255);
+	
 	fill(150,150,150,255);
 	image( foregroundImage, 0, 0, 600, 600 );
 }
 
-
 void mousePressed() {
+  if (beam == null) {
+    return;
+  }
   for (Asteroid asteroid : asteroids) {
 	  if (travelToBodyIfWithinReach(asteroid)) {
 		return;
@@ -154,7 +147,7 @@ void mousePressed() {
   }
 }
 
-public boolean travelToBodyIfWithinReach(Body body) {
+boolean travelToBodyIfWithinReach(Body body) {
   if (body.isUnderMouse() && beam.isWithinReach(body)) {
 	  beam.setLocation(body);
 	  return true;

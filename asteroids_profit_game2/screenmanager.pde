@@ -2,12 +2,12 @@
 
 class ScreenManager
 {
-	public ScreenManager()
+ public ScreenManager()
 	{
 		
 	}
 	
-	public static void draw()
+  void draw()
 	{
 		
 	}
