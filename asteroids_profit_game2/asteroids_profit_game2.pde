@@ -102,6 +102,8 @@ void draw()
   for (Asteroid asteroid : asteroids) {
     asteroid.drawOrbitOnDayNumber(dayNumber);
   }
+  
+  beam.draw();
 
   if ( linesOn == 1 ) {
     strokeWeight(2);

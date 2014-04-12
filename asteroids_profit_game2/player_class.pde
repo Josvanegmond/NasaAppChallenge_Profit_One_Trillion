@@ -27,11 +27,6 @@ class Player
   }
   
   
-  public void updatePosition()
-  {
-  }
-  
-  
   public void setMoveTarget( PVector targetLocation )
   {
   	this.targetLocation = targetLocation;
@@ -41,6 +36,7 @@ class Player
   {
   	return (this.fuelLevel > 0);
   }
+  
   
   
 
