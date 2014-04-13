@@ -28,16 +28,9 @@
 </head>
 
 <body>
-	<div id="story">
-		<!-- <img src="./data/mission1.jpg"></img> -->
-		<div id="login">
-			<input id="create" type="button" value="Create Game"></button>
-			<input id="join" type="button" value="Join Game"></button>
-		</div>
-	</div>
 	<div id="game">
 		<img id="blinkers" src="./data/greenCode.gif" />
-		<canvas	id="gameScreen"
+		<canvas id="gameScreen"
 			data-processing-sources="
 		asteroids_profit_game2.pde 
 		orbit_class.pde 
@@ -48,6 +41,20 @@
 		body_class.pde 
 		drawable_class.pde
 	"></canvas>
+	</div>
+	<div id="story">
+		<!-- <img src="./data/mission1.jpg"></img> -->
+		<div id="login">
+			<input id="name" type="textbox"></input>
+			<select id="colorPicker">
+				<option value="FF0000">Red</option>
+				<option value="00FF00">Green</option>
+				<option value="0000FF">Blue</option>
+				<option value="FFFF00">Yellow</option>
+			</select>
+			<input id="create" type="button" value="Create Game"></input>
+			<input id="join" type="button" value="Join Game"></input>
+		</div>
 	</div>
 </body>
 

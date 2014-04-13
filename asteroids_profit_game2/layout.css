@@ -4,16 +4,10 @@
 }
 
 story {
-	position: absolute;
 	background-color: #FF9999; /* Damn pink! */
 }
 
-#login {
-	position: absolute;
-}
-
 canvas {
-	position: absolute;
 	display: block;
 	margin-right: auto;
 	margin-left: 100px;
@@ -24,4 +18,16 @@ canvas {
 	left: 334px;
 	top: 574px;
 	z-level: 100;
+}
+
+#colorPicker {
+	max-width: 100%;
+}
+
+.colorSelect {
+	display: inline-block;
+	height: 20px;
+	width: 20px;
+	border: 2px solid #000000;
+	margin: 3px;
 }
