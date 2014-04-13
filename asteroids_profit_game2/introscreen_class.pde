@@ -12,24 +12,28 @@ class IntroScreen extends Screen
 	
 	public IntroScreen()
 	{
-		mission1 = loadImage("./data/mission1.png");
-		mission2 = loadImage("./data/mission2.png");
-		mission3 = loadImage("./data/mission3.png");
-		mission4 = loadImage("./data/mission4.png");
-		mission5 = loadImage("./data/mission5.png");
+		mission1 = loadImage("./data/mission1.jpg");
+		mission2 = loadImage("./data/mission2.jpg");
+		mission3 = loadImage("./data/mission3.jpg");
+		mission4 = loadImage("./data/mission4.jpg");
+		mission5 = loadImage("./data/mission5.jpg");
 	}
 	
 	void draw()
 	{
-		if( screen == 1 ) { image( mission1, 0, 0 ); }
-		if( screen == 2 ) { image( mission2, 0, 0 ); }
-		if( screen == 3 ) { image( mission3, 0, 0 ); }
-		if( screen == 4 ) { image( mission4, 0, 0 ); }
-		if( screen == 5 ) { image( mission5, 0, 0 ); }
+		background(0);
+		
+		fill(150,150,150,255);
+		if( screen == 1 ) { image( mission1, 0, 0, 600, 600 ); }
+		if( screen == 2 ) { image( mission2, 0, 0, 600, 600 ); }
+		if( screen == 3 ) { image( mission3, 0, 0, 600, 600 ); }
+		if( screen == 4 ) { image( mission4, 0, 0, 600, 600 ); }
+		if( screen == 5 ) { image( mission5, 0, 0, 600, 600 ); }
 	}
 	
 	void mouseClicked()
 	{
 		screen++;
+		if( screen > 5 ) { setDone( true ); }
 	}
 }
