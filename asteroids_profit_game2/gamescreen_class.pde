@@ -23,7 +23,7 @@ boolean mining = false;
 
 float dayNumber = 0;
 
-
+Audio audio;
 
 
 class GameScreen extends Screen
@@ -40,6 +40,9 @@ class GameScreen extends Screen
 
 	public GameScreen()
 	{
+		audio = new Audio();
+		newSound();
+		
 	  bodies.add ( new Body( "Sun", new SolarOrbit(), sunImage) );
 	  bodies.add ( new Planet ( "Mercury", new Orbit(168.6562/180.0*PI, 0.205635, 0.387098, 4.0923344368/180.0*PI), color(255, 100, 100), 5, planetImage ) );
 	  bodies.add ( new Planet ( "Venus", new Orbit(48.0052/180.0*PI, 0.006773, 0.723330, 1.6021302244/180.0*PI), color(255, 255, 100), 10, planetImage ) );
@@ -156,5 +159,22 @@ class GameScreen extends Screen
 	  if (key == 'm' && miner.isOnAsteroid()) {
 		  mining = !mining;
 	  }
+	}
+	
+	void newSound()
+	{
+		int random = int(Math.random() * 9);
+		if( random == 0 ) audio.setAttribute("src","./sounds/11023.mp3");
+		if( random == 1 ) audio.setAttribute("src","./sounds/11025.mp3");
+		if( random == 2 ) audio.setAttribute("src","./sounds/843.mp3");
+		if( random == 3 ) audio.setAttribute("src","./sounds/850.mp3");
+		if( random == 4 ) audio.setAttribute("src","./sounds/866.mp3");
+		if( random == 5 ) audio.setAttribute("src","./sounds/868.mp3");
+		if( random == 6 ) audio.setAttribute("src","./sounds/850.mp3");
+		if( random == 7 ) audio.setAttribute("src","./sounds/851.mp3");
+		if( random == 8 ) audio.setAttribute("src","./sounds/848.mp3");
+		
+		audio.addEventListener("ended",newSound);
+		audio.play();
 	}
 }

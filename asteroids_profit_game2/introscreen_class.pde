@@ -1,9 +1,10 @@
-/* @pjs preload="data/mission1.png, data/mission2.png, data/mission3.png, data/mission4.png, data/mission5.png"; */
+/* @pjs preload="data/splash.png, data/mission1.jpg, data/mission2.jpg, data/mission3.jpg, data/mission4.jpg, data/mission5.jpg"; */
 
 class IntroScreen extends Screen
 {
-	int screen = 1;
+	int screen = 0;
 	
+	PImage splash;
 	PImage mission1;
 	PImage mission2;
 	PImage mission3;
@@ -12,6 +13,7 @@ class IntroScreen extends Screen
 	
 	public IntroScreen()
 	{
+		splash = loadImage("./data/Splash.png");
 		mission1 = loadImage("./data/mission1.jpg");
 		mission2 = loadImage("./data/mission2.jpg");
 		mission3 = loadImage("./data/mission3.jpg");
@@ -24,6 +26,7 @@ class IntroScreen extends Screen
 		background(0);
 		
 		fill(150,150,150,255);
+		if( screen == 0 ) { image( splash, 0, 0, 600, 600 ); }
 		if( screen == 1 ) { image( mission1, 0, 0, 600, 600 ); }
 		if( screen == 2 ) { image( mission2, 0, 0, 600, 600 ); }
 		if( screen == 3 ) { image( mission3, 0, 0, 600, 600 ); }
