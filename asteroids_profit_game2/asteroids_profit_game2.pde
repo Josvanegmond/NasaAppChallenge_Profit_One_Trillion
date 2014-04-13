@@ -74,7 +74,7 @@ void setup() {
 
 void draw()
 {
-	miner.updateState(mining);
+	miner.updateState();
 	background(0);
 	
 	fill(150,150,150,255);
@@ -139,11 +139,8 @@ void keyPressed() {
       referencePosition = new PVector(0, 0);
     }  
   }
-//
-//  if ( key == 'm') {
-//    Body b = miner.getLocation();
-//    if (b instanceof Asteroid && !((Asteroid) b).isMined()) {
-//      ((Asteroid) b).mine(miner);
-//     }
-//  }
+
+  if (key == 'm' && miner.isOnAsteroid()) {
+	  mining = !mining;
+  }
 }
