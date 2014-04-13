@@ -1,8 +1,9 @@
+/* @pjs preload="data/asteroid.png"; */
+
 class Asteroid extends Body {  
   float minableProfit; 
- 
-  Asteroid(String name, Orbit orbit, float minableProfit) {
-    super(name, orbit, asteroidImage);
+  Asteroid(String name, Orbit orbit, float minableProfit, PImage asteroidImage ) {
+    super(name, orbit, asteroidImage );
     this.minableProfit = minableProfit;
   }
   
@@ -22,11 +23,12 @@ class Asteroid extends Body {
 	  noTint();
   }
   
-  protected void onTouch() {
+  protected void onTouch()
+  {
    	stroke(200, 100, 50);
    	strokeWeight(5);
-   	ellipse( position.x, position.y, asteroidImage.width, asteroidImage.height );
+   	ellipse( position.x, position.y, bodyImage.width, bodyImage.height );
    	fill( 150, 150, 150 );
-   	text( "Name: " + this.name + "\nProfit: " + this.minableProfit + " billion" , position.x + asteroidImage.width, position.y );
+   	text( "Name: " + this.name + "\nProfit: " + this.minableProfit + " billion" , position.x + bodyImage.width, position.y );
   }
 }

@@ -1,7 +1,7 @@
 class Body extends Drawable {
-  final String name;
-  private final Orbit orbit;
-  private final PImage bodyImage;
+  String name;
+  Orbit orbit;
+  PImage bodyImage;
   
   PVector position = new PVector(0, 0);
 
