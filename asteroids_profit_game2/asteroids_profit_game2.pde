@@ -69,7 +69,7 @@ void setup() {
   hud.add(new PlayerProfitBar(miner));
   hud.add(mineToggler);
   
-  fill( (255), (255), (255));
+  fill(255, 255, 255);
 }
 
 void draw()
@@ -83,7 +83,6 @@ void draw()
 	stroke(200, 100, 50);
 
 	dayNumber += .5;
-	
 	for (Drawable body : bodies) {
 		body.drawOnDayNumber(dayNumber);
 	}
@@ -93,8 +92,17 @@ void draw()
 	}
 	
 	miner.drawOnDayNumber(dayNumber);
+	
+    if (playerView) {
+		referencePosition.x = miner.getLocation().position.x - width/2;
+		referencePosition.y = miner.getLocation().position.y - height/2;
+    }	
 
 	drawHud(dayNumber);
+	
+	if (miner.isTrillionaire()) {
+		profit();
+	}
 }
 
 void drawHud(float dayNumber) {
@@ -134,7 +142,8 @@ void keyPressed() {
     playerView = !playerView;
     zoomLevel *= playerView ? 2 : 0.5;
     if (playerView) {
-      referencePosition = miner.getLocation().position;
+		referencePosition.x = miner.getLocation().position.x - width/2;
+		referencePosition.y = miner.getLocation().position.y - height/2;
     } else {
       referencePosition = new PVector(0, 0);
     }  
@@ -143,4 +152,9 @@ void keyPressed() {
   if (key == 'm' && miner.isOnAsteroid()) {
 	  mining = !mining;
   }
+}
+
+void profit() {
+	// Yay, you won!
+	
 }

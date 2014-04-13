@@ -35,8 +35,8 @@ class Orbit {
   
   PVector solarPosition(float xv, float yv) {
     return new PVector(
-        width/2 + referencePosition.x + xv * zoomLevel,
-        height/2 + referencePosition.y + yv * zoomLevel );
+        width/2 - referencePosition.x + xv * zoomLevel,
+        height/2 - referencePosition.y + yv * zoomLevel );
   }
 }
 

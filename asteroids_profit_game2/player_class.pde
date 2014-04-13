@@ -86,6 +86,10 @@ class Player extends Drawable {
 	  fuelLevel = 100;
   }
   
+  boolean isTrillionaire() {
+	  return profitLevel > 1000000000000
+  }
+  
   Body getLocation() {
     return location;
   }
