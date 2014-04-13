@@ -21,6 +21,7 @@ PVector referencePosition = new PVector( 0, 0 );
 
 boolean playerView = false;
 boolean mining = false;
+boolean started = false;
 
 float dayNumber = 0;
 
@@ -32,6 +33,10 @@ PImage asteroidImage;
 PImage backgroundImage;
 PImage foregroundImage;
 PImage winnerImage;
+
+void start() {
+	started = true;
+}
 
 void setup() {
   size(600, 600);
@@ -76,12 +81,20 @@ void setup() {
 
 void draw()
 {
-	miner.updateState();
 	background(0);
 	
 	fill(150,150,150,255);
 	image( backgroundImage, 0, 0, backgroundImage.width, backgroundImage.height );
   
+	if (!started) {
+		textSize(30);
+		fill(255, 255, 255);
+		text("WAITING FOR GAME", 150, 200);
+		textSize(12);
+		return;
+	}
+	
+	miner.updateState();
 	stroke(200, 100, 50);
 
 	dayNumber += .5;
