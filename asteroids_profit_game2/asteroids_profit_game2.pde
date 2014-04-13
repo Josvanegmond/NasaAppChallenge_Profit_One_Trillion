@@ -26,12 +26,16 @@ boolean mining = false;
 
 float dayNumber = 0;
 
-GameScreen screen;
+
+
+Screen currentScreen;
+
+
 
 void setup()
 {
 	size(600, 600);
-	screen = new GameScreen();
+	currentScreen = new IntroScreen();
 }
 	  
 void start()
@@ -41,20 +45,23 @@ void start()
 
 void draw()
 {
-	screen.draw();
+	//if intro is done, load game
+	if( currentScreen.isDone() == true ) { currentScreen = new GameScreen(); }
+	
+	currentScreen.draw();
 }
 
 void mouseClicked()
 {
-	screen.mouseClicked();
+	currentScreen.mouseClicked();
 }
 
 void mousePressed()
 {
-	screen.mousePressed();
+	currentScreen.mousePressed();
 }
 
 void keyPressed()
 {
-	screen.keyPressed();
+	currentScreen.keyPressed();
 }
