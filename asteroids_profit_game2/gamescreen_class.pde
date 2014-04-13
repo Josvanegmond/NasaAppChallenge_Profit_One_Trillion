@@ -1,3 +1,31 @@
+
+int numberOfAsteroids = 500;
+float profitLimit = 350.0;
+float distanceForConnection = 40.0 ;
+
+String totalStringAll = "";
+String totalString = "";
+
+Player miner;
+Planet earth;
+
+ArrayList<Asteroid> asteroids = new ArrayList<Asteroid>();
+ArrayList<Body> bodies = new ArrayList<Body>();
+ArrayList<Drawable> hud = new ArrayList<Drawable>();
+
+MineToggler mineToggler = new MineToggler();
+
+float zoomLevel = 60;
+PVector referencePosition = new PVector( 0, 0 );
+
+boolean playerView = false;
+boolean mining = false;
+
+float dayNumber = 0;
+
+
+
+
 class GameScreen extends Screen
 {
 	PImage backgroundImage = loadImage("./data/space.png");
@@ -69,10 +97,8 @@ class GameScreen extends Screen
 		
 		miner.drawOnDayNumber(dayNumber);
 		
-	    if (playerView) {
-			referencePosition.x = miner.getLocation().position.x - width/2;
-			referencePosition.y = miner.getLocation().position.y - height/2;
-	    }	
+		//referencePosition.x = miner.getLocation().position.x;
+		//referencePosition.y = miner.getLocation().position.y;
 	
 		drawHud(dayNumber);
 		
@@ -123,15 +149,8 @@ class GameScreen extends Screen
 	
 	void keyPressed() {
 	  if ( key == 'z')
-	  { //toggle overview and player view
-	    playerView = !playerView;
-	    zoomLevel *= playerView ? 2 : 0.5;
-	    if (playerView) {
-			referencePosition.x = miner.getLocation().position.x - width/2;
-			referencePosition.y = miner.getLocation().position.y - height/2;
-	    } else {
-	      referencePosition = new PVector(0, 0);
-	    }  
+	  {
+	    zoomLevel -= 10;
 	  }
 	
 	  if (key == 'm' && miner.isOnAsteroid()) {

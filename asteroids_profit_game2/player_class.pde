@@ -1,7 +1,7 @@
 class Player extends Drawable {
   private float pixelsPerGallon = 0.6;
   private float shovelSize = 2.5;
-  private float fuelLineDiameter = 0.2;
+  private float fuelLineDiameter = 0.1;
   
   final float cargoHold = 4000.0;
   final float fuelTank = 100.0;
