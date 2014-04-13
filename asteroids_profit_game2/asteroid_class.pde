@@ -1,13 +1,12 @@
 class Asteroid extends Body {  
-  private float minableProfit; 
+  float minableProfit; 
  
   Asteroid(String name, Orbit orbit, float minableProfit) {
     super(name, orbit, asteroidImage);
     this.minableProfit = minableProfit;
   }
   
-  void mine(Player player) {
-     float minedProfit = player.addMetal(minableProfit);    
+  void mine(float minedProfit) {
      minableProfit -= minedProfit;
   }
   

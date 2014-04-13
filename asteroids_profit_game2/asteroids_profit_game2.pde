@@ -7,19 +7,22 @@ float distanceForConnection = 40.0 ;
 String totalStringAll = "";
 String totalString = "";
 
+Player miner;
+Planet earth;
+
 ArrayList<Asteroid> asteroids = new ArrayList<Asteroid>();
 ArrayList<Body> bodies = new ArrayList<Body>();
 ArrayList<Drawable> hud = new ArrayList<Drawable>();
+
+MineToggler mineToggler = new MineToggler();
 
 float zoomLevel = 60;
 PVector referencePosition = new PVector( 0, 0 );
 
 boolean playerView = false;
+boolean mining = false;
 
 float dayNumber = 0;
-
-Player miner;
-Planet earth;
 
 PImage sunImage;
 PImage earthImage;
@@ -64,24 +67,21 @@ void setup() {
   hud.add(new PlayerStatusBar("F", width - 85, miner));
   hud.add(new PlayerStatusBar("C", width - 60, miner));
   hud.add(new PlayerProfitBar(miner));
+  hud.add(mineToggler);
   
   fill( (255), (255), (255));
 }
 
 void draw()
 {
+	miner.updateState(mining);
 	background(0);
 	
 	fill(150,150,150,255);
 	image( backgroundImage, 0, 0, backgroundImage.width, backgroundImage.height );
   
-	strokeWeight(3);
 	stroke(200, 100, 50);
 
-    text ( "Total Profit Player " + str(miner.profitLevel), 10, 30);
-	
-	text ( "key m to mine (if on green asteroid)", 10, 70);
-	
 	dayNumber += .5;
 	
 	for (Drawable body : bodies) {
@@ -116,6 +116,8 @@ void mousePressed() {
 		  return;
 	  }
   }
+  
+  mineToggler.checkAndHandle();
 }
 
 boolean travelToBodyIfWithinReach(Body body) {
@@ -137,11 +139,11 @@ void keyPressed() {
       referencePosition = new PVector(0, 0);
     }  
   }
-
-  if ( key == 'm') {
-    Body b = miner.getLocation();
-    if (b instanceof Asteroid && !((Asteroid) b).isMined()) {
-      ((Asteroid) b).mine(miner);
-     }
-  }
+//
+//  if ( key == 'm') {
+//    Body b = miner.getLocation();
+//    if (b instanceof Asteroid && !((Asteroid) b).isMined()) {
+//      ((Asteroid) b).mine(miner);
+//     }
+//  }
 }

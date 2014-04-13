@@ -1,10 +1,16 @@
 class Player extends Drawable {
-  float cargoHold = 4000.0;
+  private float pixelsPerGallon = 0.6;
+  private float shovelSize = 2.5;
+  private float fuelLineDiameter = 0.2;
+  
+  final float cargoHold = 4000.0;
+  final float fuelTank = 100.0;
+		  
   final String name;
   
   Body location;
   
-  float fuelLevel = 100;
+  float fuelLevel = fuelTank;
   float metalLevel = 0;
   long profitLevel = 0;
   
@@ -13,6 +19,16 @@ class Player extends Drawable {
   Player( String name, Body startLocation) {
     this.name = name;
     this.location = startLocation;
+  }
+  
+  void updateState(boolean mining) {
+	  if (mining) {
+		  Asteroid minee = (Asteroid) location; // otherwise mining shouldn't be true.
+		  float removed = addMetal(min(shovelSize, minee.minableProfit));
+		  minee.mine(removed);
+	  } else if (fuelLevel < fuelTank){
+		  fuelLevel += fuelLineDiameter;
+	  }
   }
   
   void drawOnDayNumber(float dayNumber) {
@@ -30,13 +46,17 @@ class Player extends Drawable {
   }
   
   boolean isWithinReach(Body body) {
-   	float fuelRange = fuelLevel * 0.6;
+   	float fuelRange = fuelLevel * pixelsPerGallon;
    	float xDifference = abs(body.position.x - location.position.x); 
    	float yDifference = abs(body.position.y - location.position.y);
     return xDifference < fuelRange && yDifference < fuelRange && sqrt(xDifference*xDifference + yDifference*yDifference) < fuelRange;
   }
   
-  float addMetal(float change) {
+  boolean isOnAsteroid() {
+	  return location != null && location instanceof Asteroid;
+  }
+  
+  private float addMetal(float change) {
 	if (metalLevel + change < cargoHold) {
 		metalLevel += change;
 		return change;
@@ -48,9 +68,14 @@ class Player extends Drawable {
   }
   
   void setLocation(Body location) {
+	if (location == this.location) {
+		return;
+	}
+	mining = false;
 	if (location == earth) {
 		sellMetal();
 	}
+	fuelLevel -= Utils.distance(this.location.position, location.position);
     this.location = location;
   }
   

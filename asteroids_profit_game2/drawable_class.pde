@@ -77,7 +77,27 @@ class PlayerProfitBar extends PlayerStatusDrawable {
 		rect(34, 32, 200, 38);
 		textSize(30);
 		fill(255, 255, 255);
-		text("$ " + profit + "M", 38, 60);
-  textSize(12);
+		text("$ " + profit + "B", 38, 60);
+		textSize(12);
+	}
+}
+
+class MineToggler extends Drawable {
+	void drawOnDayNumber(float dayNumber) {
+		stroke(255, 255, 255);
+		fill(mining ? color(0, 0, 255) : color(255, 255, 0));
+		strokeWeight(2);
+		rect(100, height - 78, 100, 40);
+		fill(0, 0, 0);
+		textSize(20);
+		text(mining ? "Mining..." : "Mine!", 118, height - 52);
+		textSize(12);
+	}
+	
+	void checkAndHandle() {
+		if (mouseX - 100 < 100 && mouseY - (height - 78) < 40
+				&& miner.isOnAsteroid()) {
+			mining = !mining;
+		}
 	}
 }
