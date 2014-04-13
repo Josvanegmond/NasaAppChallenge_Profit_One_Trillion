@@ -1,25 +1,40 @@
 class Drawable {
 	void drawOnDayNumber(float dayNumber) {
-		
+		// For overwriting.
 	}
 }
 
-class PlayerStatusBar extends Drawable {
-	private String label;
+class PlayerStatusDrawable extends Drawable {
 	private Player player;
-	private int xv;
 	
-	PlayerStatusBar(String label, int xv, Player miner) {
-		this.label = label;
-		this.player = miner;
-		this.xv = xv;
+	protected PlayerStatusDrawable(Player player) {
+		this.player = player;
 	}
 	
 	void drawOnDayNumber(float dayNumber) {
-		drawBar(computeLevelFull(player));
+		drawWithComputedValue(computeValue(player));
 	}
 	
-	void drawBar(float levelFull) {
+	protected float computeValue(Player player) {
+		return 0.0;// For overwriting.
+	}
+	
+	protected void drawWithComputedValue(float value) {
+		// For overwriting.
+	}
+}
+
+class PlayerStatusBar extends PlayerStatusDrawable {
+	private String label;
+	private int xv;
+	
+	PlayerStatusBar(String label, int xv, Player player) {
+		super(player);
+		this.label = label;
+		this.xv = xv;
+	}
+	
+	void drawWithComputedValue(float levelFull) {
 		int rectHeight = 60;
 		int rectWidth = 20;
 		int yv = 74;
@@ -38,28 +53,31 @@ class PlayerStatusBar extends Drawable {
 		text(label, xv+7, 148);
 	}
 	
-	protected float computeLevelFull(Player player) {
+	protected float computeValue(Player player) {
 		if (label.equals("F")) {
-			return miner.fuelLevel / 100;
+			return player.fuelLevel / 100;
 		}
-		return miner.metalLevel / miner.cargoHold;
+		return player.metalLevel / miner.cargoHold;
   }
 }
 
-class PlayerProfitBar extends Drawable{
-	private Player player;
-	
+class PlayerProfitBar extends PlayerStatusDrawable {
 	PlayerProfitBar(Player player) {
-		this.player = player;  
+		super(player);
 	}
-  
-	void drawOnDayNumber(float dayNumber) {
+	
+	protected float computeValue(Player player) {
+		return player.profitLevel / 1000000;
+	}
+	
+	protected void drawWithComputedValue(float profit) {
 		stroke(255, 255, 255);
 		fill(0, 0, 0);
 		strokeWeight(2);
 		rect(34, 32, 200, 38);
 		textSize(30);
 		fill(255, 255, 255);
-		text("$ " + player.profitLevel / 1000000 + "M", 38, 60);
+		text("$ " + profit + "M", 38, 60);
+  textSize(12);
 	}
 }
