@@ -1,5 +1,4 @@
-class Player
-{
+class Player extends Drawable {
   float cargoHold = 4000.0;
   final String name;
   
@@ -16,7 +15,7 @@ class Player
     this.location = startLocation;
   }
   
-  void draw() {
+  void drawOnDayNumber(float dayNumber) {
 	  noFill();
 	  strokeWeight(2);
 	  stroke(255, 255, 255);

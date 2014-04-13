@@ -8,7 +8,8 @@ String totalStringAll = "";
 String totalString = "";
 
 ArrayList<Asteroid> asteroids = new ArrayList<Asteroid>();
-ArrayList<Body> bodies = new ArrayList<Body>(); 
+ArrayList<Body> bodies = new ArrayList<Body>();
+ArrayList<Drawable> hud = new ArrayList<Drawable>();
 
 float zoomLevel = 60;
 PVector referencePosition = new PVector( 0, 0 );
@@ -60,6 +61,9 @@ void setup() {
   
   miner = new Player("Beam", asteroids.get((int)random(  (asteroids.size()/2-1))));
 
+  hud.add(new PlayerStatusBar("F", width - 85, miner));
+  hud.add(new PlayerStatusBar("C", width - 60, miner));
+  
   fill( (255), (255), (255));
 }
 
@@ -79,46 +83,28 @@ void draw()
 	
 	dayNumber += .5;
 	
-	for (Body body : bodies) {
+	for (Drawable body : bodies) {
 		body.drawOnDayNumber(dayNumber);
 	}
 	
-	for (Asteroid asteroid : asteroids) {
+	for (Drawable asteroid : asteroids) {
 		asteroid.drawOnDayNumber(dayNumber);
 	}
 	
-	miner.draw();
-	
-	drawHud();
+	miner.drawOnDayNumber(dayNumber);
+
+	drawHud(dayNumber);
 }
 
-void drawHud() {
-	drawBar(width - 85, miner.fuelLevel / 100, "F");
-	drawBar(width - 60, miner.metalLevel / miner.cargoHold, "C");
+void drawHud(float dayNumber) {
+	for (Drawable drawable : hud) {
+		drawable.drawOnDayNumber(dayNumber);
+	}
 
 	// stroke(0, 255, 255);
 	
 	fill(150,150,150,255);
 	image( foregroundImage, 0, 0, 600, 600 );
-}
-
-void drawBar(int xv, float levelFull, String label) {
-	int rectHeight = 60;
-	int rectWidth = 20;
-	int yv = 74;
-	noStroke();
-	fill(255, 0, 0);
-	int redBarHeight = 60*(1.0-levelFull);
-	rect(xv, yv, rectWidth, redBarHeight);
-	fill(0, 255, 0);
-	rect(xv, yv + redBarHeight, rectWidth, 60*levelFull);
-	
-	noFill();
-	stroke(255, 255, 255);
-	strokeWeight(2);
-	rect(xv, yv, rectWidth, rectHeight);
-	fill(255, 255, 255);
-	text(label, xv+7, 148);
 }
 
 void mousePressed() {

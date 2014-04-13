@@ -1,4 +1,4 @@
-class Body {
+class Body extends Drawable {
   final String name;
   private final Orbit orbit;
   private final PImage bodyImage;
