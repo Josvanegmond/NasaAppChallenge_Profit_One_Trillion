@@ -80,6 +80,10 @@ class Player extends Drawable {
     this.location = location;
   }
   
+  boolean hasRoom() {
+	  return metalLevel < cargoHold;
+  }
+  
   void sellMetal() {
 	  profitLevel += 100000*metalLevel;
 	  metalLevel = 0.0;

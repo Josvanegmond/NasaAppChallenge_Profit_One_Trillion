@@ -96,7 +96,7 @@ class MineToggler extends Drawable {
 	
 	void checkAndHandle() {
 		if (mouseX - 100 < 100 && mouseY - (height - 78) < 40
-				&& miner.isOnAsteroid()) {
+				&& miner.isOnAsteroid() && miner.hasRoom()) {
 			mining = !mining;
 		}
 	}
