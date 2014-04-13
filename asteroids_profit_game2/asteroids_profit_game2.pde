@@ -1,4 +1,4 @@
-/* @pjs preload="data/space.png, data/sun.png, data/earth_small.png, data/planet.png, data/cargo.png, data/asteroid.png, data/play_screen.png"; */
+/* @pjs preload="data/space.png, data/sun.png, data/earth_small.png, data/planet.png, data/cargo.png, data/asteroid.png, data/play_screen.png, data/winner.jpg"; */
 
 int numberOfAsteroids = 500;
 float profitLimit = 350.0;
@@ -31,6 +31,7 @@ PImage cargoImage;
 PImage asteroidImage;
 PImage backgroundImage;
 PImage foregroundImage;
+PImage winnerImage;
 
 void setup() {
   size(600, 600);
@@ -43,6 +44,7 @@ void setup() {
   planetImage = loadImage("data/planet.png");
   cargoImage = loadImage("data/cargo.png");
   asteroidImage = loadImage("data/asteroid.png");
+  winnerImage = loadImage("./data/winner.jpg");
   
   bodies.add ( new Body( "Sun", new SolarOrbit(), sunImage) );
   bodies.add ( new Planet ( "Mercury", new Orbit(168.6562/180.0*PI, 0.205635, 0.387098, 4.0923344368/180.0*PI), color(255, 100, 100), 5, planetImage ) );
@@ -156,5 +158,9 @@ void keyPressed() {
 
 void profit() {
 	// Yay, you won!
-	
+	fill(0, 0, 0);
+	stroke(255, 255, 255);
+	strokeWeight(5);
+	rect(95, 95, 410, 410);
+	image(winnerImage, 100, 100);
 }
