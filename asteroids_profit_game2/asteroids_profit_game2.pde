@@ -63,6 +63,7 @@ void setup() {
 
   hud.add(new PlayerStatusBar("F", width - 85, miner));
   hud.add(new PlayerStatusBar("C", width - 60, miner));
+  hud.add(new PlayerProfitBar(miner));
   
   fill( (255), (255), (255));
 }
@@ -97,14 +98,11 @@ void draw()
 }
 
 void drawHud(float dayNumber) {
+	image( foregroundImage, 0, 0, 600, 600 );
+
 	for (Drawable drawable : hud) {
 		drawable.drawOnDayNumber(dayNumber);
 	}
-
-	// stroke(0, 255, 255);
-	
-	fill(150,150,150,255);
-	image( foregroundImage, 0, 0, 600, 600 );
 }
 
 void mousePressed() {

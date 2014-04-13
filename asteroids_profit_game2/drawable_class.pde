@@ -7,7 +7,7 @@ class Drawable {
 class PlayerStatusBar extends Drawable {
 	private String label;
 	private Player player;
-private int xv;
+	private int xv;
 	
 	PlayerStatusBar(String label, int xv, Player miner) {
 		this.label = label;
@@ -44,4 +44,22 @@ private int xv;
 		}
 		return miner.metalLevel / miner.cargoHold;
   }
+}
+
+class PlayerProfitBar extends Drawable{
+	private Player player;
+	
+	PlayerProfitBar(Player player) {
+		this.player = player;  
+	}
+  
+	void drawOnDayNumber(float dayNumber) {
+		stroke(255, 255, 255);
+		fill(0, 0, 0);
+		strokeWeight(2);
+		rect(34, 32, 200, 38);
+		textSize(30);
+		fill(255, 255, 255);
+		text("$ " + player.profitLevel / 1000000 + "M", 38, 60);
+	}
 }
