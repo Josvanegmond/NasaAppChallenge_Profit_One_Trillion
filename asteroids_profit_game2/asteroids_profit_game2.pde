@@ -1,6 +1,6 @@
 /* @pjs preload="data/space.png, data/sun.png, data/earth_small.png, data/planet.png, data/cargo.png, data/play_screen.png, data/winner.jpg"; */
 
-boolean started = false;
+boolean started = true;
 
 
 Screen currentScreen;

@@ -44,6 +44,8 @@ class Player extends Drawable {
 	  noStroke();
 	  fill(0, 200, 255, 70);
 	  ellipse( xv, yv, int(fuelLevel * 1.2), int(fuelLevel * 1.2)  );
+	  
+	  this.location.showData();
   }
   
   boolean isWithinReach(Body body) {

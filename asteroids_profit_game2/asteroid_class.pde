@@ -28,7 +28,12 @@ class Asteroid extends Body {
    	stroke(200, 100, 50);
    	strokeWeight(5);
    	ellipse( position.x, position.y, bodyImage.width, bodyImage.height );
-   	fill( 150, 150, 150 );
+   	this.showData();
+  }
+   
+  protected void showData()
+  {
+  	fill( 150, 255, 150 );
    	text( "Name: " + this.name + "\nProfit: " + this.minableProfit + " billion" , position.x + bodyImage.width, position.y );
   }
 }
