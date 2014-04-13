@@ -1,0 +1,33 @@
+#game {
+	align: center;
+	margin: auto;
+}
+
+story {
+	background-color: #FF9999; /* Damn pink! */
+}
+
+canvas {
+	display: block;
+	margin-right: auto;
+	margin-left: 100px;
+}
+
+#blinkers {
+	position: absolute;
+	left: 334px;
+	top: 574px;
+	z-level: 100;
+}
+
+#colorPicker {
+	max-width: 100%;
+}
+
+.colorSelect {
+	display: inline-block;
+	height: 20px;
+	width: 20px;
+	border: 2px solid #000000;
+	margin: 3px;
+}

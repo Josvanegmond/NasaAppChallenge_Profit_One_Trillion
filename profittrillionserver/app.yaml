@@ -1,0 +1,12 @@
+application: profittrillionserver 
+version: 1
+runtime: python27
+api_version: 1
+threadsafe: "no"
+
+handlers:
+- url: /game
+  static_dir: web/asteroids_profit_game2
+  
+- url: /.*
+  script: profitserver.app
