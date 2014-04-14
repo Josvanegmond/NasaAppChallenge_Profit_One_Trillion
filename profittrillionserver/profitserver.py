@@ -6,7 +6,6 @@ import copy
 
 ids = 0
 games = dict();
-openGames = [game for (_, game) in games if not game.has_started()]
 
 profitDict = {
     "Ceres": 522.0,
@@ -144,6 +143,7 @@ class Join(webapp.RequestHandler):
         blob = self.request.get('json')
         responseDict = {}
         try:
+            pass
             game, jsonDict = _game_from_blob(blob)
             game.playerTwo = jsonDict["player"]
             responseDict["started"] = game.has_started()
@@ -154,11 +154,10 @@ class Join(webapp.RequestHandler):
          
     
     def get(self):
-        logging.error("We're here!")
         global games
-        global openGames
-        logging.error(openGames)
-        logging.error(games)
+        logging.error("Request for list of games")
+        openGames = [[game.gameId, game.playerOne["name"], game.playerOne["color"]] for game in games.itervalues() if not game.has_started()]
+        logging.error("Returning list of %s open games" % len(openGames))
         _set_response(self.response, openGames)        
 
 
