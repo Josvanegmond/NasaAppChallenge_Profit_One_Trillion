@@ -3,9 +3,8 @@ pot.Game = function() {};
 
 pot.Game.object = undefined;
 
-pot.Game.getPJSObject = function()
-{
-	if(pot.Game.object === undefined) {
+pot.Game.getPJSObject = function() {
+	if (pot.Game.object === undefined) {
 		pot.Game.object = Processing.getInstanceById("gameScreen");
 	}
 	
@@ -75,3 +74,38 @@ pot.Game.pollForOpponent = function(gameId) {
 		});
 	}, 3000);
 };
+
+pot.Game.join = function(gameId, playerName, location, playerColor) {
+	$.ajax({
+		url: "/join",
+		type: "POST",
+		data: JSON.stringify(
+			{ 
+				gameId: gameId,
+				player: {
+					name: playerName,
+					color: playerColor,
+					location: pot.Game.getPJSObject().getPlayerLocation(),
+					profit: 0
+				}
+			}),
+		contentType: "json",
+		dataType: "json",
+		success: function(data) {
+			console.log("It's time to celebrate because HOLY SMOKES WE'RE HERE!")
+			console.log("We have data too! " + data)
+		},
+		error: pot.Game.reportError
+	});	
+}
+
+pot.Game.list = function(listProcessor) {
+	$.ajax({
+		url: "/join",
+		type: "GET",
+		contentType: "json",
+		dataType: "json",
+		success: listProcessor,
+		error: pot.Game.reportError
+	});	
+}

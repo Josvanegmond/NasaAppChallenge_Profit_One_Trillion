@@ -140,15 +140,15 @@ class Move(webapp.RequestHandler):
         
 class Join(webapp.RequestHandler):
     def post(self):
-        blob = self.request.get('json')
         responseDict = {}
         try:
-            pass
-            game, jsonDict = _game_from_blob(blob)
+            jsonDict = json.loads(self.request.body)
+            game = games[jsonDict["gameId"]]
             game.playerTwo = jsonDict["player"]
             responseDict["started"] = game.has_started()
-        except:
-            logging.error("Exception reading data joining game.")
+            responseDict["opponent"] = game.playerOne
+        except Exception as e:
+            logging.error("Exception reading data joining game. " + str(e))
             responseDict["started"] = False
         _set_response(self.response, responseDict)        
          
