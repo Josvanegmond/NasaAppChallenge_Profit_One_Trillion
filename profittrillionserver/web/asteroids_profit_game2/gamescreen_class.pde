@@ -36,6 +36,10 @@ void setGameId(int i) {
 	gameId = i;
 }
 
+void setOpponent(Player player) {
+	opponent = player;
+}
+
 class GameScreen extends Screen
 {
 	PImage backgroundImage = loadImage("./data/space.png");
@@ -93,6 +97,7 @@ class GameScreen extends Screen
 			fill(255, 255, 255);
 			text("WAITING FOR GAME", 150, 200);
 			textSize(12);
+			image( foregroundImage, 0, 0, 600, 600 );
 			return;
 		}
 		

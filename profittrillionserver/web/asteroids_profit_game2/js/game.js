@@ -91,9 +91,11 @@ pot.Game.join = function(gameId, playerName, location, playerColor) {
 			}),
 		contentType: "json",
 		dataType: "json",
-		success: function(data) {
-			console.log("It's time to celebrate because HOLY SMOKES WE'RE HERE!")
-			console.log("We have data too! " + data)
+		success: function(game) {
+			console.log("It's time to celebrate because HOLY SMOKES WE'RE HERE!");
+			console.log("We have data too! " + game);
+			console.log("We have a game id: " + game.gameId);
+			console.log("And we have an opponent called " + game.opponent["name"] + ", located at " + game.opponent["location"] + "in color " + game.opponent["color"]);
 		},
 		error: pot.Game.reportError
 	});	

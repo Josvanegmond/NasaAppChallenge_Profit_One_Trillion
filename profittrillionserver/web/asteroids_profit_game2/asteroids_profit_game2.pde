@@ -1,11 +1,8 @@
 /* @pjs preload="data/space.png, data/sun.png, data/earth_small.png, data/planet.png, data/cargo.png, data/play_screen.png, data/winner.jpg"; */
 
-boolean started = true;
-
+boolean started = false;
 
 Screen currentScreen;
-
-
 
 void setup()
 {
@@ -21,7 +18,9 @@ void start()
 void draw()
 {
 	//if intro is done, load game
-	if( currentScreen.isDone() == true ) { currentScreen = new GameScreen(); }
+	if( currentScreen.isDone() ) { 
+		currentScreen = new GameScreen();
+	}
 	
 	currentScreen.draw();
 }

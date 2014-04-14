@@ -68,7 +68,7 @@ class Game():
         self.asteroids = copy.deepcopy(profitDict)
     
     def has_started(self):
-        return self.playerTwo is not None
+        return self.playerTwo is not None and self.playerOne is not None
 
 class Player():
     def __init__(self, name, location, color, profit=0):
@@ -114,10 +114,11 @@ class Start(webapp.RequestHandler):
 
 class Move(webapp.RequestHandler):        
     def post(self):
-        blob = self.request.get('json')
+        global games
         responseDict = {}
         try:
-            game, move = _game_from_blob(blob)
+            move = json.loads(self.request.body)
+            game = games[move["gameId"]]
             name = move["name"]
             target = move["target"]
             mined = move["mined"]
@@ -146,6 +147,7 @@ class Join(webapp.RequestHandler):
             game = games[jsonDict["gameId"]]
             game.playerTwo = jsonDict["player"]
             responseDict["started"] = game.has_started()
+            responseDict["gameId"] = game.gameId
             responseDict["opponent"] = game.playerOne
         except Exception as e:
             logging.error("Exception reading data joining game. " + str(e))

@@ -1,4 +1,7 @@
 $(document).ready(function() {
+	$("#single").click(function() {
+		pot.Game.getPJSObject().start();
+	});
 	$("#create").click(pot.Page.clickCreate);
 	$("#join").click(pot.Page.clickJoin);
 });
