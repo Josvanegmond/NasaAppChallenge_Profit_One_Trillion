@@ -31,7 +31,7 @@ $(document).ready(function() {
 
 var pollForOpponent = function(gameId) {
 	console.log("starting poll for game " + gameId);
-	setInterval(function() {
+	var intervalId = setInterval(function() {
 		$.ajax({
 			url: "/start",
 			type: "GET",
@@ -41,12 +41,16 @@ var pollForOpponent = function(gameId) {
 			success: function(data) {
 				if (data.started) {
 					console.log("Game started!");
-					clearInterval();
+					clearInterval(intervalId);
 					pot.Game.getPJSObject().setOpponent(data.opponent);
 					pot.Game.getPJSObject().start();
 				}
 				else {
 					console.log("Found no opponent, game hasn't started yet.");
+					if (data.gameLost) {
+						console.log("Server timed out game, stopping poll");
+						clearInterval(intervalId);
+					}
 				}
 			},
 			error: function(e, msg) {

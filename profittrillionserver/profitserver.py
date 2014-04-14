@@ -96,15 +96,20 @@ class Start(webapp.RequestHandler):
         global games
         responseDict = {}
         try:
-            logging.error("request for game data")
-            game = games[json.loads(self.request.get("gameId"))]
-            responseDict["started"] = game.has_started()
-            logging.error("game has started %s" % game.has_started())
-            if game.has_started():
-                responseDict["opponent"] = game.playerTwo
+            gameId = json.loads(self.request.get("gameId"))
+            logging.error("request for game data with id '%s'" % gameId)
+            game = games[gameId]
+            if (game):
+                responseDict["started"] = game.has_started()
+                logging.error("game has started %s" % game.has_started())
+                if game.has_started():
+                    responseDict["opponent"] = game.playerTwo
+            else:
+                responseDict["gameLost"] = True;
+                logging.error("No game found for id: %s" % gameId)
         except Exception as e:
             logging.error("Exception reading data for game check. " + str(e))
-            responseDict["started"] = False
+            responseDict["gameLost"] = True
        
         _set_response(self.response, responseDict)
 
@@ -149,7 +154,11 @@ class Join(webapp.RequestHandler):
          
     
     def get(self):
+        logging.error("We're here!")
+        global games
         global openGames
+        logging.error(openGames)
+        logging.error(games)
         _set_response(self.response, openGames)        
 
 
