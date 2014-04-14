@@ -20,6 +20,7 @@ pot.Game.reportError = function(msg, status) {
 pot.Game.create = function(playerName, playerColor) {
 	console.log("Requesting new game from server.");
 	var location = pot.Game.getPJSObject().getPlayerLocation();
+	pot.Game.getPJSObject().setPlayerData(playerName, playerColor);
 	
 	function setIdAndStartPolling(data) {
 		console.log("created game with id " + data.gameId);

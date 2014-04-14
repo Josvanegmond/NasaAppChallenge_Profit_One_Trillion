@@ -16,6 +16,8 @@ ArrayList<Asteroid> asteroids = new ArrayList<Asteroid>();
 ArrayList<Body> bodies = new ArrayList<Body>();
 ArrayList<Drawable> hud = new ArrayList<Drawable>();
 
+HashMap<String, color> colorMap = new HashMap<String, color>();
+
 MineToggler mineToggler = new MineToggler();
 
 float zoomLevel = 60;
@@ -28,8 +30,14 @@ float dayNumber = 0;
 
 Audio audio;
 
+
 String getPlayerLocation() {
 	return miner.location.name;
+}
+
+void setPlayerData(String name, String colorHex) {
+	miner.name = name;
+	miner.playerColor = colorMap.get(colorHex);
 }
 
 void setGameId(int i) {
@@ -75,7 +83,7 @@ class GameScreen extends Screen
 	  	asteroids.add(new Asteroid(asteroidInfo[0], new Orbit(asteroidInfo), float(asteroidInfo[5]), asteroidImage ));
 	  }
 	  
-	  miner = new Player("Beam", asteroids.get((int)random(  (asteroids.size()/2-1))));
+	  miner = new Player("Beam", asteroids.get((int)random((asteroids.size()/2-1))));
 	
 	  hud.add(new PlayerStatusBar("F", width - 85, miner));
 	  hud.add(new PlayerStatusBar("C", width - 60, miner));
@@ -83,6 +91,11 @@ class GameScreen extends Screen
 	  hud.add(mineToggler);
 	  
 	  fill(255, 255, 255);
+	  
+	  colorMap.put("FF0000", color(255, 0, 0));
+	  colorMap.put("00FF00", color(0, 255, 0));
+	  colorMap.put("0000FF", color(0, 0, 255));
+	  colorMap.put("FFFF00", color(255, 255, 0));
 	}
 	
 	void draw()

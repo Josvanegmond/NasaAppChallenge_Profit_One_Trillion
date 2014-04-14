@@ -6,9 +6,9 @@ class Player extends Drawable {
   final float cargoHold = 4000.0;
   final float fuelTank = 100.0;
 		  
-  final String name;
-  
+  String name;
   Body location;
+  color playerColor;
   
   float fuelLevel = fuelTank;
   float metalLevel = 0;
@@ -35,14 +35,14 @@ class Player extends Drawable {
   void drawOnDayNumber(float dayNumber) {
 	  noFill();
 	  strokeWeight(2);
-	  stroke(255, 255, 255);
+	  stroke(playerColor != null ? playerColor : color(255, 255, 255));
 	  float xv = location.position.x;
 	  float yv = location.position.y;
 	  ellipse( xv, yv, 20, 40 );
 	  ellipse( xv, yv, 40, 20 );
 	  
 	  noStroke();
-	  fill(0, 200, 255, 70);
+	  fill(playerColor != null ? playerColor : color(0, 200, 255), 70);
 	  ellipse( xv, yv, int(fuelLevel * 1.2), int(fuelLevel * 1.2)  );
 	  
 	  this.location.showData();
