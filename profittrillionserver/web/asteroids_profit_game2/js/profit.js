@@ -5,7 +5,6 @@ $(document).ready(function() {
 		if (playerName != null && playerColor != null) {
 			console.log("Requesting new game from server.");
 			var location = pot.Game.getPJSObject().getPlayerLocation();
-			console.log(location + " is OK!");
 			$.ajax({
 				url: "/start",
 				type: "POST",
@@ -17,9 +16,9 @@ $(document).ready(function() {
 					location: pot.Game.getPJSObject().getPlayerLocation(),
 					profit: 0 }),
 				success: function(data) {
-					console.log("created game with id " + data.id);
-					pot.Game.getPJSObject().setGameId(data.id);
-					pollForOpponent(data.id);
+					console.log("created game with id " + data.gameId);
+					pot.Game.getPJSObject().setGameId(data.gameId);
+					pollForOpponent(data.gameId);
 				},
 				error: function(msg, status) {
 					console.log(msg);
@@ -31,18 +30,27 @@ $(document).ready(function() {
 });
 
 var pollForOpponent = function(gameId) {
-	console.log("starting poll");
-	setTimeout(function() {
+	console.log("starting poll for game " + gameId);
+	setInterval(function() {
 		$.ajax({
 			url: "/start",
 			type: "GET",
-			data: JSON.stringify({gameId: gameId}),
+			data: { gameId: gameId },
+			contentType: "json",
+			dataType: "json",
 			success: function(data) {
 				if (data.started) {
 					console.log("Game started!");
+					clearInterval();
 					pot.Game.getPJSObject().setOpponent(data.opponent);
 					pot.Game.getPJSObject().start();
 				}
+				else {
+					console.log("Found no opponent, game hasn't started yet.");
+				}
+			},
+			error: function(e, msg) {
+				console.log(msg);
 			}
 		});
 	}, 3000);

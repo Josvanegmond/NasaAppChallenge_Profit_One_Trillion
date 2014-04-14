@@ -50,9 +50,9 @@ profitDict = {
 }
 
 def _game_from_blob(body):
+    global games
     jsonDict = json.loads(body)
-    gameId = jsonDict["gameId"]
-    return games[gameId], jsonDict
+    return games[jsonDict["gameId"]], jsonDict
 
 def _set_response(response, responseDict):
     response.headers['Content-Type'] = 'application/json'
@@ -81,34 +81,29 @@ class Player():
 class Start(webapp.RequestHandler):
     def post(self):
         global games
-#         _set_response(self.response, { "stuff": 5 });
-        logging.error("Here")
-        logging.error("There")
         responseDict = {}
         try:
-            logging.error("A")
             player = json.loads(self.request.body)
-            logging.error("player")
+            logging.error("Starting new game for player " + player["name"])
             game = Game(player)
-            logging.error("C")
             games[game.gameId] = game
-#             logging.error("D" + str(game));
-            responseDict["id"] = game.gameId
+            responseDict["gameId"] = game.gameId
         except Exception as e:
             logging.error("Exception reading data for new game." + str(e))
         _set_response(self.response, responseDict)
         
     def get(self):
+        global games
         responseDict = {}
         try:
             logging.error("request for game data")
-            game, _ = _game_from_blob(self.request.body)
+            game = games[json.loads(self.request.get("gameId"))]
             responseDict["started"] = game.has_started()
-            logging.error(game.has_started())
+            logging.error("game has started %s" % game.has_started())
             if game.has_started():
                 responseDict["opponent"] = game.playerTwo
-        except Exception:
-            logging.error("Exception reading data for game check.")
+        except Exception as e:
+            logging.error("Exception reading data for game check. " + str(e))
             responseDict["started"] = False
        
         _set_response(self.response, responseDict)
@@ -154,6 +149,7 @@ class Join(webapp.RequestHandler):
          
     
     def get(self):
+        global openGames
         _set_response(self.response, openGames)        
 
 
