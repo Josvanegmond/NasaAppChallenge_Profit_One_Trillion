@@ -5,7 +5,7 @@ import logging
 import copy
 
 ids = 0
-games = dict();
+games = dict()
 
 profitDict = {
     "Ceres": 522.0,
