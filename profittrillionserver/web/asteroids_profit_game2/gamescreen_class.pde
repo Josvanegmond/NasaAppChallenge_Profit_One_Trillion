@@ -30,9 +30,8 @@ float dayNumber = 0;
 
 Audio audio;
 
-
 String getPlayerLocation() {
-	return miner.location.name;
+	return miner != null ? miner.location.name : null;
 }
 
 void setPlayerData(String name, String colorHex) {
@@ -42,6 +41,10 @@ void setPlayerData(String name, String colorHex) {
 
 void setGameId(int i) {
 	gameId = i;
+}
+
+boolean playerLoaded() {
+	return miner != null;
 }
 
 boolean setOpponent(String name, String location, String colorHex) {
@@ -176,7 +179,7 @@ class GameScreen extends Screen
 		stroke(255, 255, 255);
 		strokeWeight(5);
 		rect(95, 95, 410, 410);
-		image(winnerImage, 100, 100);
+		image(winnerImage, 100, 100, 400, 400);
 	}
 	
 	void mousePressed() {

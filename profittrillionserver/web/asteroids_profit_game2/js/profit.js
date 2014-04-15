@@ -19,7 +19,15 @@ $(document).ready(function() {
 	create.hide();
 	join.click(pot.Page.clickJoin);
 	join.hide();
+	login.hide();
 	$("#polling").hide();
+	
+	$("#gameScreen").click(function () {
+		var pjs = pot.Game.getPJSObject();
+		if (pjs.playerLoaded() && !pjs.started) {
+			login.show();
+		}
+	});
 });
 
 pot.Page = function() {};
