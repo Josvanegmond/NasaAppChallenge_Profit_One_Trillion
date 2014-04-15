@@ -44,8 +44,20 @@ void setGameId(int i) {
 	gameId = i;
 }
 
-void setOpponent(Player player) {
-	opponent = player;
+boolean setOpponent(String name, String location, String colorHex) {
+	Asteroid opponentLocation = null;
+	for (Asteroid asteroid : asteroids) {
+		if (asteroid.name.equals(location)) {
+			opponentLocation = asteroid;
+		}
+	}
+	if (opponentLocation == null) {
+		return false;
+	}
+	
+	opponent = new Player(name, opponentLocation);
+	opponent.playerColor = colorMap.get(colorHex);
+	return true;
 }
 
 class GameScreen extends Screen
@@ -92,6 +104,7 @@ class GameScreen extends Screen
 	  
 	  fill(255, 255, 255);
 	  
+	  // Temporary
 	  colorMap.put("FF0000", color(255, 0, 0));
 	  colorMap.put("00FF00", color(0, 255, 0));
 	  colorMap.put("0000FF", color(0, 0, 255));
@@ -127,6 +140,9 @@ class GameScreen extends Screen
 		}
 		
 		miner.drawOnDayNumber(dayNumber);
+		if (opponent != null) {
+			opponent.drawOnDayNumber(dayNumber);
+		}
 		
 		//referencePosition.x = miner.getLocation().position.x;
 		//referencePosition.y = miner.getLocation().position.y;

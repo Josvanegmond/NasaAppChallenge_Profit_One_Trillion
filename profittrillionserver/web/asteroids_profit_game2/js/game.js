@@ -49,10 +49,11 @@ pot.Game.pollForOpponent = function(gameId) {
 	
 	function handlePollResult(data) {
 		if (data.started) {
-			console.log("Game started!");
+			console.log("Found opponent: [" + data.opponent.name + ", @" + data.opponent.location + ", #" + data.opponent.color + "]");
 			clearInterval(intervalId);
-			pot.Game.getPJSObject().setOpponent(data.opponent);
+			pot.Game.getPJSObject().setOpponent(data.opponent.name, data.opponent.location, data.opponent.color);
 			pot.Game.getPJSObject().start();
+			console.log("Game started!");
 		}
 		else {
 			console.log("Found no opponent, game hasn't started yet.");
@@ -76,7 +77,8 @@ pot.Game.pollForOpponent = function(gameId) {
 	}, 3000);
 };
 
-pot.Game.join = function(gameId, playerName, location, playerColor) {
+pot.Game.join = function(gameId, playerName, playerColor) {
+	pot.Game.getPJSObject().setPlayerData(playerName, playerColor);
 	$.ajax({
 		url: "/join",
 		type: "POST",
@@ -93,10 +95,13 @@ pot.Game.join = function(gameId, playerName, location, playerColor) {
 		contentType: "json",
 		dataType: "json",
 		success: function(game) {
-			console.log("It's time to celebrate because HOLY SMOKES WE'RE HERE!");
-			console.log("We have data too! " + game);
-			console.log("We have a game id: " + game.gameId);
-			console.log("And we have an opponent called " + game.opponent["name"] + ", located at " + game.opponent["location"] + "in color " + game.opponent["color"]);
+			console.log("Joined game with id: " + game.gameId);
+			console.log("Opponent: [" + game.opponent.name + ", @" + game.opponent.location + ", #" + game.opponent.color + "]");
+			pot.Game.getPJSObject().setGameId(game.gameId)
+			pot.Game.getPJSObject().setOpponent(game.opponent.name, game.opponent.location, game.opponent.color);
+			if (game.started) {
+				pot.Game.getPJSObject().start();
+			}
 		},
 		error: pot.Game.reportError
 	});	

@@ -22,9 +22,9 @@ pot.Page.clickJoin = function() {
 	if (playerName != null && playerName != "") {
 		pot.Game.list(function(data) {
 			if (data.length > 0) {
-				gameId = data[0][0];
+				var gameId = data[0][0];
+				pot.Game.join(gameId, playerName, playerColor);
 			}
-			pot.Game.join(gameId, playerName, playerColor);
 		});
 	}	
 }
