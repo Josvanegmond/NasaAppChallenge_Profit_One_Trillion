@@ -95,7 +95,7 @@ class GameScreen extends Screen
 	  	asteroids.add(new Asteroid(asteroidInfo[0], new Orbit(asteroidInfo), float(asteroidInfo[5]), asteroidImage ));
 	  }
 	  
-	  miner = new Player("Beam", asteroids.get((int)random((asteroids.size()/2-1))));
+	  miner = new Player(null, asteroids.get((int)random((asteroids.size()/2-1))));
 	
 	  hud.add(new PlayerStatusBar("F", width - 85, miner));
 	  hud.add(new PlayerStatusBar("C", width - 60, miner));

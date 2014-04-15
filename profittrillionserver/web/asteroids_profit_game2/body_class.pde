@@ -25,7 +25,9 @@ class Body extends Drawable {
 	  // Overwrite for hover functionality.
   }
   
-  protected void showData() { }
+  protected void showData() {
+	  // Overwrite for data show functionality.
+  }
   
   boolean isUnderMouse() {
     float hWidth = bodyImage.width/2;

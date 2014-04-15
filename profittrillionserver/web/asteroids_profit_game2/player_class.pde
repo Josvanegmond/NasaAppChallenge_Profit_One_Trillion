@@ -36,7 +36,8 @@ class Player extends Drawable {
 	  boolean hasPlayerColor = playerColor != null && !playerColor.equals(0);
 	  noFill();
 	  strokeWeight(2);
-	  stroke( hasPlayerColor ? playerColor : color(255, 255, 255));
+	  color foreGroundColor = hasPlayerColor ? playerColor : color(255, 255, 255);
+	  stroke(foreGroundColor);
 	  float xv = location.position.x;
 	  float yv = location.position.y;
 	  ellipse( xv, yv, 20, 40 );
@@ -46,6 +47,10 @@ class Player extends Drawable {
 	  fill(hasPlayerColor ? playerColor : color(0, 200, 255), 70);
 	  ellipse( xv, yv, int(fuelLevel * 1.2), int(fuelLevel * 1.2)  );
 	  
+	  fill(foreGroundColor);
+	  if (name != null) {
+		  text(name, xv - location.bodyImage.width/2 - 4 - textWidth(name), yv - 8);
+	  }
 	  this.location.showData();
   }
   

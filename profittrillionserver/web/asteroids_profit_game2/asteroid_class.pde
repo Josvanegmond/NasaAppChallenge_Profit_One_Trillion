@@ -17,7 +17,7 @@ class Asteroid extends Body {
  
   void drawOnDayNumber(float dayNumber) {
 	  if (isMined()) {
-		  tint(255, 0, 0);
+		  tint(miner.playerColor);
 	  }
 	  super.drawOnDayNumber(dayNumber);
 	  noTint();
@@ -28,12 +28,12 @@ class Asteroid extends Body {
    	stroke(200, 100, 50);
    	strokeWeight(5);
    	ellipse( position.x, position.y, bodyImage.width, bodyImage.height );
-   	this.showData();
+   	showData();
   }
    
   protected void showData()
   {
   	fill( 150, 255, 150 );
-   	text( "Name: " + this.name + "\nProfit: " + this.minableProfit + " billion" , position.x + bodyImage.width, position.y );
+   	text( "Name: " + name + "\nProfit: " + minableProfit + " billion" , position.x + bodyImage.width, position.y );
   }
 }
