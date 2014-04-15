@@ -33,16 +33,17 @@ class Player extends Drawable {
   }
   
   void drawOnDayNumber(float dayNumber) {
+	  boolean hasPlayerColor = playerColor != null && !playerColor.equals(0);
 	  noFill();
 	  strokeWeight(2);
-	  stroke(playerColor != null ? playerColor : color(255, 255, 255));
+	  stroke( hasPlayerColor ? playerColor : color(255, 255, 255));
 	  float xv = location.position.x;
 	  float yv = location.position.y;
 	  ellipse( xv, yv, 20, 40 );
 	  ellipse( xv, yv, 40, 20 );
 	  
 	  noStroke();
-	  fill(playerColor != null ? playerColor : color(0, 200, 255), 70);
+	  fill(hasPlayerColor ? playerColor : color(0, 200, 255), 70);
 	  ellipse( xv, yv, int(fuelLevel * 1.2), int(fuelLevel * 1.2)  );
 	  
 	  this.location.showData();
