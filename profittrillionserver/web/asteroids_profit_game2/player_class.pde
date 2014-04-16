@@ -107,7 +107,11 @@ class Player extends Drawable {
   }
   
   boolean isTrillionaire() {
-	  return profitLevel / 1000000 > 1000;
+	  return getProfitInBillions() > 1000;
+  }
+  
+  long getProfitInBillions() {
+	  return profitLevel / 1000000;
   }
   
   Body getLocation() {

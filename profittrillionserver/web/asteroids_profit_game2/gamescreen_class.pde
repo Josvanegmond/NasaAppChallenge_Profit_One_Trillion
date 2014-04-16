@@ -85,7 +85,7 @@ void updateState(boolean moveValid, boolean mineValid, String opponentLocation, 
 			opponent.location = body;
 		}		
 	}
-	opponent.profit = opponentProfit;
+	opponent.profitLevel = opponentProfit;
 }
 
 class GameScreen extends Screen
@@ -187,6 +187,18 @@ class GameScreen extends Screen
 	
 		for (Drawable drawable : hud) {
 			drawable.drawOnDayNumber(dayNumber);
+		}
+		
+		if (miner.name != null) {
+			textSize(30);
+			fill(miner.playerColor);
+			text(miner.name, 38, 28);
+			textSize(12);
+		}
+		if (opponent != null) {
+			fill(opponent.playerColor);
+			text("Opponent: " + opponent.name + " - Profit: $ " + opponent.getProfitInBillions() + "B", 38, 82);
+			textSize(12);
 		}
 	}
 	

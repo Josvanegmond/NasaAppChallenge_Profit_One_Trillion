@@ -67,7 +67,7 @@ class PlayerProfitBar extends PlayerStatusDrawable {
 	}
 	
 	protected float computeValue(Player player) {
-		return player.profitLevel / 1000000;
+		return player.getProfitInBillions();
 	}
 	
 	protected void drawWithComputedValue(float profit) {
