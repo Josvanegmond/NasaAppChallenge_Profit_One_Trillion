@@ -15,6 +15,10 @@ void start()
 	started = true;
 }
 
+boolean hasStarted() {
+	return started;
+}
+
 void draw()
 {
 	//if intro is done, load game

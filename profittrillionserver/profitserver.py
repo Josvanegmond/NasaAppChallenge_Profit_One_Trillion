@@ -117,25 +117,29 @@ class Move(webapp.RequestHandler):
         global games
         responseDict = {}
         try:
+            logging.error("Request received to update game state")
             move = json.loads(self.request.body)
             game = games[move["gameId"]]
             name = move["name"]
             target = move["target"]
             mined = move["mined"]
-            opponent = game.playerTwo if game.playerOne.name == name else game.playerOne
-            player = game.playerOne if game.playerOne.name == name else game.playerTwo
-            sourceMetals = game.asteroids[player.location]
-            moveAllowed = opponent.location != target
+            logging.error("Moving %s to %s after having mined %s" % (name, target, mined))
+            opponent = game.playerTwo if game.playerOne["name"] == name else game.playerOne
+            player = game.playerOne if game.playerOne["name"] == name else game.playerTwo
+            sourceMetals = game.asteroids[player["location"]]
+            moveAllowed = opponent["location"] != target
             mineAllowed = sourceMetals - mined > -3
             responseDict["moveAllowed"] = moveAllowed
             responseDict["mineAllowed"] = mineAllowed
+            responseDict["opponentLocation"] = opponent["location"]
+            responseDict["opponentProfit"] = opponent["profit"]
             if mineAllowed:
-                game.asteroids[player.location] = sourceMetals - mined
+                game.asteroids[player["location"]] = sourceMetals - mined
             if moveAllowed:
-                player.location = target
-                player.profit = move["profit"]
-        except:
-            logging.error("Exception reading data for move.")
+                player["location"] = target
+                player["profit"] = move["profit"]
+        except Exception as e:
+            logging.error("Exception reading data for move. %s" % e)
             pass
         _set_response(self.response, responseDict)
         

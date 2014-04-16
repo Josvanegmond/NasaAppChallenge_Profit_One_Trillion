@@ -80,6 +80,30 @@ pot.Game.pollForOpponent = function(gameId) {
 	}, 3000);
 };
 
+pot.Game.checkMove = function(i, player, body, minedOnPrevious, totalProfit) {
+	console.log("Move checker called");
+	var requestObject = { 
+			gameId: i,
+			name: player,
+			target: body,
+			mined: minedOnPrevious,
+			profit: totalProfit
+		};
+	console.log(requestObject);
+	$.ajax({
+		url: "/move",
+		type: "POST",
+		data: JSON.stringify(requestObject),
+		contentType: "json",
+		dataType: "json",
+		success: function(game) {
+			console.log("Gamestate returned: [" + game.moveAllowed + ", " + game.mineAllowed + ", " + game.opponentLocation + ", " + game.opponentProfit +"]");
+			pot.Game.getPJSObject().updateState(game.moveAllowed, game.mineAllowed, game.opponentLocation, game.opponentProfit);
+		},
+		error: pot.Game.reportError
+	});	
+}
+
 pot.Game.join = function(gameId, playerName, playerColor) {
 	pot.Game.getPJSObject().setPlayerData(playerName, playerColor);
 	$.ajax({

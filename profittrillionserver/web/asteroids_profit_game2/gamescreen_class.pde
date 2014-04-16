@@ -1,14 +1,12 @@
-
-int numberOfAsteroids = 500;
-float profitLimit = 350.0;
-float distanceForConnection = 40.0 ;
-
-String totalStringAll = "";
-String totalString = "";
+interface MoveChecker {
+	void checkMove(int gameId, String name, String location, float mined, long profit);
+}
 
 Player miner;
 Player opponent;
 Planet earth;
+
+Body proposedMove;
 
 int gameId;
 
@@ -19,6 +17,7 @@ ArrayList<Drawable> hud = new ArrayList<Drawable>();
 HashMap<String, color> colorMap = new HashMap<String, color>();
 
 MineToggler mineToggler = new MineToggler();
+MoveChecker moveChecker = null;
 
 float zoomLevel = 60;
 PVector referencePosition = new PVector( 0, 0 );
@@ -63,6 +62,27 @@ boolean setOpponent(String name, String location, String colorHex) {
 	return true;
 }
 
+void setMoveChecker(MoveChecker checker) {
+	moveChecker = checker;
+}
+
+boolean hasNoMoveChecker() {
+	return moveChecker == null;
+}
+
+void updateState(boolean moveValid, boolean mineValid, String opponentLocation, long opponentProfit) {
+	if (moveValid) {
+		miner.setLocation(proposedMove);
+		proposedMove == null;
+	}
+	for (Asteroid asteroid : asteroids) {
+		if (asteroid.name.equals(opponentLocation)) {
+			opponent.location = asteroid;
+		}
+	}
+	opponent.profit = opponentProfit;
+}
+
 class GameScreen extends Screen
 {
 	PImage backgroundImage = loadImage("./data/space.png");
@@ -95,7 +115,7 @@ class GameScreen extends Screen
 	  String lines[] = loadStrings("./data/asteroids.dat");
 	  for (String line : lines) {
 		String[] asteroidInfo = split(line, ",");
-	  	asteroids.add(new Asteroid(asteroidInfo[0], new Orbit(asteroidInfo), float(asteroidInfo[5]), asteroidImage ));
+	  	asteroids.add(new Asteroid(asteroidInfo[0], new Orbit(asteroidInfo), float(asteroidInfo[5]), asteroidImage));
 	  }
 	  
 	  miner = new Player(null, asteroids.get((int)random((asteroids.size()/2-1))));
@@ -167,7 +187,15 @@ class GameScreen extends Screen
 	
 	boolean travelToBodyIfWithinReach(Body body) {
 	  if (body.isUnderMouse() && miner.isWithinReach(body)) {
-		  miner.setLocation(body);
+		  if (opponent == null) {
+			  miner.setLocation(body);
+		  } else {
+			  println("Calling moveChecker");
+			  proposedMove = body;
+			  minedProfit = miner.isOnAsteroid() ? miner.profitOnEntry - miner.location.minableProfit : 0;
+			  moveChecker.checkMove(gameId, miner.name, body.name, minedProfit, miner.profitLevel);
+			  println("Called moveChecker");
+		  }
 		  return true;
 	  }
 	  return false;

@@ -24,8 +24,10 @@ $(document).ready(function() {
 	
 	$("#gameScreen").click(function () {
 		var pjs = pot.Game.getPJSObject();
-		if (pjs.playerLoaded() && !pjs.started) {
+		if (pjs.playerLoaded() && !pjs.hasStarted()) {
+			console.log("Registering move checker and showing menu");
 			login.show();
+			pjs.setMoveChecker(pot.Game);
 		}
 	});
 });

@@ -1,7 +1,7 @@
 class Player extends Drawable {
   private float pixelsPerGallon = 0.6;
   private float shovelSize = 2.5;
-  private float fuelLineDiameter = 0.1;
+  private float fuelLineDiameter = 0.15;
   
   final float cargoHold = 4000.0;
   final float fuelTank = 100.0;
@@ -13,12 +13,14 @@ class Player extends Drawable {
   float fuelLevel = fuelTank;
   float metalLevel = 0;
   long profitLevel = 0;
+  float profitOnEntry = 0.0;
   
   PVector targetLocation;
   
   Player( String name, Body startLocation) {
     this.name = name;
     this.location = startLocation;
+    profitOnEntry = startLocation.minableProfit;
   }
   
   void updateState() {
@@ -33,6 +35,9 @@ class Player extends Drawable {
   }
   
   void drawOnDayNumber(float dayNumber) {
+	  if (location == null) {
+		  return;
+	  }
 	  boolean hasPlayerColor = playerColor != null && !playerColor.equals(0);
 	  noFill();
 	  strokeWeight(2);
@@ -85,6 +90,9 @@ class Player extends Drawable {
 		sellMetal();
 	}
 	fuelLevel -= Utils.distance(this.location.position, location.position);
+	if (location instanceof Asteroid) {
+		profitOnEntry = ((Asteroid) location).minableProfit;
+	}
     this.location = location;
   }
   
