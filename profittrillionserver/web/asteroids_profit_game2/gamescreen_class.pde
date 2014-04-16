@@ -80,6 +80,11 @@ void updateState(boolean moveValid, boolean mineValid, String opponentLocation, 
 			opponent.location = asteroid;
 		}
 	}
+	for (Body body : bodies) {
+		if (body.name.equals(opponentLocation)) {
+			opponent.location = body;
+		}		
+	}
 	opponent.profit = opponentProfit;
 }
 
@@ -190,11 +195,9 @@ class GameScreen extends Screen
 		  if (opponent == null) {
 			  miner.setLocation(body);
 		  } else {
-			  println("Calling moveChecker");
 			  proposedMove = body;
 			  minedProfit = miner.isOnAsteroid() ? miner.profitOnEntry - miner.location.minableProfit : 0;
 			  moveChecker.checkMove(gameId, miner.name, body.name, minedProfit, miner.profitLevel);
-			  println("Called moveChecker");
 		  }
 		  return true;
 	  }

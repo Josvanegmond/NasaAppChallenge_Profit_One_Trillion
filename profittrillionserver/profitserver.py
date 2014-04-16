@@ -124,20 +124,28 @@ class Move(webapp.RequestHandler):
             target = move["target"]
             mined = move["mined"]
             logging.error("Moving %s to %s after having mined %s" % (name, target, mined))
+            
             opponent = game.playerTwo if game.playerOne["name"] == name else game.playerOne
             player = game.playerOne if game.playerOne["name"] == name else game.playerTwo
-            sourceMetals = game.asteroids[player["location"]]
+            
+            mineAllowed = False
+            source = player["location"]
+            if source in game.asteroids:
+                sourceMetals = game.asteroids[source]
+                mineAllowed = sourceMetals - mined > -3 if sourceMetals else False
+                if mineAllowed:
+                    game.asteroids[source] = sourceMetals - mined
+            
             moveAllowed = opponent["location"] != target
-            mineAllowed = sourceMetals - mined > -3
+            if moveAllowed:
+                player["location"] = target
+                player["profit"] = move["profit"]
+
             responseDict["moveAllowed"] = moveAllowed
             responseDict["mineAllowed"] = mineAllowed
             responseDict["opponentLocation"] = opponent["location"]
             responseDict["opponentProfit"] = opponent["profit"]
-            if mineAllowed:
-                game.asteroids[player["location"]] = sourceMetals - mined
-            if moveAllowed:
-                player["location"] = target
-                player["profit"] = move["profit"]
+            
         except Exception as e:
             logging.error("Exception reading data for move. %s" % e)
             pass
