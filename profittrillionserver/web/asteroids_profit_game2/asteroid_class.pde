@@ -20,7 +20,7 @@ class Asteroid extends Body {
  
   void drawOnDayNumber(float dayNumber) {
 	  if (isMined()) {
-//		  tint(opponentMined ? opponent.playerColor : miner.playerColor);
+//		  tint(opponentMined ? opponent.playerColor : miner.playerColor); // This works only partially, I suspect a bug in the tint code. Perhaps a bug report might be worth the effort.
 		  tint(miner.playerColor);
 	  }
 	  super.drawOnDayNumber(dayNumber);
