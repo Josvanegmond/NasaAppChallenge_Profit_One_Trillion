@@ -1,4 +1,4 @@
-/* @pjs preload="data/splash.png, data/mission1.jpg, data/mission2.jpg, data/mission3.jpg, data/mission4.jpg, data/mission5.jpg"; */
+/* @pjs preload="/data/splash.png, /data/mission1.jpg, /data/mission2.jpg, /data/mission3.jpg, /data/mission4.jpg, /data/mission5.jpg"; */
 
 class IntroScreen extends Screen
 {
@@ -13,12 +13,12 @@ class IntroScreen extends Screen
 	
 	public IntroScreen()
 	{
-		splash = loadImage("./data/Splash.png");
-		mission1 = loadImage("./data/mission1.jpg");
-		mission2 = loadImage("./data/mission2.jpg");
-		mission3 = loadImage("./data/mission3.jpg");
-		mission4 = loadImage("./data/mission4.jpg");
-		mission5 = loadImage("./data/mission5.jpg");
+		splash = loadImage("/data/Splash.png");
+		mission1 = loadImage("/data/mission1.jpg");
+		mission2 = loadImage("/data/mission2.jpg");
+		mission3 = loadImage("/data/mission3.jpg");
+		mission4 = loadImage("/data/mission4.jpg");
+		mission5 = loadImage("/data/mission5.jpg");
 	}
 	
 	void draw()

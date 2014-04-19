@@ -5,9 +5,9 @@ var pot = {};
 (function()
 {
 	// Scripts
-	addScript("js/processing.js");
-	addScript("js/game.js");
-	addScript("js/profit.js");
+	addScript("/js/processing.js");
+	addScript("/js/game.js");
+	addScript("/js/profit.js");
 	
 	function addScript(url)
 	{

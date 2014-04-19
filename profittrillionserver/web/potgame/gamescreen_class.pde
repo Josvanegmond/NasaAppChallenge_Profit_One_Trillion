@@ -99,15 +99,15 @@ void updateState(boolean moveValid, boolean mineValid, String opponentLocation, 
 
 class GameScreen extends Screen
 {
-	PImage backgroundImage = loadImage("./data/space.png");
-	PImage foregroundImage = loadImage("./data/play_screen.png");
+	PImage backgroundImage = loadImage("/data/space.png");
+	PImage foregroundImage = loadImage("/data/play_screen.png");
 	
-	PImage sunImage = loadImage("./data/sun.png");
-	PImage earthImage = loadImage("./data/earth_small.png");
-	PImage planetImage = loadImage("./data/planet.png");
-	PImage cargoImage = loadImage("./data/cargo.png");
-	PImage winnerImage = loadImage("./data/winner.jpg");
-	PImage asteroidImage = loadImage("./data/asteroid.png");
+	PImage sunImage = loadImage("/data/sun.png");
+	PImage earthImage = loadImage("/data/earth_small.png");
+	PImage planetImage = loadImage("/data/planet.png");
+	PImage cargoImage = loadImage("/data/cargo.png");
+	PImage winnerImage = loadImage("/data/winner.jpg");
+	PImage asteroidImage = loadImage("/data/asteroid.png");
 
 	public GameScreen()
 	{
@@ -126,7 +126,7 @@ class GameScreen extends Screen
 	  bodies.add ( new Body ( "cargo", new Orbit(19.8950/180.0*PI, 0.9, 2.20256, 1.0/180.0*PI), cargoImage));
 	
 	  //Asteroids data loading
-	  String lines[] = loadStrings("./data/asteroids.dat");
+	  String lines[] = loadStrings("/data/asteroids.dat");
 	  for (String line : lines) {
 		String[] asteroidInfo = split(line, ",");
 	  	asteroids.add(new Asteroid(asteroidInfo[0], new Orbit(asteroidInfo), float(asteroidInfo[5]), asteroidImage));
@@ -263,15 +263,15 @@ class GameScreen extends Screen
 	void newSound()
 	{
 		int random = int(Math.random() * 9);
-		if( random == 0 ) audio.setAttribute("src","./sounds/11023.mp3");
-		if( random == 1 ) audio.setAttribute("src","./sounds/11025.mp3");
-		if( random == 2 ) audio.setAttribute("src","./sounds/843.mp3");
-		if( random == 3 ) audio.setAttribute("src","./sounds/850.mp3");
-		if( random == 4 ) audio.setAttribute("src","./sounds/866.mp3");
-		if( random == 5 ) audio.setAttribute("src","./sounds/868.mp3");
-		if( random == 6 ) audio.setAttribute("src","./sounds/850.mp3");
-		if( random == 7 ) audio.setAttribute("src","./sounds/851.mp3");
-		if( random == 8 ) audio.setAttribute("src","./sounds/848.mp3");
+		if( random == 0 ) audio.setAttribute("src","/sounds/11023.mp3");
+		if( random == 1 ) audio.setAttribute("src","/sounds/11025.mp3");
+		if( random == 2 ) audio.setAttribute("src","/sounds/843.mp3");
+		if( random == 3 ) audio.setAttribute("src","/sounds/850.mp3");
+		if( random == 4 ) audio.setAttribute("src","/sounds/866.mp3");
+		if( random == 5 ) audio.setAttribute("src","/sounds/868.mp3");
+		if( random == 6 ) audio.setAttribute("src","/sounds/850.mp3");
+		if( random == 7 ) audio.setAttribute("src","/sounds/851.mp3");
+		if( random == 8 ) audio.setAttribute("src","/sounds/848.mp3");
 		
 		audio.addEventListener("ended", newSound);
 		audio.play();

@@ -1,4 +1,4 @@
-/* @pjs preload="data/asteroid.png"; */
+/* @pjs preload="/data/asteroid.png"; */
 
 class Asteroid extends Body {  
   float minableProfit;

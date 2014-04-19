@@ -5,6 +5,10 @@ api_version: 1
 threadsafe: "no"
 
 handlers:
+- url: /game/index.html
+  static_files: web/index.html
+  upload: web/index.html
+  
 - url: /game/.*
   script: profitserver.app
 
