@@ -6,7 +6,7 @@ threadsafe: "no"
 
 handlers:
 - url: /game
-  static_dir: web/potgame
+  static_dir: web
   
 - url: /.*
   script: profitserver.app

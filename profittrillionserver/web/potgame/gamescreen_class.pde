@@ -273,7 +273,7 @@ class GameScreen extends Screen
 		if( random == 7 ) audio.setAttribute("src","./sounds/851.mp3");
 		if( random == 8 ) audio.setAttribute("src","./sounds/848.mp3");
 		
-		audio.addEventListener("ended",newSound);
+		audio.addEventListener("ended", newSound);
 		audio.play();
 	}
 }
