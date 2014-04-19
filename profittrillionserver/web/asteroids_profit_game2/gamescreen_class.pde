@@ -70,6 +70,15 @@ boolean hasNoMoveChecker() {
 	return moveChecker == null;
 }
 
+void handleOpponentMine(String asteroidName, float mined) {
+	for (Asteroid asteroid : asteroids) {
+		if (asteroid.name.equals(asteroidName)) {
+			asteroid.mine(mined, opponent.playerColor);
+			return;
+		}
+	}
+}
+
 void updateState(boolean moveValid, boolean mineValid, String opponentLocation, long opponentProfit) {
 	if (moveValid) {
 		miner.setLocation(proposedMove);

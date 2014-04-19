@@ -1,18 +1,21 @@
 /* @pjs preload="data/asteroid.png"; */
 
 class Asteroid extends Body {  
-  float minableProfit; 
+  float minableProfit;
+  color tintColor;
+  
   Asteroid(String name, Orbit orbit, float minableProfit, PImage asteroidImage ) {
     super(name, orbit, asteroidImage );
     this.minableProfit = minableProfit;
   }
   
-  void mine(float minedProfit) {
+  void mine(float minedProfit, color mineTint) {
      minableProfit -= minedProfit;
+     tintColor = mineTint;
   }
   
   boolean isMined() {
-    return minableProfit < 1;
+    return minableProfit <= 0;
   }
  
   void drawOnDayNumber(float dayNumber) {

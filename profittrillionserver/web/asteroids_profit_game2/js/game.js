@@ -1,4 +1,3 @@
-
 pot.Game = function() {};
 
 pot.Game.object = undefined;
@@ -81,24 +80,28 @@ pot.Game.pollForOpponent = function(gameId) {
 };
 
 pot.Game.checkMove = function(i, player, body, minedOnPrevious, totalProfit) {
-	console.log("Move checker called");
-	var requestObject = { 
+	$.ajax({
+		url: "/move",
+		type: "POST",
+		data: JSON.stringify({ 
 			gameId: i,
 			name: player,
 			target: body,
 			mined: minedOnPrevious,
 			profit: totalProfit
-		};
-	console.log(requestObject);
-	$.ajax({
-		url: "/move",
-		type: "POST",
-		data: JSON.stringify(requestObject),
+		}),
 		contentType: "json",
 		dataType: "json",
 		success: function(game) {
 			console.log("Gamestate returned: [" + game.moveAllowed + ", " + game.mineAllowed + ", " + game.opponentLocation + ", " + game.opponentProfit +"]");
-			pot.Game.getPJSObject().updateState(game.moveAllowed, game.mineAllowed, game.opponentLocation, game.opponentProfit);
+			var pjs = pot.Game.getPJSObject();
+			for (var asteroid in game.opponentHistory) {
+				if (game.opponentHistory.hasOwnProperty(asteroid)) {
+					console.log("Opponent mined " + game.opponentHistory[asteroid] + " from " + asteroid);
+					pjs.handleOpponentMine(asteroid, game.opponentHistory[asteroid]);
+				}
+			}
+			pjs.updateState(game.moveAllowed, game.mineAllowed, game.opponentLocation, game.opponentProfit);
 		},
 		error: pot.Game.reportError
 	});	

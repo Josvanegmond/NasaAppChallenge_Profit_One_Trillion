@@ -48,34 +48,23 @@ profitDict = {
     "Venusia": 430.0
 }
 
-def _game_from_blob(body):
-    global games
-    jsonDict = json.loads(body)
-    return games[jsonDict["gameId"]], jsonDict
-
 def _set_response(response, responseDict):
     response.headers['Content-Type'] = 'application/json'
-    response.out.write(json.dumps(responseDict)) # Game ID
-
+    response.out.write(json.dumps(responseDict))
 
 class Game():
     def __init__(self, playerOne, playerTwo=None):
         global ids
         self.gameId = ids+1
         ids = self.gameId
-        self.playerOne = playerOne
-        self.playerTwo = playerTwo
+        self.playerOne = playerOne #JSON dict from create request
+        self.playerOneHistory = dict()
+        self.playerTwo = playerTwo #JSON dict from join request
+        self.playerTwoHistory = dict()
         self.asteroids = copy.deepcopy(profitDict)
     
     def has_started(self):
         return self.playerTwo is not None and self.playerOne is not None
-
-class Player():
-    def __init__(self, name, location, color, profit=0):
-        self.name = name
-        self.location = location
-        self.color = color
-        self.profit = profit
 
 class Start(webapp.RequestHandler):
     def post(self):
@@ -125,15 +114,19 @@ class Move(webapp.RequestHandler):
             mined = move["mined"]
             logging.error("Moving %s to %s after having mined %s" % (name, target, mined))
             
-            opponent = game.playerTwo if game.playerOne["name"] == name else game.playerOne
-            player = game.playerOne if game.playerOne["name"] == name else game.playerTwo
+            isPlayerOne = game.playerOne["name"] == name
+            opponent = game.playerTwo if isPlayerOne else game.playerOne
+            opponentHistory = game.playerTwoHistory if isPlayerOne else game.playerOneHistory
+            player = game.playerOne if isPlayerOne else game.playerTwo
+            playerHistory = game.playerOneHistory if isPlayerOne else game.playerTwoHistory
             
             mineAllowed = False
             source = player["location"]
             if source in game.asteroids:
                 sourceMetals = game.asteroids[source]
                 mineAllowed = sourceMetals - mined > -3 if sourceMetals else False
-                if mineAllowed:
+                if mineAllowed and mined > 0:
+                    playerHistory[source] = mined if source not in playerHistory else playerHistory[source] + mined
                     game.asteroids[source] = sourceMetals - mined
             
             moveAllowed = opponent["location"] != target
@@ -145,6 +138,8 @@ class Move(webapp.RequestHandler):
             responseDict["mineAllowed"] = mineAllowed
             responseDict["opponentLocation"] = opponent["location"]
             responseDict["opponentProfit"] = opponent["profit"]
+            responseDict["opponentHistory"] = copy.deepcopy(opponentHistory)
+            opponentHistory.clear()
             
         except Exception as e:
             logging.error("Exception reading data for move. %s" % e)

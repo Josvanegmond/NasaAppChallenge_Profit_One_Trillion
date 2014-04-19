@@ -27,7 +27,7 @@ class Player extends Drawable {
 	  if (mining) {
 		  Asteroid minee = (Asteroid) location; // otherwise mining shouldn't be true.
 		  float removed = addMetal(min(shovelSize, minee.minableProfit));
-		  minee.mine(removed);
+		  minee.mine(removed, playerColor);
 		  mining = !minee.isMined();
 	  } else if (fuelLevel < fuelTank){
 		  fuelLevel += fuelLineDiameter;
