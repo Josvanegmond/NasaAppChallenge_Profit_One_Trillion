@@ -2,16 +2,16 @@
 
 class Asteroid extends Body {  
   float minableProfit;
-  color tintColor;
+  boolean opponentMined = false;
   
   Asteroid(String name, Orbit orbit, float minableProfit, PImage asteroidImage ) {
     super(name, orbit, asteroidImage );
     this.minableProfit = minableProfit;
   }
   
-  void mine(float minedProfit, color mineTint) {
+  void mine(float minedProfit, boolean opponentMined) {
      minableProfit -= minedProfit;
-     tintColor = mineTint;
+     this.opponentMined = opponentMined;
   }
   
   boolean isMined() {
@@ -20,6 +20,7 @@ class Asteroid extends Body {
  
   void drawOnDayNumber(float dayNumber) {
 	  if (isMined()) {
+//		  tint(opponentMined ? opponent.playerColor : miner.playerColor);
 		  tint(miner.playerColor);
 	  }
 	  super.drawOnDayNumber(dayNumber);

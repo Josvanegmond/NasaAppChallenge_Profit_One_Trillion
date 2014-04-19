@@ -73,7 +73,7 @@ boolean hasNoMoveChecker() {
 void handleOpponentMine(String asteroidName, float mined) {
 	for (Asteroid asteroid : asteroids) {
 		if (asteroid.name.equals(asteroidName)) {
-			asteroid.mine(mined, opponent.playerColor);
+			asteroid.mine(mined, true);
 			return;
 		}
 	}
