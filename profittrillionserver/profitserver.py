@@ -171,7 +171,7 @@ class Join(webapp.RequestHandler):
 
 
 app = webapp.WSGIApplication([
-        ('/move', Move),
-        ('/start', Start),
-        ('/join', Join)
+        ('/game/move', Move),
+        ('/game/start', Start),
+        ('/game/join', Join)
         ], debug=True)

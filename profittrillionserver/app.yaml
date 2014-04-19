@@ -1,12 +1,17 @@
 application: profittrillionserver 
-version: 1
+version: 1-alpha-1
 runtime: python27
 api_version: 1
 threadsafe: "no"
 
 handlers:
-- url: /game
-  static_dir: web
-  
-- url: /.*
+- url: /game/.*
   script: profitserver.app
+
+- url: /
+  static_files: web/index.html
+  upload: web/index.html
+  
+- url: /(.+)
+  static_files: web/\1
+  upload: web/(.+)

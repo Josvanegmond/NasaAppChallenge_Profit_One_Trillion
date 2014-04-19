@@ -28,7 +28,7 @@ pot.Game.create = function(playerName, playerColor) {
 	};
 	
 	$.ajax({
-		url: "/start",
+		url: "/game/start",
 		type: "POST",
 		contentType: "json",
 		dataType: "json",
@@ -68,7 +68,7 @@ pot.Game.pollForOpponent = function(gameId) {
 	
 	intervalId = setInterval(function() {
 		$.ajax({
-			url: "/start",
+			url: "/game/start",
 			type: "GET",
 			data: { gameId: gameId },
 			contentType: "json",
@@ -81,7 +81,7 @@ pot.Game.pollForOpponent = function(gameId) {
 
 pot.Game.checkMove = function(i, player, body, minedOnPrevious, totalProfit) {
 	$.ajax({
-		url: "/move",
+		url: "/game/move",
 		type: "POST",
 		data: JSON.stringify({ 
 			gameId: i,
@@ -110,7 +110,7 @@ pot.Game.checkMove = function(i, player, body, minedOnPrevious, totalProfit) {
 pot.Game.join = function(gameId, playerName, playerColor) {
 	pot.Game.getPJSObject().setPlayerData(playerName, playerColor);
 	$.ajax({
-		url: "/join",
+		url: "/game/join",
 		type: "POST",
 		data: JSON.stringify(
 			{ 
@@ -140,7 +140,7 @@ pot.Game.join = function(gameId, playerName, playerColor) {
 
 pot.Game.list = function(listProcessor) {
 	$.ajax({
-		url: "/join",
+		url: "/game/join",
 		type: "GET",
 		contentType: "json",
 		dataType: "json",
