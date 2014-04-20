@@ -4,22 +4,20 @@ $(document).ready(function() {
 	var create = $("#create");
 	var join = $("#join");
 	var lobby = $("#lobby");
+	var multilobby = $("#multilobby");
 	single.click(function() {
 		pot.Game.getPJSObject().start();
 		lobby.hide();
 	});
 	multi.click(function() {
-		single.hide();
-		multi.hide();
-		create.show();
-		join.show();
+		$("#gameselection").hide();
+		multilobby.show();
 	});
 	
 	create.click(pot.Page.clickCreate);
-	create.hide();
 	join.click(pot.Page.clickJoin);
-	join.hide();
 	lobby.hide();
+	multilobby.hide();
 	$("#polling").hide();
 	
 	var enabledMoveChecker = false;
