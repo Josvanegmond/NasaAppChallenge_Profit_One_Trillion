@@ -41,7 +41,7 @@ pot.Page.clickCreate = function() {
 	var playerColor = $("#colorPicker").val();
 	if (playerName != null && playerName != "") {
 		pot.Game.create(playerName, playerColor);
-		$("#login").hide();
+		$("#lobby").hide();
 		$("#polling").show();
 	}	
 }

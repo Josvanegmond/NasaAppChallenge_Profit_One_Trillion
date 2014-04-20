@@ -14,3 +14,12 @@ body {
 	height: 100%;
 	width: 100%;
 }
+
+.window {
+	display: block;
+	background-color: rgba(191, 255, 0, 0.5);
+	border: 2px solid green;
+	margin: auto;
+	margin-top: 80px;
+	width: 500px;
+}
