@@ -58,6 +58,9 @@ pot.Page.refreshGameList = function() {
 	var gameList = $("#gamelist");
 	pot.Game.list(function(data) {
 		gameList.empty();
+		if (data.length == 0) {
+			gameList.append("No games available to join, why not create one?")
+		}
 		data.forEach(function(info) {
 			// Info is a list of structure: [gameId, playerName, playerColor]
 			var colorBlock = $("<div></div>")
@@ -71,8 +74,11 @@ pot.Page.refreshGameList = function() {
 				.append(info[1])
 				.append(colorBlock)
 				.click(function () {
+					var wasSelected = $(".game[data-game-id='" + info[0] +"']").attr("data-selected");
 					$(".game").attr("data-selected", null);
-					$(".game[data-game-id='" + info[0] +"']").attr("data-selected", "true")
+					if (!wasSelected) {
+						$(".game[data-game-id='" + info[0] +"']").attr("data-selected", "true");
+					}
 				});
 			gameList.append(gameRow);
 		});
