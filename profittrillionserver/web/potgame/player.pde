@@ -8,7 +8,7 @@ class Player extends Drawable {
 		  
   String name;
   Body location;
-  color playerColor;
+  color playerColor = color(180, 180, 255);
   
   float fuelLevel = fuelTank;
   float metalLevel = 0;
@@ -38,21 +38,20 @@ class Player extends Drawable {
 	  if (location == null) {
 		  return;
 	  }
-	  boolean hasPlayerColor = playerColor != null && !playerColor.equals(0);
+
 	  noFill();
 	  strokeWeight(2);
-	  color foreGroundColor = hasPlayerColor ? playerColor : color(255, 255, 255);
-	  stroke(foreGroundColor);
+	  stroke(playerColor);
 	  float xv = location.position.x;
 	  float yv = location.position.y;
 	  ellipse( xv, yv, 20, 40 );
 	  ellipse( xv, yv, 40, 20 );
 	  
 	  noStroke();
-	  fill(hasPlayerColor ? playerColor : color(0, 200, 255), 70);
+	  fill(playerColor, 70);
 	  ellipse( xv, yv, int(fuelLevel * 1.2), int(fuelLevel * 1.2)  );
 	  
-	  fill(foreGroundColor);
+	  fill(playerColor);
 	  if (name != null) {
 		  text(name, xv - location.bodyImage.width/2 - 4 - textWidth(name), yv - 8);
 	  }
