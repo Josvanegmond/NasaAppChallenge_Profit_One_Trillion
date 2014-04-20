@@ -1,3 +1,5 @@
+/* @pjs preload="/data/go-mining.jpg, /data/go-mining-disabled.jpg, /data/asteroid.working.jpg" */
+
 class Drawable {
 	void drawOnDayNumber(float dayNumber) {
 		// For overwriting.
@@ -83,21 +85,35 @@ class PlayerProfitBar extends PlayerStatusDrawable {
 }
 
 class MineToggler extends Drawable {
+	private PImage goMining;
+	private PImage goMiningDisabled;
+	private PImage working;
+	
+	MineToggler() {
+		goMining = loadImage("/data/go-mining.jpg");
+		goMiningDisabled = loadImage("/data/go-mining-disabled.jpg");
+		working = loadImage("/data/working.jpg");
+	}
+	
 	void drawOnDayNumber(float dayNumber) {
 		stroke(255, 255, 255);
-		fill(mining ? color(0, 0, 255) : color(255, 255, 0));
+		noFill();
 		strokeWeight(2);
-		rect(100, height - 78, 100, 40);
-		fill(0, 0, 0);
-		textSize(20);
-		text(mining ? "Mining..." : "Mine!", 118, height - 52);
-		textSize(12);
+		rect(99, height - 79, 102, 42);
+		PImage goMiningButton = canGoMining() ? goMining : goMiningDisabled;
+		PImage buttonImage = mining ? working : goMiningButton;
+		image(buttonImage, 99, height - 79);
 	}
 	
 	void checkAndHandle() {
-		if (mouseX - 100 < 100 && mouseY - (height - 78) < 40
-				&& miner.isOnAsteroid() && miner.hasRoom()) {
+		int xRelative = mouseX - 99;
+		int yRelative = mouseY - (height - 79);
+		if (xRelative < 102 && xRelative >= 0 && yRelative < 42 && yRelative >= 0 && canGoMining()) {
 			mining = !mining;
 		}
+	}
+	
+	private boolean canGoMining() {
+		return miner.isOnAsteroid() && miner.hasRoom() && !((Asteroid)miner.location).isMined();
 	}
 }
