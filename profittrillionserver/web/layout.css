@@ -1,10 +1,10 @@
+body {
+	background-image: url("/data/background-earth-rise.jpg");
+}
+
 #game {
 	align: center;
 	margin: auto;
-}
-
-story {
-	background-color: #FF9999; /* Damn pink! */
 }
 
 canvas {
