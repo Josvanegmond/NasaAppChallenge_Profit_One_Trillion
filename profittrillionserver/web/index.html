@@ -46,21 +46,24 @@
 	<div id="lobby" class="layer">
 		<div class="window">
 			<div id="gameselection">
-				<div class="header block biglabel">CHOOSE GAME TYPE</div>
+				<div class="block line biglabel">CHOOSE GAME TYPE</div>
 				<div class="content">
 					<div id="single" class="button block biglabel">Single Player</div>
 					<div id="multi" class="button block biglabel">Multi Player</div>
 				</div>
 			</div>
 			<div id="multilobby">
-				<div class="header block biglabel">CHOOSE GAME</div>
-				Choose your name:<input id="name" type="textbox"></input><br />
-				<select id="colorPicker">
-					<option value="FF0000">Red</option>
-					<option value="00FF00">Green</option>
-					<option value="0000FF">Blue</option>
-					<option value="FFFF00">Yellow</option>
-				</select><br />
+				<div class="block line biglabel">CHOOSE GAME</div>
+				<div id="playerline" class="block line">
+					NAME:<input id="name" type="textbox"></input>
+					<select id="colorPicker">
+						<option value="FF0000">Red</option>
+						<option value="00FF00">Green</option>
+						<option value="0000FF">Blue</option>
+						<option value="FFFF00">Yellow</option>
+					</select>
+				</div>
+				<div id="gamelist" class="block line"></div>
 				<div id="create" class="button block biglabel">Create</div>
 				<div id="join" class="button block biglabel">Join</div>
 			</div>

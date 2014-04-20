@@ -1,11 +1,14 @@
-body {
-	background-image: url("/data/background-earth-rise.jpg");
-	background-position-x: 50%;
-}
-
 #gameScreen {
 	display: block;
 	margin: auto;
+}
+
+#playerline {
+	color: green;
+}
+
+#playerline * {
+	opacity: 0.5;
 }
 
 .layer {
@@ -35,7 +38,7 @@ body {
 	text-align: center;
 }
 
-.header {
+.line {
 	margin: 3px;
 	padding: 4px;
 }
@@ -51,4 +54,9 @@ body {
 
 .button:active {
 	background-color: yellow;
+}
+
+body {
+	background-image: url("/data/background-earth-rise.jpg");
+	background-position-x: 50%;
 }
