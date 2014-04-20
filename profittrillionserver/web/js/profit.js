@@ -3,10 +3,10 @@ $(document).ready(function() {
 	var multi = $("#multi");
 	var create = $("#create");
 	var join = $("#join");
-	var login = $("#login");
+	var lobby = $("#lobby");
 	single.click(function() {
 		pot.Game.getPJSObject().start();
-		login.hide();
+		lobby.hide();
 	});
 	multi.click(function() {
 		single.hide();
@@ -19,15 +19,17 @@ $(document).ready(function() {
 	create.hide();
 	join.click(pot.Page.clickJoin);
 	join.hide();
-	login.hide();
+	lobby.hide();
 	$("#polling").hide();
 	
+	var enabledMoveChecker = false;
 	$("#gameScreen").click(function () {
 		var pjs = pot.Game.getPJSObject();
-		if (pjs.playerLoaded() && !pjs.hasStarted()) {
+		if (pjs.playerLoaded() && !pjs.hasStarted() && !enabledMoveChecker) {
 			console.log("Registering move checker and showing menu");
-			login.show();
+			lobby.show();
 			pjs.setMoveChecker(pot.Game);
+			enabledMoveChecker = true;
 		}
 	});
 });

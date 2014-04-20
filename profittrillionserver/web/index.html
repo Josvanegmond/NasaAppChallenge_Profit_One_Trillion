@@ -27,8 +27,7 @@
 </head>
 
 <body>
-	<div id="game">
-		<img id="blinkers" src="/data/greenCode.gif" />
+	<div class="layer">
 		<canvas id="gameScreen"
 			data-processing-sources="
 		/potgame/potgame.pde 
@@ -44,22 +43,24 @@
 		/potgame/drawable.pde
 	"></canvas>
 	</div>
-	<div id="story">
-		<div id="login">
-			Choose your name:<input id="name" type="textbox"></input><BR>
-			<select id="colorPicker">
-				<option value="FF0000">Red</option>
-				<option value="00FF00">Green</option>
-				<option value="0000FF">Blue</option>
-				<option value="FFFF00">Yellow</option>
-			</select><BR>
-			<input id="single" type="button" value="Start Single Player"></input><BR>
-			<input id="multi" type="button" value="Start Multi Player"></input><BR>
-			<input id="create" type="button" value="Create Game"></input><BR>
-			<input id="join" type="button" value="Join Game"></input><BR>
+	<div id="lobby" class="layer">
+		<div id="story">
+			<div id="login">
+				Choose your name:<input id="name" type="textbox"></input><br />
+				<select id="colorPicker">
+					<option value="FF0000">Red</option>
+					<option value="00FF00">Green</option>
+					<option value="0000FF">Blue</option>
+					<option value="FFFF00">Yellow</option>
+				</select><br />
+				<input id="single" type="button" value="Start Single Player"></input><br />
+				<input id="multi" type="button" value="Start Multi Player"></input><br />
+				<input id="create" type="button" value="Create Game"></input><br />
+				<input id="join" type="button" value="Join Game"></input><br />
+			</div>
 		</div>
+		<div id="polling">Waiting for opponent...</div>
 	</div>
-	<div id="polling">Waiting for opponent...</div>
 </body>
 
 </html>

@@ -61,7 +61,7 @@ pot.Game.pollForOpponent = function(gameId) {
 				console.log("Server timed out game, stopping poll");
 				clearInterval(intervalId);
 				$("#polling").hide();
-				$("#login").show();
+				$("#lobby").show();
 			}
 		}
 	};
@@ -131,7 +131,7 @@ pot.Game.join = function(gameId, playerName, playerColor) {
 			pot.Game.getPJSObject().setOpponent(game.opponent.name, game.opponent.location, game.opponent.color);
 			if (game.started) {
 				pot.Game.getPJSObject().start();
-				$("#login").hide();
+				$("#lobby").hide();
 			}
 		},
 		error: pot.Game.reportError
