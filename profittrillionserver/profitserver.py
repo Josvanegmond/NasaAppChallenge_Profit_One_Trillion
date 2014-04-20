@@ -151,12 +151,8 @@ class Join(webapp.RequestHandler):
         responseDict = {}
         try:
             jsonDict = json.loads(self.request.body)
-            logging.error(jsonDict)
-            logging.error(jsonDict["gameId"])
-            logging.error(games)
             game = games[int(jsonDict["gameId"])]
             logging.error("Request to join game with id %s" % game.gameId)
-            logging.error(game)
             if(not game.has_started()):
                 game.playerTwo = jsonDict["player"]
                 responseDict["started"] = game.has_started()

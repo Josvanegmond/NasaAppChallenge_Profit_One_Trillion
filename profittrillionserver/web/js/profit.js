@@ -62,7 +62,7 @@ pot.Page.refreshGameList = function() {
 			// Info is a list of structure: [gameId, playerName, playerColor]
 			var colorBlock = $("<div></div>")
 				.addClass("colorBlock")
-				.css("background-color: #" + info[2] + ";");
+				.css("background-color", "#" + info[2]);
 			
 			var gameRow = $("<div></div>")
 				.addClass("line")
