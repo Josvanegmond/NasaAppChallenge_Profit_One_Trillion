@@ -32,6 +32,12 @@
 	border: 2px solid green;
 }
 
+.colorBlock {
+	border: 1px solid black;
+	padding: 5px;
+	margin: 3px;
+}
+
 .biglabel {
 	font-weight: bold;
 	color: green;
@@ -41,6 +47,19 @@
 .line {
 	margin: 3px;
 	padding: 4px;
+}
+
+.game {
+	color: white;
+	cursor: pointer;
+}
+
+.game:hover {
+	background-color: yellow;
+}
+
+.game[data-selected] {
+	background-color: blue;
 }
 
 .button {

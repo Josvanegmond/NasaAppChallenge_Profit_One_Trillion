@@ -151,11 +151,20 @@ class Join(webapp.RequestHandler):
         responseDict = {}
         try:
             jsonDict = json.loads(self.request.body)
-            game = games[jsonDict["gameId"]]
-            game.playerTwo = jsonDict["player"]
-            responseDict["started"] = game.has_started()
-            responseDict["gameId"] = game.gameId
-            responseDict["opponent"] = game.playerOne
+            logging.error(jsonDict)
+            logging.error(jsonDict["gameId"])
+            logging.error(games)
+            game = games[int(jsonDict["gameId"])]
+            logging.error("Request to join game with id %s" % game.gameId)
+            logging.error(game)
+            if(not game.has_started()):
+                game.playerTwo = jsonDict["player"]
+                responseDict["started"] = game.has_started()
+                responseDict["gameId"] = game.gameId
+                responseDict["opponent"] = game.playerOne
+            else:
+                responseDict["started"] = False
+                responseDict["gameLost"] = True
         except Exception as e:
             logging.error("Exception reading data joining game. " + str(e))
             responseDict["started"] = False

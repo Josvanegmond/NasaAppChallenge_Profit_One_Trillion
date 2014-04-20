@@ -125,6 +125,10 @@ pot.Game.join = function(gameId, playerName, playerColor) {
 		contentType: "json",
 		dataType: "json",
 		success: function(game) {
+			if (game.gameLost) {
+				console.log("Game was already full.");
+				return;
+			}
 			console.log("Joined game with id: " + game.gameId);
 			console.log("Opponent: [" + game.opponent.name + ", @" + game.opponent.location + ", #" + game.opponent.color + "]");
 			pot.Game.getPJSObject().setGameId(game.gameId)
