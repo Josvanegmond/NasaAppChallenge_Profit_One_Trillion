@@ -1,5 +1,5 @@
 application: profittrillionserver 
-version: 1-alpha-1
+version: 1-alpha-2
 runtime: python27
 api_version: 1
 threadsafe: "no"
