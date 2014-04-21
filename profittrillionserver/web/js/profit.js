@@ -20,6 +20,13 @@ $(document).ready(function() {
 			enabledMoveChecker = true;
 		}
 	});
+	
+	var nameField = $("#name");
+	nameField.keyup(pot.Page.validateJoin);
+	nameField.keyup(pot.Page.validateCreate);
+	
+	pot.Page.validateJoin();
+	pot.Page.validateCreate();
 });
 
 pot.Page = function() {};
@@ -27,13 +34,13 @@ pot.Page = function() {};
 pot.Page.clickSingle = function() {
 	pot.Game.getPJSObject().start();
 	$("#lobby").hide();
-}
+};
 
 pot.Page.clickMulti = function() {
 	pot.Page.refreshGameList();
 	$("#gameselection").hide();
 	$("#multilobby").show();
-}
+};
 
 pot.Page.clickCreate = function() {
 	var playerName = $("#name").val();
@@ -43,7 +50,7 @@ pot.Page.clickCreate = function() {
 		$("#lobby").hide();
 		$("#polling").show();
 	}
-}
+};
 
 pot.Page.clickJoin = function() {
 	var playerName = $("#name").val();
@@ -52,7 +59,7 @@ pot.Page.clickJoin = function() {
 	if (playerName != null && playerName != "" && selectedGameId) {
 		pot.Game.join(selectedGameId, playerName, playerColor);
 	}
-}
+};
 
 pot.Page.refreshGameList = function() {
 	var gameList = $("#gamelist");
@@ -79,8 +86,28 @@ pot.Page.refreshGameList = function() {
 					if (!wasSelected) {
 						$(".game[data-game-id='" + info[0] +"']").attr("data-selected", "true");
 					}
+					
+					pot.Page.validateJoin();
 				});
 			gameList.append(gameRow);
 		});
 	});
-}
+};
+
+pot.Page.validateJoin = function() {
+	var gameSelected = $(".game[data-selected]").length;
+	var namePresent = $("#name").val() != "";
+	var join = $("#join");
+	
+	join.attr("disabled", namePresent && gameSelected ? null : "true");
+	join.attr("title", namePresent ?
+			gameSelected ? null : "Select game to join" :
+			"Fill in player name first")
+};
+
+pot.Page.validateCreate = function() {
+	var namePresent = $("#name").val() != "";
+	var create = $("#create");
+	create.attr("disabled", namePresent ? null : "true");
+	create.attr("title" , namePresent ? null : "Fill in player name first");
+};
