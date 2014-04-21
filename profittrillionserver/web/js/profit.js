@@ -26,6 +26,8 @@ $(document).ready(function() {
 
 pot.Page = function() {};
 
+pot.Page.pollGameId = null;
+
 pot.Page.registerClickListeners = function() {
 	$("#single").click(pot.Page.clickSingle);
 	$("#multi").click(pot.Page.clickMulti);
@@ -40,6 +42,10 @@ pot.Page.clickSingle = function() {
 
 pot.Page.clickMulti = function() {
 	pot.Game.list(pot.Page.refreshGameList);
+	
+	pot.Page.pollGameId = setInterval(function() {
+		pot.Game.list(pot.Page.refreshGameList);
+	}, 5000);
 	$("#gameselection").hide();
 	$("#multilobby").show();
 };
@@ -50,6 +56,7 @@ pot.Page.clickCreate = function() {
 	if (playerName != null && playerName != "") {
 		pot.Game.create(playerName, playerColor);
 		$("#lobby").hide();
+		clearInterval(pot.Page.pollGameId);
 	}
 };
 
@@ -59,6 +66,7 @@ pot.Page.clickJoin = function() {
 	var selectedGameId = $(".game[data-selected]").attr("data-game-id");
 	if (playerName != null && playerName != "" && selectedGameId) {
 		pot.Game.join(selectedGameId, playerName, playerColor);
+		clearInterval(pot.Page.pollGameId);
 	}
 };
 
