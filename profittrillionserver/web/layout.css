@@ -70,10 +70,18 @@
 	margin: 10px;
 	width: 40%;
 	cursor: pointer;
+	box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.7);
 }
 
-.button:active {
+.button[disabled] {
+	background-color: #77AA77;
+	box-shadow: none;
+	cursor: default;
+}
+
+.button:active:not([disabled]) {
 	background-color: yellow;
+	box-shadow: none;
 }
 
 body {
