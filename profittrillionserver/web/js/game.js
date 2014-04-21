@@ -53,14 +53,12 @@ pot.Game.pollForOpponent = function(gameId) {
 			pot.Game.getPJSObject().setOpponent(data.opponent.name, data.opponent.location, data.opponent.color);
 			pot.Game.getPJSObject().start();
 			console.log("Game started!");
-			$("#polling").hide();
 		}
 		else {
 			console.log("Found no opponent, game hasn't started yet.");
 			if (data.gameLost) {
 				console.log("Server timed out game, stopping poll");
 				clearInterval(intervalId);
-				$("#polling").hide();
 				$("#lobby").show();
 			}
 		}
