@@ -36,7 +36,7 @@
 	display: inline-block;
 	border: 1px solid black;
 	padding: 5px;
-	margin: 3px;
+	margin: -1px 3px;
 }
 
 .biglabel {
@@ -74,7 +74,7 @@
 }
 
 .button[disabled] {
-	background-color: #77AA77;
+	background-color: #77AA77; /* gray-greenish */
 	box-shadow: none;
 	cursor: default;
 }
