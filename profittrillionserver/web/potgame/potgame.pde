@@ -1,4 +1,4 @@
-/* @pjs preload="/data/space.png, /data/sun.png, /data/earth_small.png, /data/planet.png, /data/cargo.png, /data/play_screen.png, /data/winner.jpg"; */
+/* @pjs preload="/data/space.png, /data/sun.png, /data/earth_small.png, /data/planet.png, /data/cargo.png, /data/play_screen.png, /data/winner.jpg, /data/loser.jpg"; */
 
 boolean started = false;
 

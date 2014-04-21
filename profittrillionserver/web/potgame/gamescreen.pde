@@ -82,6 +82,10 @@ void handleOpponentMine(String asteroidName, float mined) {
 void updateState(boolean moveValid, boolean mineValid, String opponentLocation, long opponentProfit) {
 	if (moveValid) {
 		miner.setLocation(proposedMove);
+		if (miner.isTrillionaire()) {
+			// Sending extra bogus move to server to let it know about winnings.
+			moveChecker.checkMove(gameId, miner.name, earth.name, 0, miner.profitLevel);
+		}
 		proposedMove == null;
 	}
 	for (Asteroid asteroid : asteroids) {
@@ -107,6 +111,7 @@ class GameScreen extends Screen
 	PImage planetImage = loadImage("/data/planet.png");
 	PImage cargoImage = loadImage("/data/cargo.png");
 	PImage winnerImage = loadImage("/data/winner.jpg");
+	PImage loserImage = loadImage("/data/loser.jpg");
 	PImage asteroidImage = loadImage("/data/asteroid.png");
 
 	public GameScreen()
@@ -187,7 +192,10 @@ class GameScreen extends Screen
 		drawHud(dayNumber);
 		
 		if (miner.isTrillionaire()) {
-			profit();
+			showEndImage(winnerImage);
+		}
+		if (!miner.isTrillionaire() && opponent != null && opponent.isTrillionaire()) {
+			showEndImage(loserImage);
 		}
 	}
 	
@@ -225,13 +233,13 @@ class GameScreen extends Screen
 	  return false;
 	}
 	
-	void profit() {
+	void showEndImage(endImage) {
 		// Yay, you won!
 		fill(0, 0, 0);
 		stroke(255, 255, 255);
 		strokeWeight(5);
 		rect(95, 95, 410, 410);
-		image(winnerImage, 100, 100, 400, 400);
+		image(endImage, 100, 100, 400, 400);
 	}
 	
 	void mousePressed() {
