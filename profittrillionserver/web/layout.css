@@ -11,6 +11,11 @@
 	opacity: 0.5;
 }
 
+#gamelist {
+	max-height: 250px;
+	overflow: auto;
+}
+
 .layer {
 	position: absolute;
 	height: 100%;
