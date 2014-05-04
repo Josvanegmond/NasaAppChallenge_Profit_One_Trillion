@@ -1,3 +1,13 @@
+body {
+	background-image: url("/data/background-earth-rise.jpg");
+	background-position-x: 50%;
+}
+
+#site {
+	color: green;
+	font: 14px Verdana;
+}
+
 #gameScreen {
 	display: block;
 	margin: auto;
@@ -14,6 +24,20 @@
 #gamelist {
 	max-height: 250px;
 	overflow: auto;
+}
+
+#menu {
+	display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 600px;
+    padding-left: 7%;
+}
+
+.menuitem {
+	display: inline-block;
+	width: 20%;
+	text-align: center;
 }
 
 .layer {
@@ -87,9 +111,4 @@
 .button:active:not([disabled]) {
 	background-color: yellow;
 	box-shadow: none;
-}
-
-body {
-	background-image: url("/data/background-earth-rise.jpg");
-	background-position-x: 50%;
 }

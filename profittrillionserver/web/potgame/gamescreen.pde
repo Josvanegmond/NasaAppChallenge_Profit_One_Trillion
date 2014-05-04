@@ -268,8 +268,7 @@ class GameScreen extends Screen
 	}
 	
 	void keyPressed() {
-	  if ( key == 'z')
-	  {
+	  if ( key == 'z') {
 	    zoomLevel -= 10;
 	  }
 	  
