@@ -28,11 +28,20 @@ pot.Page = function() {};
 
 pot.Page.pollGameId = null;
 
+pot.Page.animateSelectionTo = function(index) {
+	$("#selectionIndicator").animate({"margin-left": (index * 21) + "%"}, 200);
+};
+
 pot.Page.registerClickListeners = function() {
 	$("#single").click(pot.Page.clickSingle);
 	$("#multi").click(pot.Page.clickMulti);
 	$("#create").click(pot.Page.clickCreate);
 	$("#join").click(pot.Page.clickJoin);
+	$(".menuitem").each(function (index, item) {
+		$(item).click(function () {
+			pot.Page.animateSelectionTo(index);
+		});
+	});
 };
 
 pot.Page.clickSingle = function() {
@@ -75,10 +84,11 @@ pot.Page.refreshGameList = function(data) {
 	gameList.empty();
 	if (data.length == 0) {
 		gameList.append("No games available to join, why not create one?")
+		return;
 	}
 	
 	data.forEach(function(info) {
-		// Info is a list of structure: [gameId, playerName, playerColor]
+		// Info is a list with structure: [gameId, playerName, playerColor]
 		var colorBlock = $("<div></div>")
 			.addClass("colorBlock")
 			.css("background-color", "#" + info[2]);
